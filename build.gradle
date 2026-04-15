@@ -1,0 +1,78 @@
+plugins {
+    id 'java'
+    id 'io.spring.dependency-management' version '1.1.7'
+    id 'jacoco-report-aggregation'
+}
+
+group = 'omsu'
+version = '1.0-SNAPSHOT'
+
+// один jacoco { ... } в корне, НЕ в allprojects и НЕ в subprojects
+
+allprojects {
+    apply plugin: 'java'
+    apply plugin: 'io.spring.dependency-management'
+
+    repositories {
+        mavenCentral()
+    }
+
+    java {
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(21)
+        }
+    }
+}
+
+subprojects {
+    // subprojects — без jacoco { ... } и без повторного apply jacoco
+    ext {
+        springBootVersion = '3.5.6'
+        postgresDriverVersion = '42.7.8'
+        flywayVersion = '11.14.1'
+        springGrpcVersion = '3.1.0.RELEASE'
+        protobufVersion = '4.34.0'
+        grpcTestVersion = '1.75.0'
+        grpcVersion = '1.78.0'
+        mockitoVersion = '5.20.0'
+        commonsLangVersion = '3.13.0'
+
+        dockerImage = System.getProperty("os.arch") == "aarch64" || System.getProperty("os.arch") == "arm64"
+                ? "arm64v8/eclipse-temurin:21-jdk"
+                : "eclipse-temurin:21-jdk"
+        dockerArch = System.getProperty("os.arch") == "aarch64" || System.getProperty("os.arch") == "arm64"
+                ? "arm64"
+                : "amd64"
+    }
+
+    dependencies {
+        testImplementation "org.mockito:mockito-core:${mockitoVersion}"
+    }
+
+    tasks.withType(Test).configureEach {
+        options {
+            systemProperties(System.getProperties())
+        }
+        testLogging {
+            showStandardStreams = true
+            exceptionFormat = 'full'
+        }
+        useJUnitPlatform()
+    }
+}
+
+tasks.register("printAllVersions") {
+    doLast {
+        def out = System.getenv("MY_OUTPUT")
+        def lines = [
+                "grpc-server=${project(':grpc-server').version}",
+                "grpc-client=${project(':grpc-client').version}",
+                "grpc-common=${project(':grpc-common').version}"
+        ]
+        if (out) {
+            new File(out).withWriterAppend { w -> lines.each { w.println(it) } }
+        } else {
+            lines.each { println it }
+        }
+    }
+}

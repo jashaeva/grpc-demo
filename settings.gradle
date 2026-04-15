@@ -1,0 +1,17 @@
+rootProject.name = 'grpc-demo'
+
+def modules = [
+        'grpc-server',
+        'grpc-client',
+        'grpc-common'
+]
+
+modules.each { m ->
+    if (file(m).exists()) {
+        include m
+    }
+}
+//include 'grpc-server'
+//include 'grpc-client'
+//include 'grpc-common'
+
