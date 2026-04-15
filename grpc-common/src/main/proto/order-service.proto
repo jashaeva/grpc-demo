@@ -1,0 +1,37 @@
+syntax = "proto3";
+package omsu.grpc;
+
+option java_package = "omsu.grpc";
+option java_outer_classname = "OrderProto";
+option java_multiple_files = true;
+
+import "inventory-service.proto";
+
+
+service Order {
+  rpc getCountByInvId (InventoryByIdRequest) returns (CountData) {}
+  rpc getCountListByIdList (IdList) returns (CountDataList) {}
+ }
+
+message CountData {
+  int32 count = 1;
+  OrderStatus status = 2;
+}
+
+message CountDataList {
+  repeated int32 count = 1;
+  OrderStatus status = 2;
+}
+
+//message WithRepeatedInt32Response { repeated int32 int_array = 1; }
+
+message IdList {
+  repeated int32 id = 1;
+}
+
+enum OrderStatus {
+  PENDING = 0;
+  CONFIRMED = 1;
+  ACTUAL = 2;
+  CANCELLED = 3;
+}

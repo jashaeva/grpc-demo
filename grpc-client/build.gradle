@@ -1,0 +1,41 @@
+plugins {
+    id 'org.springframework.boot' version "${springBootVersion}"  // Берем версию из родительского проекта
+}
+
+group = 'omsu'
+version = '1.0-SNAPSHOT'
+
+// repositories не нужен - он уже определен в родительском проекте
+
+dependencies {
+    implementation project(':grpc-common')
+
+    // Только то, что нужно для клиента!
+    implementation 'org.springframework.boot:spring-boot-starter'
+
+    implementation("net.devh:grpc-client-spring-boot-starter:${springGrpcVersion}") {
+        exclude group: 'io.grpc'
+        exclude group: 'com.google.protobuf'
+    }
+
+    // gRPC dependencies
+    implementation "io.grpc:grpc-netty-shaded:${grpcVersion}"
+    implementation "io.grpc:grpc-protobuf:${grpcVersion}"
+    implementation "io.grpc:grpc-stub:${grpcVersion}"
+    implementation "io.grpc:grpc-services:${grpcVersion}"
+    implementation "io.grpc:grpc-inprocess:${grpcVersion}"
+    // Protobuf
+    implementation "com.google.protobuf:protobuf-java-util:${protobufVersion}"
+
+    // Testing
+    implementation "org.apache.commons:commons-lang3:${commonsLangVersion}"
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation "org.mockito:mockito-core:${mockitoVersion}"
+    testImplementation "org.mockito:mockito-junit-jupiter:${mockitoVersion}"
+}
+
+tasks.register('printVersion') {
+    doLast {
+        println project.version
+    }
+}

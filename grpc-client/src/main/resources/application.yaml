@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: grpc-client
+  main:
+    web-application-type: none
+
+grpc:
+  client:
+    inventory-service:
+      address: static://localhost:9090
+      negotiation-type: plaintext
+
+logging:
+  level:
+    net.devh.boot.grpc: DEBUG
+    io.grpc: DEBUG

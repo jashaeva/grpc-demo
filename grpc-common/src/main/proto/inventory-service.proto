@@ -1,0 +1,36 @@
+syntax = "proto3";
+import "google/protobuf/empty.proto";
+
+package omsu.grpc;
+
+option java_package = "omsu.grpc";
+option java_outer_classname = "InventoryProto";
+option java_multiple_files = true;
+
+service InventoryCRUD {
+  rpc Test (google.protobuf.Empty) returns (google.protobuf.Empty) {}
+  rpc CreateInventory (CreateRequest) returns (CreateResponse) {}
+  rpc editInventory (InventoryData) returns (google.protobuf.Empty) {}
+  rpc getInventory (InventoryByIdRequest) returns (InventoryData) {}
+  rpc deleteInventory (InventoryByIdRequest) returns (google.protobuf.Empty) {}
+}
+
+message CreateRequest {
+  string name = 1;
+  int64 count = 2;
+
+}
+
+message CreateResponse {
+  string id = 1;
+}
+
+message InventoryByIdRequest {
+  string id = 1;
+}
+
+message InventoryData {
+  string id = 1;
+  string name = 2;
+  int64 count = 3;
+}

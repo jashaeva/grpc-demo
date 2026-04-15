@@ -1,0 +1,48 @@
+plugins {
+    id 'org.springframework.boot' version "${springBootVersion}"
+}
+
+group = 'omsu'
+version = '1.0-SNAPSHOT'
+
+dependencies {
+    implementation project(':grpc-common')
+
+    // Spring Boot starters
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+    implementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+    // gRPC
+    implementation("net.devh:grpc-server-spring-boot-starter:${springGrpcVersion}") {
+        exclude group: 'io.grpc'
+        exclude group: 'com.google.protobuf'
+    }
+    implementation "io.grpc:grpc-netty-shaded:${grpcVersion}"
+
+    // Protobuf & gRPC
+    implementation "com.google.protobuf:protobuf-java-util:${protobufVersion}"
+    implementation "io.grpc:grpc-services:${grpcVersion}"
+    implementation "io.grpc:grpc-inprocess:${grpcVersion}"
+
+    // Database
+    implementation "org.flywaydb:flyway-core:${flywayVersion}"
+    implementation "org.flywaydb:flyway-database-postgresql:${flywayVersion}"
+    runtimeOnly "org.postgresql:postgresql:${postgresDriverVersion}"
+
+    //Testing
+    implementation "org.apache.commons:commons-lang3:${commonsLangVersion}"
+    implementation "io.grpc:grpc-testing:${grpcTestVersion}"
+}
+
+
+tasks.register('printVersion') {
+    doLast {
+        println project.version
+    }
+}
+
+
+test {
+    useJUnitPlatform()
+}
