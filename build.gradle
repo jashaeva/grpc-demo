@@ -1,14 +1,16 @@
 plugins {
     id 'java'
     id 'io.spring.dependency-management' version '1.1.7'
-    id 'jacoco-report-aggregation'
+    id 'jacoco'
 }
 
 group = 'omsu'
 version = '1.0-SNAPSHOT'
 
 // один jacoco { ... } в корне, НЕ в allprojects и НЕ в subprojects
-
+jacoco {
+    toolVersion = "0.8.14"  // Используйте актуальную версию
+}
 allprojects {
     apply plugin: 'java'
     apply plugin: 'io.spring.dependency-management'
@@ -25,7 +27,7 @@ allprojects {
 }
 
 subprojects {
-    // subprojects — без jacoco { ... } и без повторного apply jacoco
+    apply plugin: 'jacoco'
     ext {
         springBootVersion = '3.5.6'
         postgresDriverVersion = '42.7.8'
@@ -58,6 +60,54 @@ subprojects {
             exceptionFormat = 'full'
         }
         useJUnitPlatform()
+        finalizedBy jacocoTestReport
+    }
+
+    jacocoTestReport {
+        dependsOn test
+        reports {
+            xml.required = true
+            html.required = true
+            csv.required = false
+        }
+
+        afterEvaluate {
+            classDirectories.setFrom(files(classDirectories.files.collect {
+                fileTree(dir: it, exclude: [
+                        '**/config/**',
+                        '**/dto/**',
+                        '**/model/**',
+                        '**/**.Grpc*'
+                ])
+            }))
+        }
+    }
+    jacocoTestCoverageVerification {
+        violationRules {
+            rule {
+                limit {
+                    minimum = 0.7  // Минимальное покрытие 70%
+                }
+            }
+        }
+    }
+    // Опционально: запуск проверки после отчета
+    test.finalizedBy jacocoTestCoverageVerification
+}
+
+tasks.register('jacocoAggregatedReport', JacocoReport) {
+    dependsOn = subprojects.test
+    additionalSourceDirs.setFrom(files(subprojects.sourceSets.main.allSource.srcDirs))
+    sourceDirectories.setFrom(files(subprojects.sourceSets.main.allSource.srcDirs))
+    classDirectories.setFrom(files(subprojects.sourceSets.main.output))
+    executionData.setFrom(fileTree(dir: '.', include: '**/build/jacoco/test.exec'))
+
+    reports {
+        html.required = true
+        xml.required = true
+        csv.required = false
+        html.destination file("${buildDir}/reports/jacoco/aggregated/html")
+        xml.destination file("${buildDir}/reports/jacoco/aggregated/jacoco.xml")
     }
 }
 
