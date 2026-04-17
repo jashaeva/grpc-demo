@@ -1,45 +1,71 @@
 package omsu.inventory.exception;
 
-import io.grpc.Metadata;
+import io.envoyproxy.pgv.ValidationException;
 import io.grpc.Status;
-import io.grpc.StatusException;
+import io.grpc.StatusRuntimeException;
+import jakarta.validation.ConstraintViolationException;
 import net.devh.boot.grpc.server.advice.GrpcAdvice;
 import net.devh.boot.grpc.server.advice.GrpcExceptionHandler;
+import org.springframework.dao.DuplicateKeyException;
+import org.springframework.stereotype.Component;
 
-import java.sql.SQLException;
+import java.util.stream.Collectors;
 
 @GrpcAdvice
+@Component
 public class GrpcExceptionAdvice {
 
+//    @GrpcExceptionHandler(ConstraintViolationException.class)
+//    public StatusRuntimeException handleConstraintViolation(ConstraintViolationException e) {
+//        String message = e.getConstraintViolations().stream()
+//                .map(violation -> violation.getPropertyPath() + ": " + violation.getMessage())
+//                .collect(Collectors.joining(", "));
+//
+//        // Возвращаем INVALID_ARGUMENT, не пытаясь закрыть call вручную
+//        return Status.INVALID_ARGUMENT
+//                .withDescription("Validation error: " + message)
+//                .asRuntimeException();
+//    }
+//    @GrpcExceptionHandler(RuntimeException.class)
+//    public StatusRuntimeException handleInvalidArgument(RuntimeException e) {
+//        Metadata metadata = new Metadata();
+//        Metadata.Key<String> ERROR_MESSAGE =
+//                Metadata.Key.of("Фигня происходит", Metadata.ASCII_STRING_MARSHALLER);
+//        metadata.put(ERROR_MESSAGE, e.getMessage());
+//        return Status.INTERNAL.asRuntimeException(metadata);
+//    }
 
-    @GrpcExceptionHandler(RuntimeException.class)
-    public Status handleInvalidArgument(Exception e) {
-        Metadata metadata = new Metadata();
-        Metadata.Key<String> ERROR_MESSAGE =
-                Metadata.Key.of("Фигня происходит", Metadata.ASCII_STRING_MARSHALLER);
-        metadata.put(ERROR_MESSAGE, e.getMessage());
+//    @GrpcExceptionHandler(ValidationException.class)
+//    public StatusRuntimeException handleValidation(ValidationException e) {
+//        // Возвращаем клиенту статус INVALID_ARGUMENT с понятным сообщением
+//        return Status.INVALID_ARGUMENT
+//                .withDescription(e.getMessage())
+//                .asRuntimeException();
+//    }
+@GrpcExceptionHandler(StatusRuntimeException.class)
+public StatusRuntimeException handleStatusRuntimeException(StatusRuntimeException e) {
+    // Ничего не делаем, просто возвращаем исходное исключение
+    // Оно уже корректно и не требует повторной обработки
+    return e;
+}
 
-        return Status.INTERNAL.asException(metadata).getStatus();
+    @GrpcExceptionHandler(DuplicateKeyException.class)
+    public StatusRuntimeException handleDuplicateKeyException(DuplicateKeyException e) {
+        return Status.ALREADY_EXISTS.withDescription(e.getMessage())
+                .asRuntimeException();
     }
 
-    @GrpcExceptionHandler(SQLException.class)
-    public StatusException handleResourceNotFoundException(SQLException e) {
-        Status status = Status.INTERNAL.withDescription("SQL error").withCause(e);
-
-        // Инициализация метадаты
-        Metadata metadata = new Metadata();
-        Metadata.Key<String> SQL_STATE =
-                Metadata.Key.of("sql-state", Metadata.ASCII_STRING_MARSHALLER);
-        Metadata.Key<String> ERROR_CODE =
-                Metadata.Key.of("sql-error-code", Metadata.ASCII_STRING_MARSHALLER);
-        Metadata.Key<String> ERROR_MESSAGE =
-                Metadata.Key.of("sql-error-message", Metadata.ASCII_STRING_MARSHALLER);
-
-        // Заполнение данными об ошибке
-        metadata.put(SQL_STATE, e.getSQLState());
-        metadata.put(ERROR_CODE, String.valueOf(e.getErrorCode()));
-        metadata.put(ERROR_MESSAGE, e.getMessage());
-
-        return status.asException(metadata);
+    @GrpcExceptionHandler(EntityNotFoundException.class)
+    public StatusRuntimeException handleEntityNotFoundException(EntityNotFoundException e) {
+        return Status.NOT_FOUND.withDescription(e.getMessage())
+                .asRuntimeException();
     }
+
+//    @GrpcExceptionHandler(Exception.class)
+//    public StatusRuntimeException handleGenericException(Exception e) {
+////        log.error("Internal error", e);
+//        return Status.INTERNAL
+//                .withDescription("Internal server error")
+//                .asRuntimeException();
+//    }
 }

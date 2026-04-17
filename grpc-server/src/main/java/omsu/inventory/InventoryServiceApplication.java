@@ -18,12 +18,6 @@ public class InventoryServiceApplication {
     public static void main(String[] args) throws InterruptedException {
 
         SpringApplication.run( InventoryServiceApplication.class, args);
-        CountDownLatch latch = new CountDownLatch(1);
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            System.out.println("Shutting down gRPC server...");
-            latch.countDown();
-        }));
 
-        latch.await(); // Ждем, пока не поступит сигнал завершения
     }
 }

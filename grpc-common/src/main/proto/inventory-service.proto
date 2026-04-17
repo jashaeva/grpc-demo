@@ -9,7 +9,6 @@ option java_outer_classname = "InventoryProto";
 option java_multiple_files = true;
 
 service InventoryCRUD {
-  rpc Test (google.protobuf.Empty) returns (google.protobuf.Empty) {}
   rpc CreateInventory (CreateRequest) returns (CreateResponse) {}
   rpc editInventory (InventoryData) returns (google.protobuf.Empty) {}
   rpc getInventory (InventoryByIdRequest) returns (InventoryData) {}

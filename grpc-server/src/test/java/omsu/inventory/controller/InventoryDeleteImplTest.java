@@ -24,58 +24,15 @@ import static com.google.protobuf.util.JsonFormat.printer;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
-class InventoryCRUDImplTest {
+class InventoryDeleteImplTest extends BaseTest {
 
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
-
-    private static ManagedChannel channel;
-    private static InventoryCRUDGrpc.InventoryCRUDBlockingStub inventoryBlockingStub;
-
-    private final JsonFormat.Printer jsonPrinter = printer();
     private static final String PRODUCT_NAME = "Plain";
-
-    @BeforeAll
-    static void setUp() {
-        // Подключаемся к реальному серверу Spring Boot
-        channel = ManagedChannelBuilder
-                .forAddress("localhost", 9090)
-                .usePlaintext()
-                .build();
-
-        inventoryBlockingStub = InventoryCRUDGrpc.newBlockingStub(channel);
-    }
-
-    @AfterAll
-    static void tearDown() {
-        if (channel != null) {
-            channel.shutdown();
-        }
-    }
 
     @BeforeEach
     void setUpEach() {
         if (jdbcTemplate != null) {
-            jdbcTemplate.update("DELETE FROM product WHERE name = ?", PRODUCT_NAME);
+            jdbcTemplate.update("DELETE FROM inventory WHERE name = ?", PRODUCT_NAME);
         }
-    }
-
-    @Test
-    void testCreateInventory() throws InvalidProtocolBufferException {
-        CreateRequest request = CreateRequest.newBuilder()
-                .setCount(100L)
-                .setName(PRODUCT_NAME)
-                .build();
-
-        System.out.println("request " + jsonPrinter.print(request));
-
-        CreateResponse response = inventoryBlockingStub
-                .withDeadlineAfter(5, TimeUnit.SECONDS)
-                .createInventory(request);
-
-        String actualId = response.getId();
-        assertNotNull(actualId);
-        System.out.println("response " + jsonPrinter.print(response));
     }
 
     @Test
