@@ -7,10 +7,10 @@ plugins {
 group = 'omsu'
 version = '1.0-SNAPSHOT'
 
-// один jacoco { ... } в корне, НЕ в allprojects и НЕ в subprojects
 jacoco {
-    toolVersion = "0.8.14"  // Используйте актуальную версию
+    toolVersion = "0.8.12"
 }
+
 allprojects {
     apply plugin: 'java'
     apply plugin: 'io.spring.dependency-management'
@@ -27,7 +27,36 @@ allprojects {
 }
 
 subprojects {
-    apply plugin: 'jacoco'
+    def excludedFromCoverage = [':grpc-client', ':grpc-common']  // исключенные проекты
+
+    if (!excludedFromCoverage.contains(project.path)) {
+        apply plugin: 'jacoco'
+
+        jacocoTestReport {
+            dependsOn test
+            reports {
+                xml.required = true
+                html.required = true
+                csv.required = false
+                html.outputLocation = layout.buildDirectory.dir("reports/jacoco/html")
+                xml.outputLocation = layout.buildDirectory.file("reports/jacoco/jacoco.xml")
+            }
+        }
+
+        jacocoTestCoverageVerification {
+            violationRules {
+                rule {
+                    limit {
+                        minimum = 0.7
+                    }
+                }
+            }
+        }
+
+        test.finalizedBy jacocoTestReport, jacocoTestCoverageVerification
+    }
+
+    // Остальные общие настройки
     ext {
         springBootVersion = '3.5.6'
         postgresDriverVersion = '42.7.8'
@@ -38,17 +67,25 @@ subprojects {
         grpcVersion = '1.78.0'
         mockitoVersion = '5.20.0'
         commonsLangVersion = '3.13.0'
-
-        dockerImage = System.getProperty("os.arch") == "aarch64" || System.getProperty("os.arch") == "arm64"
-                ? "arm64v8/eclipse-temurin:21-jdk"
-                : "eclipse-temurin:21-jdk"
-        dockerArch = System.getProperty("os.arch") == "aarch64" || System.getProperty("os.arch") == "arm64"
-                ? "arm64"
-                : "amd64"
+        pgvVersion = '1.0.4'
     }
 
     dependencies {
+        // Retrofit
+        implementation 'com.squareup.retrofit2:retrofit:2.11.0'
+        implementation 'com.squareup.retrofit2:converter-gson:2.11.0'
+        implementation 'com.squareup.okhttp3:okhttp:4.12.0'
+
+        // Logging (опционально)
+        implementation 'com.squareup.okhttp3:logging-interceptor:4.12.0'
+
+        // Тесты
+        testImplementation 'org.junit.jupiter:junit-jupiter:5.10.0'
+        testImplementation 'org.wiremock:wiremock:3.9.1'
         testImplementation "org.mockito:mockito-core:${mockitoVersion}"
+
+        // Для тестирования Retrofit с WireMock
+        testImplementation 'com.squareup.okhttp3:mockwebserver:4.12.0' // альтернатива WireMock
     }
 
     tasks.withType(Test).configureEach {
@@ -60,54 +97,29 @@ subprojects {
             exceptionFormat = 'full'
         }
         useJUnitPlatform()
-        finalizedBy jacocoTestReport
     }
-
-    jacocoTestReport {
-        dependsOn test
-        reports {
-            xml.required = true
-            html.required = true
-            csv.required = false
-        }
-
-        afterEvaluate {
-            classDirectories.setFrom(files(classDirectories.files.collect {
-                fileTree(dir: it, exclude: [
-                        '**/config/**',
-                        '**/dto/**',
-                        '**/model/**',
-                        '**/**.Grpc*'
-                ])
-            }))
-        }
-    }
-    jacocoTestCoverageVerification {
-        violationRules {
-            rule {
-                limit {
-                    minimum = 0.7  // Минимальное покрытие 70%
-                }
-            }
-        }
-    }
-    // Опционально: запуск проверки после отчета
-    test.finalizedBy jacocoTestCoverageVerification
 }
 
+// Агрегированный отчет
 tasks.register('jacocoAggregatedReport', JacocoReport) {
-    dependsOn = subprojects.test
-    additionalSourceDirs.setFrom(files(subprojects.sourceSets.main.allSource.srcDirs))
-    sourceDirectories.setFrom(files(subprojects.sourceSets.main.allSource.srcDirs))
-    classDirectories.setFrom(files(subprojects.sourceSets.main.output))
+    dependsOn = subprojects.findAll {
+        it.plugins.hasPlugin('jacoco')
+    }.test
+
+    def coveredProjects = subprojects.findAll {
+        it.plugins.hasPlugin('jacoco')
+    }
+
+    sourceDirectories.setFrom(files(coveredProjects.sourceSets.main.allSource.srcDirs))
+    classDirectories.setFrom(files(coveredProjects.sourceSets.main.output))
     executionData.setFrom(fileTree(dir: '.', include: '**/build/jacoco/test.exec'))
 
     reports {
         html.required = true
         xml.required = true
         csv.required = false
-        html.destination file("${buildDir}/reports/jacoco/aggregated/html")
-        xml.destination file("${buildDir}/reports/jacoco/aggregated/jacoco.xml")
+        html.outputLocation = layout.buildDirectory.dir("reports/jacoco/aggregated/html")
+        xml.outputLocation = layout.buildDirectory.file("reports/jacoco/aggregated/jacoco.xml")
     }
 }
 

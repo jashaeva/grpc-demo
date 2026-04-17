@@ -18,6 +18,20 @@ sh localenv.sh
 Надо пересобрать проект grpc-common (grpc-common -> Tasks ->build -> build)
 
 
+### Тесты и отчеты
+
+~~~
+./gradlew test
+~~~
+
+~~~
+./gradlew jacocoTestReport
+~~~
+
+~~~
+./gradlew jacocoAggregatedReport
+~~~
+
 # План
 Что еще сделать
 1. Реализовать метод потоковый 
