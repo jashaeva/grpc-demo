@@ -2,6 +2,12 @@ grpc:
   server:
     port: 9090
     # address: 0.0.0.0  # слушать все интерфейсы
+  advice:
+    exception-handling:
+      enabled: true
+      base-packages: omsu.inventory.exception
+      ignored-exception-types:
+        - io.grpc.StatusRuntimeException
 
 spring:
   application:

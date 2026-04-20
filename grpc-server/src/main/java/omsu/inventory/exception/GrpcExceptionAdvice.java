@@ -6,48 +6,31 @@ import io.grpc.StatusRuntimeException;
 import jakarta.validation.ConstraintViolationException;
 import net.devh.boot.grpc.server.advice.GrpcAdvice;
 import net.devh.boot.grpc.server.advice.GrpcExceptionHandler;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Component;
 
-import java.util.stream.Collectors;
-
-@GrpcAdvice
+//@GrpcAdvice
 @Component
 public class GrpcExceptionAdvice {
 
-//    @GrpcExceptionHandler(ConstraintViolationException.class)
-//    public StatusRuntimeException handleConstraintViolation(ConstraintViolationException e) {
-//        String message = e.getConstraintViolations().stream()
-//                .map(violation -> violation.getPropertyPath() + ": " + violation.getMessage())
-//                .collect(Collectors.joining(", "));
-//
-//        // Возвращаем INVALID_ARGUMENT, не пытаясь закрыть call вручную
-//        return Status.INVALID_ARGUMENT
-//                .withDescription("Validation error: " + message)
-//                .asRuntimeException();
-//    }
-//    @GrpcExceptionHandler(RuntimeException.class)
-//    public StatusRuntimeException handleInvalidArgument(RuntimeException e) {
-//        Metadata metadata = new Metadata();
-//        Metadata.Key<String> ERROR_MESSAGE =
-//                Metadata.Key.of("Фигня происходит", Metadata.ASCII_STRING_MARSHALLER);
-//        metadata.put(ERROR_MESSAGE, e.getMessage());
-//        return Status.INTERNAL.asRuntimeException(metadata);
-//    }
+    @GrpcExceptionHandler(StatusRuntimeException.class)
+    public void ignoreStatusRuntimeException(StatusRuntimeException e) {
+        // Пустой метод - исключение не обрабатывается
+        // Фреймворк сам отправит его клиенту
+    }
 
-//    @GrpcExceptionHandler(ValidationException.class)
-//    public StatusRuntimeException handleValidation(ValidationException e) {
-//        // Возвращаем клиенту статус INVALID_ARGUMENT с понятным сообщением
-//        return Status.INVALID_ARGUMENT
-//                .withDescription(e.getMessage())
-//                .asRuntimeException();
-//    }
-@GrpcExceptionHandler(StatusRuntimeException.class)
-public StatusRuntimeException handleStatusRuntimeException(StatusRuntimeException e) {
-    // Ничего не делаем, просто возвращаем исходное исключение
-    // Оно уже корректно и не требует повторной обработки
-    return e;
-}
+    @GrpcExceptionHandler(DataIntegrityViolationException.class)
+    public StatusRuntimeException handleDataIntegrityViolation(DataIntegrityViolationException e) {
+        if (e.getMessage().contains("inventory_stock_quantity_check")) {
+            return Status.INVALID_ARGUMENT
+                    .withDescription("count must be greater than or equal to 1")
+                    .asRuntimeException();
+        }
+        return Status.INTERNAL
+                .withDescription("Database integrity violation")
+                .asRuntimeException();
+    }
 
     @GrpcExceptionHandler(DuplicateKeyException.class)
     public StatusRuntimeException handleDuplicateKeyException(DuplicateKeyException e) {
@@ -60,12 +43,4 @@ public StatusRuntimeException handleStatusRuntimeException(StatusRuntimeExceptio
         return Status.NOT_FOUND.withDescription(e.getMessage())
                 .asRuntimeException();
     }
-
-//    @GrpcExceptionHandler(Exception.class)
-//    public StatusRuntimeException handleGenericException(Exception e) {
-////        log.error("Internal error", e);
-//        return Status.INTERNAL
-//                .withDescription("Internal server error")
-//                .asRuntimeException();
-//    }
 }
