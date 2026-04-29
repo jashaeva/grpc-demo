@@ -1,5 +1,7 @@
-package omsu.inventory.model;
+package omsu.inventory.model.json;
 
+
+import omsu.inventory.model.InventoryEntity;
 
 import javax.annotation.Nonnull;
 import java.util.UUID;

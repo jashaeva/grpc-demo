@@ -1,35 +1,22 @@
 package omsu.inventory.controller;
 
-import com.google.protobuf.Empty;
 import com.google.protobuf.InvalidProtocolBufferException;
-import com.google.protobuf.util.JsonFormat;
-import io.envoyproxy.pgv.ValidationException;
 import io.grpc.*;
 import omsu.grpc.CreateRequest;
-import omsu.grpc.CreateResponse;
-import omsu.grpc.InventoryByIdRequest;
-import omsu.grpc.InventoryCRUDGrpc;
+import omsu.grpc.IdMessage;
 import org.junit.jupiter.api.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.jdbc.core.JdbcTemplate;
 
-import java.util.UUID;
+import java.lang.reflect.Method;
 import java.util.concurrent.TimeUnit;
 
-import static com.google.protobuf.util.JsonFormat.printer;
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
+
 class InventoryCreateImplTest extends BaseTest {
-    private static final String PRODUCT_NAME = "Plain";
 
     @BeforeEach
     void setUpEach() {
-        if (jdbcTemplate != null) {
-            jdbcTemplate.update("DELETE FROM inventory WHERE name = ?", PRODUCT_NAME);
-        }
+        jdbcTemplate.update("DELETE FROM inventory WHERE name = ?", PRODUCT_NAME);
     }
 
     @Test
@@ -41,7 +28,7 @@ class InventoryCreateImplTest extends BaseTest {
 
         System.out.println("request " + jsonPrinter.print(request));
 
-        CreateResponse response = inventoryBlockingStub
+        IdMessage response = inventoryBlockingStub
                 .withDeadlineAfter(5, TimeUnit.SECONDS)
                 .createInventory(request);
 

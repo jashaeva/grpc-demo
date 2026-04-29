@@ -1,4 +1,4 @@
-package omsu.inventory;
+package omsu.inventory.config;
 
 import omsu.inventory.controller.ValidationInterceptor;
 import org.springframework.context.annotation.Bean;

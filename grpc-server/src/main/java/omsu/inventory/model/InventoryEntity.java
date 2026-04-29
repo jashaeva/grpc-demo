@@ -1,6 +1,8 @@
 package omsu.inventory.model;
 
 
+import omsu.grpc.InventoryData;
+
 import java.util.Objects;
 import java.util.UUID;
 
@@ -10,11 +12,16 @@ public class InventoryEntity {
     private long count;
 
     public InventoryEntity(UUID id, String name, long count) {
+        this.id = id;
         this.name = name;
         this.count = count;
-        this.id = id;
     }
 
+    public InventoryEntity(InventoryData data) {
+        this.id = UUID.fromString(data.getId());
+        this.name = data.getName();
+        this.count = data.getCount();
+    }
 
     public InventoryEntity(String name, long count) {
         this.name = name;

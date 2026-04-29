@@ -9,10 +9,10 @@ option java_outer_classname = "InventoryProto";
 option java_multiple_files = true;
 
 service InventoryCRUD {
-  rpc CreateInventory (CreateRequest) returns (CreateResponse) {}
+  rpc CreateInventory (CreateRequest) returns (IdMessage) {}
   rpc editInventory (InventoryData) returns (google.protobuf.Empty) {}
-  rpc getInventory (InventoryByIdRequest) returns (InventoryData) {}
-  rpc deleteInventory (InventoryByIdRequest) returns (google.protobuf.Empty) {}
+  rpc getInventory (IdMessage) returns (InventoryData) {}
+  rpc deleteInventory (IdMessage) returns (google.protobuf.Empty) {}
 }
 
 message CreateRequest {
@@ -21,11 +21,7 @@ message CreateRequest {
 
 }
 
-message CreateResponse {
-  string id = 1 [(validate.rules).string.uuid = true];
-}
-
-message InventoryByIdRequest {
+message IdMessage {
   string id = 1 [(validate.rules).string.uuid = true];
 }
 

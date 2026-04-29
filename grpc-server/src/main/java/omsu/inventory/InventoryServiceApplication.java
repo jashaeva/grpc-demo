@@ -12,8 +12,6 @@ import java.util.concurrent.CountDownLatch;
 
 @SpringBootApplication
 public class InventoryServiceApplication {
-    @Autowired
-    JdbcTemplate jdbcTemplate;
 
     public static void main(String[] args) throws InterruptedException {
 

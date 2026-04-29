@@ -1,32 +1,52 @@
 syntax = "proto3";
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+import "validate/validate.proto";
+import "inventory-service.proto";
+
 package omsu.grpc;
 
 option java_package = "omsu.grpc";
 option java_outer_classname = "OrderProto";
 option java_multiple_files = true;
 
-import "inventory-service.proto";
-
-
 service Order {
-  rpc getCountByInvId (InventoryByIdRequest) returns (CountData) {}
-  rpc getCountListByIdList (IdList) returns (CountDataList) {}
+  rpc createOrder (OrderData) returns (IdMessage){}
+  rpc updateOrder (OrderDataWithId) returns (google.protobuf.Empty){}
+  rpc getOrderInfo (IdMessage) returns (OrderInfo) {}
+  rpc addInventory (OrderItem) returns (google.protobuf.Empty) {}
+
+//  rpc getInvCountById (IdMessage) returns (CountData) {}
+//  rpc getInventoryByOrderId (IdMessage) returns (stream InventoryData) {}
+//  rpc getAllOrders (stream IdMessage) returns (stream OrderInfo) {}
  }
 
-message CountData {
-  int32 count = 1;
-  OrderStatus status = 2;
+message OrderData {
+  string user = 1  [(validate.rules).string = {min_len: 1, max_len: 100}];
+  optional OrderStatus status = 2 [(validate.rules).enum = {in: [0, 4] }];
+  google.protobuf.Timestamp created_at = 3;
 }
 
-message CountDataList {
-  repeated int32 count = 1;
-  OrderStatus status = 2;
+message OrderDataWithId {
+  string id = 1 [(validate.rules).string.uuid = true];
+  string user = 2  [(validate.rules).string = {min_len: 1, max_len: 100}];
+  OrderStatus status = 3 [(validate.rules).enum = {in: [0,1,2,3,4] }];
+  google.protobuf.Timestamp created_at = 4;
 }
 
-//message WithRepeatedInt32Response { repeated int32 int_array = 1; }
+message OrderItem {
+  string order_id = 1 [(validate.rules).string.uuid = true];
+  string inventory_id = 2  [(validate.rules).string.uuid = true];
+  int32 quantity = 3 [(validate.rules).int32.gte = 1];
+}
 
-message IdList {
-  repeated int32 id = 1;
+//inv_count это сколько разных продуктов в заказе всего,
+message OrderInfo {
+  string id = 1 [(validate.rules).string.uuid = true];
+  string user = 2  [(validate.rules).string = {min_len: 1, max_len: 100}];
+  OrderStatus status = 3 [(validate.rules).enum = {in: [0,1,2,3,4] }];
+  google.protobuf.Timestamp created_at = 4;
+  int32 inv_count = 5 [(validate.rules).int32.gte = 1];
 }
 
 enum OrderStatus {
@@ -34,4 +54,5 @@ enum OrderStatus {
   CONFIRMED = 1;
   ACTUAL = 2;
   CANCELLED = 3;
+  CREATED = 4;
 }

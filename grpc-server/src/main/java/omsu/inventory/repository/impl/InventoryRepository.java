@@ -1,20 +1,23 @@
-package omsu.inventory.repository;
+package omsu.inventory.repository.impl;
 
 import omsu.inventory.exception.EntityNotFoundException;
 import omsu.inventory.model.InventoryEntity;
-import org.springframework.beans.factory.annotation.Autowired;
+import omsu.inventory.repository.IInventoryRepository;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.stereotype.Repository;
 
 import java.util.UUID;
 
-@Repository
-public class InventoryRepository implements IInventoryRepo{
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
+public class InventoryRepository implements IInventoryRepository {
+
+    private final JdbcOperations jdbcTemplate;
+
+    public InventoryRepository(JdbcOperations jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
 
     @Override
     public UUID create(InventoryEntity entity) {

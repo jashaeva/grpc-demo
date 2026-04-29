@@ -33,8 +33,14 @@ dependencies {
     runtimeOnly "org.postgresql:postgresql:${postgresDriverVersion}"
 
     //Testing
+    testImplementation(platform("org.testcontainers:testcontainers-bom:2.0.4"))
+    testImplementation("org.testcontainers:postgresql")
+    testImplementation("org.testcontainers:junit-jupiter")
+    testImplementation("org.testcontainers:testcontainers")
+    testImplementation 'org.springframework.boot:spring-boot-testcontainers'
     implementation "org.apache.commons:commons-lang3:${commonsLangVersion}"
     implementation "io.grpc:grpc-testing:${grpcTestVersion}"
+    testRuntimeOnly 'com.h2database:h2'
 }
 
 

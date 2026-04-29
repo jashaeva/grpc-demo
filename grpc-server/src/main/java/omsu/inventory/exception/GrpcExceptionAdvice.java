@@ -1,23 +1,24 @@
 package omsu.inventory.exception;
 
-import io.envoyproxy.pgv.ValidationException;
 import io.grpc.Status;
 import io.grpc.StatusRuntimeException;
-import jakarta.validation.ConstraintViolationException;
 import net.devh.boot.grpc.server.advice.GrpcAdvice;
 import net.devh.boot.grpc.server.advice.GrpcExceptionHandler;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Component;
 
-//@GrpcAdvice
+@GrpcAdvice
 @Component
 public class GrpcExceptionAdvice {
 
     @GrpcExceptionHandler(StatusRuntimeException.class)
-    public void ignoreStatusRuntimeException(StatusRuntimeException e) {
-        // Пустой метод - исключение не обрабатывается
-        // Фреймворк сам отправит его клиенту
+    public StatusRuntimeException handleStatusRuntimeException(StatusRuntimeException e) {
+        System.out.println("=== Handling StatusRuntimeException ===");
+        System.out.println("Status: " + e.getStatus());
+        System.out.println("Message: " + e.getMessage());
+        e.printStackTrace();
+        return e;
     }
 
     @GrpcExceptionHandler(DataIntegrityViolationException.class)
