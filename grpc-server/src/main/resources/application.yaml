@@ -1,3 +1,9 @@
+logging:
+  level:
+    root: INFO
+    com.zaxxer.hikari: INFO
+    org.springframework.boot.context.config: INFO
+
 grpc:
   server:
     port: 9090
@@ -22,3 +28,22 @@ spring:
     locations: classpath:db/migration
     baseline-on-migrate: true
     schemas: inventory_schema
+---
+spring:
+  config:
+    activate:
+      on-profile: dev, staging
+grpc:
+  server:
+    reflection:
+      enabled: true   # Reflection для разработки
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+grpc:
+  server:
+    reflection:
+      enabled: false     # Отключаем в проде

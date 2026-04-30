@@ -5,49 +5,42 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a318df17-4f88-4a8b-bfe7-25691d06d922" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.env.example" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.env.template" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/inventory/config/DataBaseConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/inventory/config/InventoryRepositoryConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/inventory/config/InventoryServiceConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/inventory/config/OrderRepositoryConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/inventory/config/OrderServiceConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/inventory/controller/OrderGrpcImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/inventory/model/OrderEntity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/inventory/model/OrderInfoEntity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/inventory/model/OrderItemEntity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/inventory/model/json/OrderJson.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/inventory/repository/IOrderRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/inventory/repository/impl/OrderRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/inventory/services/IInventoryService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/inventory/services/IOrderService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/inventory/services/impl/InventoryService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/inventory/services/impl/OrderService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/inventory/utils/ProtoTimestampConverter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/grpc-server/src/main/resources/db/migration/V2__schema.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/grpc-server/src/test/resources/application-test.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/grpc-server/src/test/resources/db/migration/V2__schema.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/grpc-server/src/test/resources/db/migration/init.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/grpc-server/src/test/resources/junit-platform.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/grpc-server/src/test/java/omsu/order/OrderGrpcImplTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grpc-common/src/main/proto/inventory-service.proto" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-common/src/main/proto/inventory-service.proto" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grpc-common/src/main/proto/order-service.proto" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-common/src/main/proto/order-service.proto" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grpc-server/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/inventory/GrpcValidationConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/inventory/config/GrpcValidationConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/inventory/InventoryServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/inventory/InventoryServiceApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/inventory/controller/InventoryCRUDImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/inventory/controller/InventoryCRUDImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/inventory/exception/GrpcExceptionAdvice.java" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/inventory/exception/GrpcExceptionAdvice.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/inventory/model/InventoryEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/inventory/model/InventoryEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/inventory/model/InventoryJson.java" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/inventory/model/json/InventoryJson.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/inventory/model/dto/CreateRequestDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/inventory/model/dto/CreateResponseDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/inventory/repository/IInventoryRepo.java" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/inventory/repository/IInventoryRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/inventory/repository/InventoryRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/inventory/repository/impl/InventoryRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/inventory/InventoryServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/GrpcDemoServiceApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/inventory/config/DataBaseConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/config/DataBaseConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/inventory/config/GrpcValidationConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/config/GrpcValidationConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/inventory/config/InventoryRepositoryConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/config/InventoryRepositoryConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/inventory/config/InventoryServiceConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/config/InventoryServiceConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/inventory/config/OrderRepositoryConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/config/OrderRepositoryConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/inventory/config/OrderServiceConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/config/OrderServiceConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/inventory/controller/InventoryCRUDImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/controller/InventoryCRUDImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/inventory/controller/OrderGrpcImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/controller/OrderGrpcImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/inventory/controller/ValidationInterceptor.java" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/controller/ValidationInterceptor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/inventory/exception/EntityNotFoundException.java" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/exception/EntityNotFoundException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/inventory/exception/GrpcExceptionAdvice.java" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/exception/GrpcExceptionAdvice.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/inventory/model/InventoryEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/model/InventoryEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/inventory/model/OrderEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/model/OrderEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/inventory/model/OrderInfoEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/model/OrderInfoEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/inventory/model/OrderItemEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/model/OrderItemEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/inventory/model/json/InventoryJson.java" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/model/json/InventoryJson.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/inventory/model/json/OrderJson.java" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/model/json/OrderJson.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/inventory/package-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/package-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/inventory/repository/IInventoryRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/repository/IInventoryRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/inventory/repository/IOrderRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/repository/IOrderRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/inventory/repository/impl/InventoryRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/repository/impl/InventoryRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/inventory/repository/impl/OrderRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/repository/impl/OrderRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/inventory/services/IInventoryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/services/IInventoryService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/inventory/services/IOrderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/services/IOrderService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/inventory/services/impl/InventoryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/services/impl/InventoryService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/inventory/services/impl/OrderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/services/impl/OrderService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/inventory/utils/ProtoTimestampConverter.java" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/utils/TimestampConverter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/grpc-server/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/src/main/resources/application.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grpc-server/src/test/java/omsu/inventory/controller/BaseTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/src/test/java/omsu/inventory/controller/BaseTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grpc-server/src/test/java/omsu/inventory/controller/InventoryCreateImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/src/test/java/omsu/inventory/controller/InventoryCreateImplTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grpc-server/src/test/java/omsu/inventory/controller/InventoryDeleteImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/src/test/java/omsu/inventory/controller/InventoryDeleteImplTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/grpc-server/src/main/resources/db/migration/V1__schema_init.sql" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/src/main/resources/db/migration/V1__schema_init.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/grpc-server/src/main/resources/db/migration/V2__schema.sql" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/src/main/resources/db/migration/V2__schema.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/grpc-server/src/test/java/omsu/inventory/controller/BaseTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/src/test/java/omsu/BaseTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/grpc-server/src/test/java/omsu/inventory/controller/InventoryCreateImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/src/test/java/omsu/inventory/InventoryCreateImplTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/grpc-server/src/test/java/omsu/inventory/controller/InventoryDeleteImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/src/test/java/omsu/inventory/InventoryDeleteImplTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -86,6 +79,12 @@
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="grpc-demo" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="build" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="grpc-demo" type="f1a62948:ProjectNode" />
                 <item name="grpc-server" type="2d1252cf:ModuleNode" />
               </path>
               <path>
@@ -120,6 +119,7 @@
       <list>
         <option value="Interface" />
         <option value="Class" />
+        <option value="JUnit5 Test Class" />
       </list>
     </option>
   </component>
@@ -142,8 +142,12 @@
     "Gradle.InventoryCRUDImplTest.testCreateInventory.executor": "Run",
     "Gradle.InventoryCreateImplTest.executor": "Run",
     "Gradle.InventoryCreateImplTest.testCreateInvalidInventory_neg.executor": "Run",
+    "Gradle.OrderGrpcImplTest.executor": "Run",
+    "Gradle.Tests in 'grpc-demo.grpc-server.test'.executor": "Run",
+    "Gradle.grpc-demo [build].executor": "Run",
     "Gradle.grpc-demo:grpc-common [assemble].executor": "Run",
     "Gradle.grpc-demo:grpc-common [build].executor": "Run",
+    "Gradle.grpc-demo:grpc-server [:grpc-server:omsu.GrpcDemoServiceApplication.main()].executor": "Run",
     "Gradle.grpc-demo:grpc-server [:grpc-server:omsu.inventory.InventoryServiceApplication.main()].executor": "Run",
     "Gradle.grpc-demo:grpc-server [assemble].executor": "Run",
     "Gradle.grpc-demo:grpc-server [build].executor": "Run",
@@ -152,9 +156,12 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "Shell Script.dockers.executor": "Run",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
     "git-widget-placeholder": "master",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/julia/Study/GRPC/grpc-demo/grpc-server/src/test/resources",
+    "last_directory_selection": "/home/julia/Study/GRPC/grpc-demo/grpc-server/src/test/java/omsu/inventory",
+    "last_opened_file_path": "/home/julia/Study/GRPC/grpc-demo/grpc-server/src/main/java/omsu",
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.16927323",
@@ -177,6 +184,12 @@
       <recent name="$PROJECT_DIR$/grpc-server/src/test/resources/db" />
       <recent name="$PROJECT_DIR$" />
     </key>
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="omsu.order" />
+    </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="omsu.inventory.config" />
       <recent name="omsu.inventory.model" />
@@ -192,11 +205,14 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Gradle.grpc-demo [build]">
+  <component name="RunManager" selected="Gradle.OrderGrpcImplTest">
     <configuration name="server" type="Application" factoryName="Application">
       <option name="ALTERNATIVE_JRE_PATH" value="21" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
-      <option name="MAIN_CLASS_NAME" value="omsu.inventory.InventoryServiceApplication" />
+      <envs>
+        <env name="spring.profiles.active" value="dev" />
+      </envs>
+      <option name="MAIN_CLASS_NAME" value="omsu.GrpcDemoServiceApplication" />
       <module name="grpc-demo.grpc-server.main" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -226,7 +242,7 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="InventoryCreateImplTest.testCreateInvalidInventory_neg" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="OrderGrpcImplTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -239,7 +255,29 @@
           <list>
             <option value=":grpc-server:test" />
             <option value="--tests" />
-            <option value="&quot;omsu.inventory.controller.InventoryCreateImplTest.testCreateInvalidInventory_neg&quot;" />
+            <option value="&quot;omsu.order.OrderGrpcImplTest&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="Tests in 'grpc-demo.grpc-server.test'" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":grpc-server:test" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -254,28 +292,6 @@
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="build" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>false</RunAsTest>
-      <method v="2" />
-    </configuration>
-    <configuration name="grpc-demo:grpc-common [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/grpc-common" />
         <option name="externalSystemIdString" value="GRADLE" />
         <option name="scriptParameters" />
         <option name="taskDescriptions">
@@ -355,11 +371,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.OrderGrpcImplTest" />
+        <item itemvalue="Gradle.Tests in 'grpc-demo.grpc-server.test'" />
         <item itemvalue="Gradle.grpc-demo [build]" />
         <item itemvalue="Gradle.InventoryCreateImplTest" />
         <item itemvalue="Gradle.grpc-demo:grpc-server [build]" />
-        <item itemvalue="Gradle.grpc-demo:grpc-common [build]" />
-        <item itemvalue="Gradle.InventoryCreateImplTest.testCreateInvalidInventory_neg" />
       </list>
     </recent_temporary>
   </component>

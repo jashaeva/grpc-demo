@@ -1,6 +1,5 @@
 create extension if not exists "uuid-ossp";
-
-create table if not exists public.inventory
+create table if not exists inventory
 (
     id        UUID unique        not null default uuid_generate_v1(),
     name      varchar(50) unique not null,
@@ -8,4 +7,4 @@ create table if not exists public.inventory
     primary key (id)
 );
 
-alter table public.inventory owner to postgres;
+alter table inventory owner to postgres;
