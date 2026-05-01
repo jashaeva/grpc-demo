@@ -14,6 +14,7 @@ import omsu.services.IOrderService;
 import java.util.UUID;
 
 import static omsu.utils.TimestampConverter.protoToTimestamp;
+import static omsu.utils.TimestampConverter.timestampToProto;
 
 
 public class OrderService implements IOrderService {
@@ -59,5 +60,19 @@ public class OrderService implements IOrderService {
     @Override
     public OrderInfoEntity getOrderInfo(IdMessage request) {
         return orderRepository.getOrderInfo(UUID.fromString(request.getId()));
+    }
+
+    @Override
+    public OrderDataWithId getOrderById(IdMessage request) {
+        UUID uuid = UUID.fromString(request.getId());
+
+        OrderEntity entity = orderRepository.getById(uuid);
+        OrderDataWithId result = OrderDataWithId.newBuilder()
+                .setId(entity.getId().toString())
+                .setUser(entity.getUsername())
+                .setStatus(entity.getStatus())
+                .setCreatedAt(timestampToProto(entity.getCreated_at()))
+                .build();
+        return result;
     }
 }

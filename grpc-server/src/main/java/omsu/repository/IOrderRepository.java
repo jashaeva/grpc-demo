@@ -1,5 +1,6 @@
 package omsu.repository;
 
+import omsu.grpc.OrderDataWithId;
 import omsu.model.OrderEntity;
 import omsu.model.OrderInfoEntity;
 

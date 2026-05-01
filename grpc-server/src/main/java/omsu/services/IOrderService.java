@@ -12,4 +12,5 @@ public interface IOrderService {
     UUID create(OrderData order);
     boolean update(OrderDataWithId order);
     OrderInfoEntity getOrderInfo(IdMessage request);
+    OrderDataWithId getOrderById(IdMessage request);
 }

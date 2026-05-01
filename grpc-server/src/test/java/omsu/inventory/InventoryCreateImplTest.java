@@ -6,18 +6,11 @@ import omsu.grpc.CreateRequest;
 import omsu.grpc.IdMessage;
 import omsu.BaseTest;
 import org.junit.jupiter.api.*;
-
 import java.util.concurrent.TimeUnit;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 
 class InventoryCreateImplTest extends BaseTest {
-
-    @BeforeEach
-    void setUpEach() {
-        jdbcTemplate.update("DELETE FROM inventory_schema.inventory WHERE name = ?;", PRODUCT_NAME);
-    }
 
     @Test
     void testCreateInventory_pos() throws InvalidProtocolBufferException {

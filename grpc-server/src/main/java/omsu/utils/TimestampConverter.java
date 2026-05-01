@@ -16,7 +16,7 @@ public class TimestampConverter {
     }
 
     // Обратно
-    public static Timestamp toProto(Instant instant) {
+    public static Timestamp instantToProto(Instant instant) {
         return Timestamp.newBuilder()
                 .setSeconds(instant.getEpochSecond())
                 .setNanos(instant.getNano())
@@ -30,5 +30,9 @@ public class TimestampConverter {
 
     public static java.sql.Timestamp instantToTimestamp(Instant instant) {
         return java.sql.Timestamp.from(instant);
+    }
+
+    public static Timestamp timestampToProto(java.sql.Timestamp stamp) {
+        return  instantToProto(stamp.toInstant());
     }
 }

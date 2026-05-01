@@ -53,6 +53,13 @@ public OrderGrpcImpl(IOrderService service) {
         responseObserver.onCompleted();
     }
 
+    @Override
+    public void getOrderById(IdMessage request, StreamObserver<OrderDataWithId> responseObserver) {
+        OrderDataWithId entity = service.getOrderById(request);
+
+        responseObserver.onNext(entity);
+        responseObserver.onCompleted();
+    }
 /*
     @Override
     public void getCountByInvId(InventoryByIdRequest request, StreamObserver<CountData> response) {

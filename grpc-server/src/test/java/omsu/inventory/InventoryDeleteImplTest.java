@@ -12,15 +12,6 @@ import java.util.UUID;
 
 class InventoryDeleteImplTest extends BaseTest {
 
-    private static final String PRODUCT_NAME = "Plain";
-
-    @BeforeEach
-    void setUpEach() {
-        if (jdbcTemplate != null) {
-            jdbcTemplate.update("DELETE FROM inventory_schema.inventory WHERE name = ?;", PRODUCT_NAME);
-        }
-    }
-
     @Test
     void testDeleteInventory() throws InvalidProtocolBufferException {
         // Сначала создаем

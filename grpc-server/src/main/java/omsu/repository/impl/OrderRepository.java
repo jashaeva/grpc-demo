@@ -1,23 +1,25 @@
 package omsu.repository.impl;
 
+import omsu.grpc.OrderDataWithId;
 import omsu.grpc.OrderStatus;
 import omsu.exception.EntityNotFoundException;
 import omsu.model.OrderEntity;
 import omsu.model.OrderInfoEntity;
 import omsu.repository.IOrderRepository;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcOperations;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.SqlParameterValue;
 
 import java.sql.Types;
-import java.time.Instant;
 import java.util.UUID;
 
 public class OrderRepository implements IOrderRepository {
 
-    private JdbcOperations jdbcTemplate;
+    private final JdbcOperations jdbcTemplate;
     public OrderRepository(JdbcOperations jdbc) {
         this.jdbcTemplate = jdbc;
     }
@@ -46,7 +48,7 @@ public class OrderRepository implements IOrderRepository {
     public boolean update(OrderEntity entity) {
         String sqlUpdate = """
         UPDATE inventory_schema.orders
-        SET username = ?, status = CAST(? AS order_status)
+        SET username = ?, status = ?, created_at = ?
         WHERE id = ?;
         """;
 
@@ -55,6 +57,7 @@ public class OrderRepository implements IOrderRepository {
                     sqlUpdate,
                     entity.getUsername(),
                     entity.getStatus().name(),
+                    entity.getCreated_at(),
                     entity.getId());
             return (updated > 0);
         } catch (DataAccessException e) {
@@ -76,20 +79,23 @@ public class OrderRepository implements IOrderRepository {
         try {
             OrderEntity order = jdbcTemplate.queryForObject(
                 sqlGet,
-                (rs, rowNum) -> {
-                    return new OrderEntity(
-                        UUID.fromString(rs.getString("order_id")),
-                        rs.getString("username"),
-                        OrderStatus.valueOf(rs.getString("status")),
-                        rs.getTimestamp("created_at")
-                    );
-                },
+                    getOrderEntityRowMapper(),
                 id
             );
             return order;
         } catch (EmptyResultDataAccessException e) {
             throw new EntityNotFoundException("Failed to get order by id "+ id, e);
         }
+    }
+
+    @NotNull
+    private static RowMapper<OrderEntity> getOrderEntityRowMapper() {
+        return (rs, rowNum) -> new OrderEntity(
+                UUID.fromString(rs.getString("id")),
+                rs.getString("username"),
+                OrderStatus.valueOf(rs.getString("status")),
+                rs.getTimestamp("created_at")
+        );
     }
 
     @Override

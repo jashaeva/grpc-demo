@@ -15,6 +15,8 @@ service Order {
   rpc updateOrder (OrderDataWithId) returns (google.protobuf.Empty){}
   rpc getOrderInfo (IdMessage) returns (OrderInfo) {}
   rpc addInventory (OrderItem) returns (google.protobuf.Empty) {}
+  rpc getOrderById (IdMessage) returns (OrderDataWithId) {}
+
 
 //  rpc getInvCountById (IdMessage) returns (CountData) {}
 //  rpc getInventoryByOrderId (IdMessage) returns (stream InventoryData) {}

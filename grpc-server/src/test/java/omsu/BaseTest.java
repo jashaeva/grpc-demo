@@ -5,6 +5,7 @@ import io.grpc.ManagedChannel;
 import io.grpc.Server;
 import io.grpc.inprocess.InProcessChannelBuilder;
 import io.grpc.inprocess.InProcessServerBuilder;
+import io.grpc.testing.GrpcCleanupRule;
 import omsu.exception.GrpcExceptionAdvice;
 import omsu.grpc.InventoryCRUDGrpc;
 import omsu.controller.InventoryCRUDImpl;
@@ -15,33 +16,36 @@ import omsu.repository.impl.InventoryRepository;
 import omsu.repository.impl.OrderRepository;
 import omsu.services.impl.InventoryService;
 import omsu.services.impl.OrderService;
-import org.junit.jupiter.api.AfterAll;
+import org.junit.After;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.TestInstance;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
-
 import javax.sql.DataSource;
-
-import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 import static com.google.protobuf.util.JsonFormat.printer;
-
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public abstract class BaseTest {
     protected static final Logger log = LoggerFactory.getLogger(GrpcExceptionAdvice.class);
-
-    protected static JdbcTemplate jdbcTemplate;
-    protected static ManagedChannel channel;
-    protected static InventoryCRUDGrpc.InventoryCRUDBlockingStub inventoryBlockingStub;
-    protected static OrderGrpc.OrderBlockingStub orderBlockingStub;
-    protected static Server grpcServer;
     protected static final String PRODUCT_NAME = "Plain";
+    protected static final String johnFSmith = "John F Smith";
 
 
     protected final JsonFormat.Printer jsonPrinter = printer();
+    protected final GrpcCleanupRule grpcCleanup = new GrpcCleanupRule();
+
+    protected static JdbcTemplate jdbcTemplate;
+    protected InventoryCRUDGrpc.InventoryCRUDBlockingStub inventoryBlockingStub;
+    protected OrderGrpc.OrderBlockingStub orderBlockingStub;
+
+    private Server server;
+    private ManagedChannel channel;
 
     private static void initWithPostgresDb() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
@@ -51,6 +55,10 @@ public abstract class BaseTest {
         dataSource.setPassword("secret");
 
         jdbcTemplate = new JdbcTemplate(dataSource);
+    }
+    protected void cleanDB(){
+        jdbcTemplate.update("DELETE FROM inventory_schema.inventory;");
+        jdbcTemplate.update("DELETE FROM inventory_schema.orders;");
     }
 
     private static void initWithH2Embedded(){
@@ -64,39 +72,32 @@ public abstract class BaseTest {
     }
 
     @BeforeAll
-    static void setUp() throws IOException {
+    void setUp() throws Exception {
         initWithPostgresDb();
+
         String serverName = InProcessServerBuilder.generateName();
+        server = grpcCleanup.register(
+                InProcessServerBuilder.forName(serverName)
+                        .addService(new InventoryCRUDImpl(new InventoryService(
+                                new InventoryRepository(jdbcTemplate))))
+                        .addService(new OrderGrpcImpl(new OrderService(
+                                new OrderRepository(jdbcTemplate),
+                                new InventoryRepository(jdbcTemplate))))
+                        .intercept(new ValidationInterceptor())
+                        .build()
+                        .start()
+        );
+        channel = grpcCleanup.register(
+                InProcessChannelBuilder.forName(serverName)
+                        .build()
+        );
 
-        InventoryRepository invRepository = new InventoryRepository(jdbcTemplate);
-        OrderRepository orderRepository = new OrderRepository(jdbcTemplate);
-        InventoryCRUDImpl inventoryCRUDService = new InventoryCRUDImpl(new InventoryService(invRepository));
-        OrderGrpcImpl orderGrpcService = new OrderGrpcImpl(new OrderService(orderRepository, invRepository));
-        ValidationInterceptor validationInterceptor = new ValidationInterceptor();
-
-        grpcServer = InProcessServerBuilder.forName(serverName)
-                .directExecutor()
-                .addService(inventoryCRUDService)
-                .addService(orderGrpcService)
-                .intercept(validationInterceptor)
-                .build()
-                .start();
-
-        channel = InProcessChannelBuilder.forName(serverName)
-                .directExecutor()
-                .build();
         inventoryBlockingStub = InventoryCRUDGrpc.newBlockingStub(channel);
         orderBlockingStub = OrderGrpc.newBlockingStub(channel);
-
+    }
+    @BeforeEach
+    void setUpEach() {
+        cleanDB();
     }
 
-    @AfterAll
-    static void tearDown() {
-        if (channel != null) {
-            channel.shutdownNow();  // Принудительное немедленное закрытие
-        }
-        if (grpcServer != null) {
-            grpcServer.shutdownNow();
-        }
-    }
 }
