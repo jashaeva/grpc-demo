@@ -1,5 +1,6 @@
 package omsu.services.impl;
 
+import omsu.exception.GrpcExceptionAdvice;
 import omsu.grpc.IdMessage;
 import omsu.exception.EntityNotFoundException;
 import omsu.grpc.OrderData;
@@ -10,6 +11,8 @@ import omsu.model.OrderInfoEntity;
 import omsu.repository.IInventoryRepository;
 import omsu.repository.IOrderRepository;
 import omsu.services.IOrderService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.UUID;
 
@@ -18,6 +21,7 @@ import static omsu.utils.TimestampConverter.timestampToProto;
 
 
 public class OrderService implements IOrderService {
+    private static final Logger log = LoggerFactory.getLogger(OrderService.class);
 
     private final IInventoryRepository inventoryRepository;
     private final IOrderRepository orderRepository;
@@ -67,6 +71,7 @@ public class OrderService implements IOrderService {
         UUID uuid = UUID.fromString(request.getId());
 
         OrderEntity entity = orderRepository.getById(uuid);
+        log.info("entity by id {}", entity);
         OrderDataWithId result = OrderDataWithId.newBuilder()
                 .setId(entity.getId().toString())
                 .setUser(entity.getUsername())

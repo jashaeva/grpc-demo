@@ -17,6 +17,8 @@ build/
 *.iws
 *.iml
 *.ipr
+**/*.log.*
+**/*.log
 out/
 !**/src/main/**/out/
 !**/src/test/**/out/

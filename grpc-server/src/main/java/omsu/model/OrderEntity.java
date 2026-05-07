@@ -49,6 +49,16 @@ public class OrderEntity {
     }
 
     @Override
+    public String toString() {
+        return "OrderEntity{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", status=" + status +
+                ", created_at=" + created_at +
+                '}';
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         OrderEntity that = (OrderEntity) o;

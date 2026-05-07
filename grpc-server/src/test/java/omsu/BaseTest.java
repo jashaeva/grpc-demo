@@ -17,6 +17,7 @@ import omsu.repository.impl.OrderRepository;
 import omsu.services.impl.InventoryService;
 import omsu.services.impl.OrderService;
 import org.junit.After;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestInstance;
@@ -30,9 +31,11 @@ import javax.sql.DataSource;
 import java.util.concurrent.TimeUnit;
 
 import static com.google.protobuf.util.JsonFormat.printer;
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+import static io.qameta.allure.Allure.step;
+
+//@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public abstract class BaseTest {
-    protected static final Logger log = LoggerFactory.getLogger(GrpcExceptionAdvice.class);
+    protected static final Logger log = LoggerFactory.getLogger(BaseTest.class);
     protected static final String PRODUCT_NAME = "Plain";
     protected static final String johnFSmith = "John F Smith";
 
@@ -53,27 +56,24 @@ public abstract class BaseTest {
         dataSource.setUrl("jdbc:postgresql://localhost:5437/inventorydb");
         dataSource.setUsername("postgres");
         dataSource.setPassword("secret");
-
         jdbcTemplate = new JdbcTemplate(dataSource);
     }
+
     protected void cleanDB(){
         jdbcTemplate.update("DELETE FROM inventory_schema.inventory;");
         jdbcTemplate.update("DELETE FROM inventory_schema.orders;");
     }
-
-    private static void initWithH2Embedded(){
-        DataSource dataSource = new EmbeddedDatabaseBuilder()
-                .setType(EmbeddedDatabaseType.H2)
-                .addScript("init.sql")
-//                .addScript("V2__schema.sql")    // опционально: тестовые данные
-                .build();
-
-        jdbcTemplate = new JdbcTemplate(dataSource);
+    @BeforeAll
+    static void setUpDB(){
+        log.info("BaseTest: BeforeAll init DB");
+        initWithPostgresDb();
     }
 
-    @BeforeAll
-    void setUp() throws Exception {
-        initWithPostgresDb();
+    @BeforeEach
+    void setUpEach() throws Exception {
+        log.info("BeforeEach");
+        cleanDB();
+        log.info("Clean DB");
 
         String serverName = InProcessServerBuilder.generateName();
         server = grpcCleanup.register(
@@ -95,9 +95,15 @@ public abstract class BaseTest {
         inventoryBlockingStub = InventoryCRUDGrpc.newBlockingStub(channel);
         orderBlockingStub = OrderGrpc.newBlockingStub(channel);
     }
-    @BeforeEach
-    void setUpEach() {
-        cleanDB();
-    }
-
+//
+//    @BeforeEach
+//    void setUpEach() {
+//        log.info("BaseTest: BeforeEach");
+//        step("Clean database before test", this::cleanDB);
+//    }
+//    @AfterEach
+//    void tearDownEach() {
+//        log.info("BaseTest: AfterEach");
+//        step("Clean database after test", this::cleanDB);
+//    }
 }

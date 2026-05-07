@@ -77,12 +77,11 @@ public class OrderRepository implements IOrderRepository {
         WHERE id = ?;
         """;
         try {
-            OrderEntity order = jdbcTemplate.queryForObject(
+            return jdbcTemplate.queryForObject(
                 sqlGet,
-                    getOrderEntityRowMapper(),
+                getOrderEntityRowMapper(),
                 id
             );
-            return order;
         } catch (EmptyResultDataAccessException e) {
             throw new EntityNotFoundException("Failed to get order by id "+ id, e);
         }

@@ -1,5 +1,6 @@
 package omsu.controller;
 import com.google.protobuf.Empty;
+import io.grpc.LoadBalancer;
 import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
 import omsu.grpc.*;
@@ -64,9 +65,11 @@ public class InventoryCRUDImpl extends InventoryCRUDGrpc.InventoryCRUDImplBase {
 
     @Override
     public void deleteInventory (IdMessage request,
-                                 StreamObserver<Empty> responseObserver) {
-            service.deleteById(UUID.fromString(request.getId()));
-            responseObserver.onNext(Empty.getDefaultInstance());
+                                 StreamObserver<BoolMessage> responseObserver) {
+            boolean res = service.deleteById(UUID.fromString(request.getId()));
+
+            BoolMessage response = BoolMessage.newBuilder().setResult(res).build();
+            responseObserver.onNext(response);
             responseObserver.onCompleted();
     }
 }

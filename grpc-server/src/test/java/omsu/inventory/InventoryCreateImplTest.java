@@ -2,53 +2,89 @@ package omsu.inventory;
 
 import com.google.protobuf.InvalidProtocolBufferException;
 import io.grpc.*;
+import io.qameta.allure.Description;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import omsu.BaseSpringTest;
 import omsu.grpc.CreateRequest;
 import omsu.grpc.IdMessage;
 import omsu.BaseTest;
 import org.junit.jupiter.api.*;
-import java.util.concurrent.TimeUnit;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import static io.qameta.allure.Allure.step;
+import static omsu.allure.AllureAttachments.attachText;
+import static omsu.steps.InventoryTestDataFactory.createRequest;
+import static omsu.utils.DataUtils.randomInventory;
+import static omsu.utils.DataUtils.randomQuantity;
 import static org.junit.jupiter.api.Assertions.*;
 
-
-class InventoryCreateImplTest extends BaseTest {
+@Epic("Inventory Management")
+@Feature("Create Inventory Operations")
+class InventoryCreateImplTest extends BaseSpringTest {
+    private static final Logger log = LoggerFactory.getLogger(InventoryCreateImplTest.class);
+    private String inventory = randomInventory();
+    private long count = randomQuantity();
 
     @Test
+    @DisplayName("TC-IMCr01: Create inventory item with valid data")
+    @Description("Positive test: Create inventory item with valid count and name")
     void testCreateInventory_pos() throws InvalidProtocolBufferException {
-        CreateRequest request = CreateRequest.newBuilder()
-                .setCount(100L)
-                .setName(PRODUCT_NAME)
-                .build();
-
-        log.info("request " + jsonPrinter.print(request));
-
-        IdMessage response = inventoryBlockingStub
-                .withDeadlineAfter(5, TimeUnit.SECONDS)
-                .createInventory(request);
-
-        String actualId = response.getId();
-        assertNotNull(actualId);
-        log.info("response " + jsonPrinter.print(response));
+        CreateRequest request = createRequest(inventory, count);
+        attachText("InventoryData request ", jsonPrinter.print(request));
+        step("Execute create inventory call",
+            () -> {
+                IdMessage result = inventoryBlockingStub.createInventory(request);
+                attachText("Created inventory ID ", result.getId());
+                step("Verify response contains ID", () -> {
+                    assertNotNull(result.getId(), "ID should not be null");
+                    assertFalse(result.getId().isEmpty(), "ID should not be empty");
+                });
+            });
     }
 
     @Test
+    @DisplayName("TC-IMCr02: Create inventory with negative count - should fail")
+    @Description("Negative test: Create inventory with count = -1, expected INVALID_ARGUMENT")
     void testCreateInvalidInventory_neg() {
-        CreateRequest createRequest = CreateRequest.newBuilder()
-                .setCount(-1L)
-                .setName(PRODUCT_NAME)
-                .build();
+        CreateRequest invalidRequest = createRequest(inventory, -1L);
 
-        StatusRuntimeException thrown =
-                Assertions.assertThrows(StatusRuntimeException.class, () ->
-                        inventoryBlockingStub.createInventory(createRequest));
-        System.out.println("**** ");
-        System.out.println(thrown.getStatus());
-        System.out.println(thrown.getMessage());
-        System.out.println("**** ");
-        // Проверяем код ошибки
-        assertEquals(Status.INVALID_ARGUMENT.getCode(), thrown.getStatus().getCode());
+        step("Execute create inventory with invalid data", () -> {
+            StatusRuntimeException thrown = assertThrows(
+                    StatusRuntimeException.class,
+                    () -> inventoryBlockingStub.createInventory(invalidRequest)
+            );
 
-        // Проверяем сообщение об ошибке валидации (не "Failed to create...")
-        assertTrue(thrown.getMessage().contains("must be greater than or equal to 1"));
-        assertTrue(thrown.getMessage().contains("count:"));
+            step("Verify error status code", () ->
+                    assertEquals(Status.INVALID_ARGUMENT.getCode(), thrown.getStatus().getCode())
+            );
+
+            step("Verify error message contains validation details", () -> {
+                String errorMessage = thrown.getMessage();
+                assertTrue(errorMessage.contains("must be greater than or equal to 1"));
+                assertTrue(errorMessage.contains("count:"));
+                log.info("Validation error received: {}", errorMessage);
+            });
+        });
+    }
+
+    @Test
+    @DisplayName("TC-IMCr03: Create inventory with empty name - should fail")
+    @Description("Negative test: Create inventory with empty name")
+    void testCreateInventoryWithEmptyName_neg() {
+        CreateRequest requestWithEmptyName = createRequest("", count);
+
+        step("Attempt to create inventory with empty name", () -> {
+            StatusRuntimeException thrown = assertThrows(
+                    StatusRuntimeException.class,
+                    () -> inventoryBlockingStub.createInventory(requestWithEmptyName)
+            );
+
+            step("Verify validation error", () -> {
+                assertEquals(Status.INVALID_ARGUMENT.getCode(), thrown.getStatus().getCode());
+                assertTrue(thrown.getMessage().contains("length must be at least 1"));
+            });
+        });
     }
 }

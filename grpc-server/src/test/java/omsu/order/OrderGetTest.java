@@ -1,51 +1,68 @@
 package omsu.order;
 
-import com.google.protobuf.Empty;
 import com.google.protobuf.InvalidProtocolBufferException;
-import com.google.protobuf.Timestamp;
+import io.qameta.allure.Description;
+import omsu.BaseSpringTest;
 import omsu.BaseTest;
 import omsu.grpc.IdMessage;
 import omsu.grpc.OrderData;
 import omsu.grpc.OrderDataWithId;
 import omsu.grpc.OrderStatus;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.UUID;
 
+import static io.qameta.allure.Allure.step;
+import static omsu.allure.AllureAttachments.attachText;
+import static omsu.steps.OrderTestDataFactory.createOrder;
+import static omsu.utils.DataUtils.randomUsername;
+import static omsu.utils.TimestampAssertions.assertEqualsWithDefaultTolerance;
 import static omsu.utils.TimestampConverter.instantToProto;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class OrderGetTest extends BaseTest {
+class OrderGetTest extends BaseSpringTest {
+    private String testOrderId;
+    private Instant testCreatedAt;
+    private String username = randomUsername();
 
-    @DisplayName("Get Order by id")
+    @BeforeEach
+    void createTestOrder(){
+        step("Setup: Create test order item for updating",
+                () -> {
+                    testCreatedAt = Instant.now().minus(1, ChronoUnit.DAYS);
+                    OrderData order = createOrder(username, OrderStatus.PENDING, testCreatedAt);
+                    IdMessage created = orderBlockingStub.createOrder(order);
+                    testOrderId = created.getId();
+                    attachText("UUID created: ", testOrderId);
+                });
+    }
+
     @Test
+    @DisplayName("TC-OMGe01: get order item by id")
+    @Description("Positive case")
     void getOrderById() throws InvalidProtocolBufferException {
-        Instant createdAt = Instant.now().minus(1, ChronoUnit.DAYS);
-        OrderData orderData = OrderData.newBuilder()
-                .setStatus(OrderStatus.PENDING)
-                .setUser(johnFSmith)
-                .setCreatedAt(instantToProto(createdAt))
-                .build();
-        String uuid = orderBlockingStub.createOrder(orderData).getId();
-
-        log.info("request " + jsonPrinter.print(orderData));
-        OrderDataWithId response = orderBlockingStub.getOrderById(
-                IdMessage.newBuilder().setId(String.valueOf(uuid)).build()
-        );
-        log.info("response " + jsonPrinter.print(response));
-
-        assertEquals(uuid, response.getId());
-        assertEquals(johnFSmith, response.getUser());
-        assertEquals(OrderStatus.PENDING, response.getStatus());
-        assertEquals(instantToProto(createdAt), response.getCreatedAt());
+        step("Get order by is...", ()->{
+            OrderDataWithId response = orderBlockingStub.getOrderById(
+                    IdMessage.newBuilder().setId(testOrderId).build()
+            );
+            attachText("Got response: ", jsonPrinter.print(response));
+            step("Assertions...", ()->{
+                assertEquals(testOrderId, response.getId());
+                assertEquals(username, response.getUser());
+                assertEquals(OrderStatus.PENDING, response.getStatus());
+                assertEqualsWithDefaultTolerance(instantToProto(testCreatedAt), response.getCreatedAt());
+            });
+        });
     }
 
     @Disabled
     @Test
+    @DisplayName("TC-OMGe02: get order with additional info")
+    @Description("Positive case of getting order with additional info")
     void getOrderInfo() {
     }
 }

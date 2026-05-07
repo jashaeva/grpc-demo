@@ -2,6 +2,8 @@ plugins {
     id 'java'
     id 'io.spring.dependency-management' version '1.1.7'
     id 'jacoco'
+    id 'io.qameta.allure' version '2.12.0'
+    id 'com.github.ben-manes.versions' version '0.53.0'
 }
 
 group = 'omsu'
@@ -68,6 +70,16 @@ subprojects {
         mockitoVersion = '5.20.0'
         commonsLangVersion = '3.13.0'
         pgvVersion = '1.0.4'
+        allureVersion = '2.34.0'
+        aspectJVersion = '1.9.25.1'
+        fakerVersion = '2.5.4'
+    }
+
+    configurations {
+        agent {
+            canBeResolved = true
+            canBeConsumed = true
+        }
     }
 
     dependencies {
@@ -77,18 +89,32 @@ subprojects {
         implementation 'com.squareup.okhttp3:okhttp:4.12.0'
 
         // Logging (опционально)
-        implementation 'com.squareup.okhttp3:logging-interceptor:4.12.0'
+//        implementation 'com.squareup.okhttp3:logging-interceptor:4.12.0'
+//        testImplementation 'org.slf4j:slf4j-log4j12:2.0.9'
+//        testImplementation 'log4j:log4j:1.2.17'
+
 
         // Тесты
         testImplementation 'org.junit.jupiter:junit-jupiter:5.10.0'
         testImplementation 'org.wiremock:wiremock:3.9.1'
         testImplementation "org.mockito:mockito-core:${mockitoVersion}"
 
+        // Allure
+        testImplementation platform("io.qameta.allure:allure-bom:$allureVersion")
+        testImplementation "io.qameta.allure:allure-junit5"
+        testImplementation "io.qameta.allure:allure-attachments"
+
+        // AspectJ для Allure
+        agent "org.aspectj:aspectjweaver:${aspectJVersion}"
+
         // Для тестирования Retrofit с WireMock
         testImplementation 'com.squareup.okhttp3:mockwebserver:4.12.0' // альтернатива WireMock
     }
 
     tasks.withType(Test).configureEach {
+        // Настройка Allure
+        systemProperty "allure.results.directory", project.layout.buildDirectory.dir("allure-results").get().asFile.toString()
+        jvmArgs = [ "-javaagent:${configurations.agent.singleFile}" ]
         options {
             systemProperties(System.getProperties())
         }
@@ -97,6 +123,55 @@ subprojects {
             exceptionFormat = 'full'
         }
         useJUnitPlatform()
+    }
+    allure {
+        version = allureVersion
+        aspectjweaver = true
+        autoconfigure = true
+    }
+
+    test {
+        finalizedBy allureReport
+    }
+}
+tasks.register('allureAggregatedReport') {
+    description = 'Generate aggregated Allure report for all subprojects'
+    group = 'verification'
+
+    dependsOn = subprojects.collect { it.tasks.matching { it.name == 'test' } }.flatten()
+
+    doLast {
+        def allResultsDir = layout.buildDirectory.dir("all-allure-results").get().asFile
+        allResultsDir.mkdirs()
+
+        // Собираем результаты всех тестов в одну директорию
+        subprojects.each { subproject ->
+            def resultsDir = subproject.layout.buildDirectory.dir("allure-results").get().asFile
+            if (resultsDir.exists()) {
+                fileTree(resultsDir).each { file ->
+                    if (file.name.endsWith('.json') || file.name.endsWith('.txt') || file.name.endsWith('.xml')) {
+                        def targetFile = new File(allResultsDir, "${subproject.name}-${file.name}")
+                        file.renameTo(targetFile)
+                    }
+                }
+            }
+        }
+
+        def reportDir = layout.buildDirectory.dir("reports/allure-aggregated").get().asFile
+
+        // Генерируем отчет через Allure CLI
+        try {
+            exec {
+                commandLine 'allure', 'generate', allResultsDir.absolutePath, '-o', reportDir.absolutePath, '--clean'
+            }
+            println "Allure aggregated report generated at: ${reportDir.absolutePath}/index.html"
+        } catch (Exception e) {
+            println "ERROR: Allure command line not found. Please install Allure:"
+            println "  macOS: brew install allure"
+            println "  Linux: sudo apt-add-repository ppa:qameta/allure && sudo apt-get update && sudo apt-get install allure"
+            println "  Windows: scoop install allure"
+            throw e
+        }
     }
 }
 
@@ -135,6 +210,21 @@ tasks.register("printAllVersions") {
             new File(out).withWriterAppend { w -> lines.each { w.println(it) } }
         } else {
             lines.each { println it }
+        }
+    }
+}
+
+dependencyUpdates {
+    resolutionStrategy {
+        componentSelection {
+            all { ComponentSelection selection ->
+                boolean isUnstable = ['alpha', 'beta', 'rc', 'm', 'snapshot'].any { keyword ->
+                    selection.candidate.version.toLowerCase().contains(keyword)
+                }
+                if (isUnstable) {
+                    selection.reject("Unstable version: ${selection.candidate.version}")
+                }
+            }
         }
     }
 }

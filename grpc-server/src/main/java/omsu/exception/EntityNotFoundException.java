@@ -1,8 +1,11 @@
 package omsu.exception;
 
-import org.springframework.dao.EmptyResultDataAccessException;
-
 public class EntityNotFoundException extends RuntimeException {
-    public EntityNotFoundException(String string, Throwable e) {
+    public EntityNotFoundException(String message) {
+        super(message);
+    }
+
+    public EntityNotFoundException(String message, Throwable cause) {
+        super(message, cause);
     }
 }

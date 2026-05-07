@@ -12,9 +12,12 @@ service InventoryCRUD {
   rpc CreateInventory (CreateRequest) returns (IdMessage) {}
   rpc editInventory (InventoryData) returns (google.protobuf.Empty) {}
   rpc getInventory (IdMessage) returns (InventoryData) {}
-  rpc deleteInventory (IdMessage) returns (google.protobuf.Empty) {}
+  rpc deleteInventory (IdMessage) returns (BoolMessage) {}
 }
 
+message BoolMessage {
+  bool result = 1;
+}
 message CreateRequest {
   string name = 1 [(validate.rules).string = {min_len: 1, max_len: 100}];
   int64 count = 2 [(validate.rules).int64.gte = 1];

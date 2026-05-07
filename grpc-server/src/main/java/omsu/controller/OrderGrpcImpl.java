@@ -2,6 +2,7 @@ package omsu.controller;
 
 import com.google.protobuf.Empty;
 import io.grpc.stub.StreamObserver;
+import net.devh.boot.grpc.server.service.GrpcService;
 import omsu.grpc.*;
 import omsu.model.OrderEntity;
 import omsu.model.OrderInfoEntity;
@@ -10,6 +11,7 @@ import omsu.utils.TimestampConverter;
 
 import java.util.UUID;
 
+@GrpcService
 public class OrderGrpcImpl extends OrderGrpc.OrderImplBase {
 
 private final IOrderService service;

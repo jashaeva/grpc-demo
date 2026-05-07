@@ -29,7 +29,7 @@ public class InventoryService implements IInventoryService {
     }
 
     @Override
-    public void deleteById(UUID uuid) {
-        repository.deleteById(uuid);
+    public boolean deleteById(UUID uuid) {
+        return repository.deleteById(uuid);
     }
 }

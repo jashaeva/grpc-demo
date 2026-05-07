@@ -1,10 +1,28 @@
-spring:
-  datasource:
-    url: jdbc:h2:mem:testdb;MODE=PostgreSQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
-    driver-class-name: org.h2.Driver
-    username: sa
-    password:
-  jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
-  flyway:
-    locations: classpath:db/migration
+#logging:
+#  level:
+#    root: INFO
+#    com.zaxxer.hikari: INFO
+#  pattern:
+#    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+#
+logging:
+  file:
+    name: "server.log"
+  level:
+    root: INFO
+    omsu: INFO
+    com.zaxxer.hikari: INFO
+  pattern:
+    console: "%d{HH:mm:ss} %-5level %logger{20} - %msg%n"
+    file: "%d [%thread] %-5level %logger{35} - %msg%n"
+grpc:
+  server:
+    in-process-name: test-server
+    port: -1
+  client:
+    test-server:
+      address: in-process:test-server
+      negotiation-type: PLAINTEXT  # <-- Это ключевой параметр
+      # ИЛИ для явного отключения TLS:
+      security:
+        enabled: false
