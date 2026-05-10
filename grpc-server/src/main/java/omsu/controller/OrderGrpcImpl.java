@@ -47,11 +47,9 @@ public OrderGrpcImpl(IOrderService service) {
 
     @Override
     public void getOrderInfo(IdMessage request, StreamObserver<OrderInfo> responseObserver) {
-       OrderInfoEntity entity = service.getOrderInfo(request);
+        OrderInfo entity = service.getOrderInfo(request);
 
-       OrderInfo orderInfo = OrderInfo.newBuilder()
-               .build();
-        responseObserver.onNext(orderInfo);
+        responseObserver.onNext(entity);
         responseObserver.onCompleted();
     }
 
@@ -62,7 +60,17 @@ public OrderGrpcImpl(IOrderService service) {
         responseObserver.onNext(entity);
         responseObserver.onCompleted();
     }
-/*
+
+//    rpc addInventory (OrderItem) returns (BoolMessage) {}
+    @Override
+    public void addInventory(OrderItem request, StreamObserver<BoolMessage> responseObserver) {
+        BoolMessage entity = service.addInventory(request);
+
+        responseObserver.onNext(entity);
+        responseObserver.onCompleted();
+    }
+
+    /*
     @Override
     public void getCountByInvId(InventoryByIdRequest request, StreamObserver<CountData> response) {
         for (int i = 1; i <= 5; i++) {

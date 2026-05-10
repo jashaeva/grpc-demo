@@ -97,7 +97,7 @@ subprojects {
         // Тесты
         testImplementation 'org.junit.jupiter:junit-jupiter:5.10.0'
         testImplementation 'org.wiremock:wiremock:3.9.1'
-        testImplementation "org.mockito:mockito-core:${mockitoVersion}"
+//        testImplementation "org.mockito:mockito-core:${mockitoVersion}"
 
         // Allure
         testImplementation platform("io.qameta.allure:allure-bom:$allureVersion")

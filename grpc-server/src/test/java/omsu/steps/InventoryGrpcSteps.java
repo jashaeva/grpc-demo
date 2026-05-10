@@ -12,7 +12,7 @@ public class InventoryGrpcSteps {
     }
 
     @Step("gRPC: Create inventory item")
-    public IdMessage createInventory(CreateRequest request) {
+    public IdMessage createInventory(InventoryMessage request) {
         return stub.createInventory(request);
     }
 

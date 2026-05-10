@@ -3,14 +3,21 @@ package omsu.repository.impl;
 import omsu.exception.EntityNotFoundException;
 import omsu.model.InventoryEntity;
 import omsu.repository.IInventoryRepository;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcOperations;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 
+import java.sql.PreparedStatement;
+import java.util.Map;
 import java.util.UUID;
+
+import static omsu.utils.UuidUtils.getUuid;
 
 public class InventoryRepository implements IInventoryRepository {
     private static final Logger log = LoggerFactory.getLogger(InventoryRepository.class);
@@ -24,22 +31,23 @@ public class InventoryRepository implements IInventoryRepository {
     public UUID create(InventoryEntity entity) {
         String sqlInsert = """
         INSERT INTO inventory_schema.inventory (name, stock_quantity)
-        VALUES (?, ?)
-        RETURNING id;
+        VALUES (?, ?);
         """;
+
+        KeyHolder keyHolder = new GeneratedKeyHolder();
         try{
-            UUID uuid = jdbcTemplate.queryForObject(
-                    sqlInsert,
-                    UUID.class,
-                    entity.getName(),
-                    entity.getCount()
-            );
-            log.info("DB Inventory: created {}", uuid);
-            return uuid;
+            jdbcTemplate.update(connection -> {
+                PreparedStatement ps = connection.prepareStatement(sqlInsert, new String[]{"id"});
+                ps.setString(1, entity.getName());
+                ps.setLong(2, entity.getCount());
+                return ps;
+            }, keyHolder);
+            return getUuid(keyHolder);
         } catch (DuplicateKeyException e) {
             throw new DuplicateKeyException("Failed to create inventory item with name "+ entity.getName(), e);
         }
     }
+
 
     @Override
     public boolean update(InventoryEntity entity) {

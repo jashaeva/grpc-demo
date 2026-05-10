@@ -20,7 +20,7 @@ public class InventoryCRUDImpl extends InventoryCRUDGrpc.InventoryCRUDImplBase {
     }
 
     @Override
-    public void createInventory(CreateRequest request, StreamObserver<IdMessage> responseObserver) {
+    public void createInventory(InventoryMessage request, StreamObserver<IdMessage> responseObserver) {
 
         InventoryEntity entity = new InventoryEntity(request.getName(), request.getCount());
         UUID uuid = service.create(entity);

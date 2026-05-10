@@ -14,7 +14,7 @@ service Order {
   rpc createOrder (OrderData) returns (IdMessage){}
   rpc updateOrder (OrderDataWithId) returns (google.protobuf.Empty){}
   rpc getOrderInfo (IdMessage) returns (OrderInfo) {}
-  rpc addInventory (OrderItem) returns (google.protobuf.Empty) {}
+  rpc addInventory (OrderItem) returns (BoolMessage) {}
   rpc getOrderById (IdMessage) returns (OrderDataWithId) {}
 
 
@@ -39,7 +39,7 @@ message OrderDataWithId {
 message OrderItem {
   string order_id = 1 [(validate.rules).string.uuid = true];
   string inventory_id = 2  [(validate.rules).string.uuid = true];
-  int32 quantity = 3 [(validate.rules).int32.gte = 1];
+  int64 quantity = 3 [(validate.rules).int64.gte = 1];
 }
 
 //inv_count это сколько разных продуктов в заказе всего,

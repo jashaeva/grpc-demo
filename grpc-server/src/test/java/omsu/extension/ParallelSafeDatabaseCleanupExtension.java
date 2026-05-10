@@ -43,6 +43,7 @@ public class ParallelSafeDatabaseCleanupExtension
             // Используем отдельный поток, чтобы не блокировать завершение
             new Thread(() -> {
                 try {
+                    System.out.println("Cleanup thread started, preparing to sleep...");
                     // Даём небольшую задержку, чтобы все тесты точно завершились
                     Thread.sleep(1000);
                     performFinalCleanup(context);
@@ -67,8 +68,8 @@ public class ParallelSafeDatabaseCleanupExtension
 
             // Получаем все таблицы в схеме public
             List<String> tables = jdbc.queryForList(
-                " SELECT table_name FROM information_schema.tables WHERE table_schema = 'inventory_schema';",
-//                    "SELECT tablename FROM pg_tables WHERE schemaname = 'inventory_schema'",
+//                " SELECT table_name FROM information_schema.tables WHERE table_schema = 'inventory_schema';",
+                    "SELECT tablename FROM pg_tables WHERE schemaname = 'inventory_schema'",
                     String.class
             );
 

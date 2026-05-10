@@ -38,8 +38,15 @@ public class GrpcExceptionAdvice {
 
     @GrpcExceptionHandler(EntityNotFoundException.class)
     public StatusRuntimeException handleEntityNotFoundException(EntityNotFoundException e) {
-        log.info("Entity not found: {}", e.getMessage()); // INFO - нормальная бизнес-ситуация
+        log.info("Entity not found: {}", e.getMessage());
         return Status.NOT_FOUND.withDescription(e.getMessage())
+                .asRuntimeException();
+    }
+
+    @GrpcExceptionHandler(NotEnoughInventoryException.class)
+    public StatusRuntimeException handleNotenoughInventoryException(NotEnoughInventoryException e) {
+        log.info("Inventory not enough: {}", e.getMessage());
+        return Status.RESOURCE_EXHAUSTED.withDescription(e.getMessage())
                 .asRuntimeException();
     }
 }

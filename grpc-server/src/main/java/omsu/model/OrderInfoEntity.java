@@ -3,8 +3,8 @@ package omsu.model;
 import java.util.Objects;
 
 public class OrderInfoEntity {
-    private OrderEntity order;
-    private int invQuantity;
+    private final OrderEntity order;
+    private final int invQuantity;
 
     public OrderInfoEntity(OrderEntity order, int invQuantity) {
         this.order = new OrderEntity(order.getId(), order.getUsername(), order.getStatus(), order.getCreated_at());
@@ -29,5 +29,13 @@ public class OrderInfoEntity {
     @Override
     public int hashCode() {
         return Objects.hash(getOrder(), getInvQuantity());
+    }
+
+    @Override
+    public String toString() {
+        return "{ " + order.getUsername() +
+               ", " + order.getStatus().name() +
+               ", " + order.getId() +
+               ", " + this.invQuantity + '}';
     }
 }

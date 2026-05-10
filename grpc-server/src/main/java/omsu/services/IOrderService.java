@@ -1,16 +1,14 @@
 package omsu.services;
 
-import omsu.grpc.IdMessage;
-import omsu.grpc.OrderData;
-import omsu.grpc.OrderDataWithId;
-import omsu.model.OrderEntity;
-import omsu.model.OrderInfoEntity;
+import omsu.grpc.*;
 
 import java.util.UUID;
 
 public interface IOrderService {
     UUID create(OrderData order);
     boolean update(OrderDataWithId order);
-    OrderInfoEntity getOrderInfo(IdMessage request);
+    OrderInfo getOrderInfo(IdMessage request);
     OrderDataWithId getOrderById(IdMessage request);
+
+    BoolMessage addInventory(OrderItem request);
 }

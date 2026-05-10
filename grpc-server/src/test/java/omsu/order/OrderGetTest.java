@@ -4,10 +4,7 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import io.qameta.allure.Description;
 import omsu.BaseSpringTest;
 import omsu.BaseTest;
-import omsu.grpc.IdMessage;
-import omsu.grpc.OrderData;
-import omsu.grpc.OrderDataWithId;
-import omsu.grpc.OrderStatus;
+import omsu.grpc.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
@@ -18,20 +15,24 @@ import java.time.temporal.ChronoUnit;
 
 import static io.qameta.allure.Allure.step;
 import static omsu.allure.AllureAttachments.attachText;
+import static omsu.steps.InventoryTestDataFactory.createInventoryMessage;
 import static omsu.steps.OrderTestDataFactory.createOrder;
-import static omsu.utils.DataUtils.randomUsername;
+import static omsu.steps.OrderTestDataFactory.createOrderItem;
+import static omsu.utils.DataUtils.*;
 import static omsu.utils.TimestampAssertions.assertEqualsWithDefaultTolerance;
 import static omsu.utils.TimestampConverter.instantToProto;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class OrderGetTest extends BaseSpringTest {
     private String testOrderId;
+    private String testInvId;
     private Instant testCreatedAt;
     private String username = randomUsername();
 
     @BeforeEach
     void createTestOrder(){
-        step("Setup: Create test order item for updating",
+        step("Setup: Create test order item to get info",
                 () -> {
                     testCreatedAt = Instant.now().minus(1, ChronoUnit.DAYS);
                     OrderData order = createOrder(username, OrderStatus.PENDING, testCreatedAt);
@@ -39,6 +40,19 @@ class OrderGetTest extends BaseSpringTest {
                     testOrderId = created.getId();
                     attachText("UUID created: ", testOrderId);
                 });
+        step("Setup: Create test inventory item to get order info",
+                () -> {
+                    InventoryMessage inventory = createInventoryMessage(
+                            randomInventory(), 10L);
+                    IdMessage created = inventoryBlockingStub.createInventory(inventory);
+                    testInvId = created.getId();
+                    attachText("UUID created: ", testInvId);
+                });
+        step("Add relation order-inventory", ()->{
+            OrderItem orderItem = createOrderItem(testOrderId, testInvId, 1);
+            BoolMessage result = orderBlockingStub.addInventory(orderItem);
+            assertTrue(result.getResult());
+        });
     }
 
     @Test
@@ -59,10 +73,21 @@ class OrderGetTest extends BaseSpringTest {
         });
     }
 
-    @Disabled
     @Test
     @DisplayName("TC-OMGe02: get order with additional info")
     @Description("Positive case of getting order with additional info")
-    void getOrderInfo() {
+    void getOrderInfo_pos() {
+        step("Get order with info", () -> {
+            IdMessage idMessage = IdMessage.newBuilder().setId(testOrderId).build();
+            OrderInfo orderInfo = orderBlockingStub.getOrderInfo(idMessage);
+            attachText("orderInfo", jsonPrinter.print(orderInfo));
+
+            step("Assertions", ()->{
+                assertEquals(testOrderId, orderInfo.getId());
+                assertEquals(username, orderInfo.getUser());
+                assertEqualsWithDefaultTolerance(instantToProto(testCreatedAt), orderInfo.getCreatedAt());
+                assertEquals(1, orderInfo.getInvCount());
+            });
+        });
     }
 }

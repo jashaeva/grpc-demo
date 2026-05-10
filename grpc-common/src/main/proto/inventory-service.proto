@@ -9,7 +9,7 @@ option java_outer_classname = "InventoryProto";
 option java_multiple_files = true;
 
 service InventoryCRUD {
-  rpc CreateInventory (CreateRequest) returns (IdMessage) {}
+  rpc createInventory (InventoryMessage) returns (IdMessage) {}
   rpc editInventory (InventoryData) returns (google.protobuf.Empty) {}
   rpc getInventory (IdMessage) returns (InventoryData) {}
   rpc deleteInventory (IdMessage) returns (BoolMessage) {}
@@ -18,7 +18,7 @@ service InventoryCRUD {
 message BoolMessage {
   bool result = 1;
 }
-message CreateRequest {
+message InventoryMessage {
   string name = 1 [(validate.rules).string = {min_len: 1, max_len: 100}];
   int64 count = 2 [(validate.rules).int64.gte = 1];
 

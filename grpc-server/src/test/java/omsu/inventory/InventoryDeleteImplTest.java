@@ -7,8 +7,8 @@ import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import omsu.BaseSpringTest;
 import omsu.grpc.BoolMessage;
-import omsu.grpc.CreateRequest;
 import omsu.grpc.IdMessage;
+import omsu.grpc.InventoryMessage;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -21,7 +21,7 @@ import static io.qameta.allure.Allure.step;
 import static omsu.allure.AllureAttachments.attachTable;
 import static omsu.allure.AllureAttachments.attachText;
 import static omsu.steps.InventoryTestDataFactory.createIdMessage;
-import static omsu.steps.InventoryTestDataFactory.createRequest;
+import static omsu.steps.InventoryTestDataFactory.createInventoryMessage;
 import static omsu.utils.DataUtils.randomInventory;
 import static omsu.utils.DataUtils.randomQuantity;
 import static org.junit.jupiter.api.Assertions.*;
@@ -40,7 +40,7 @@ class InventoryDeleteImplTest extends BaseSpringTest {
     void testDeleteInventory() {
         step("Create test inventory item for deletion",
                 () -> {
-                    CreateRequest createRequest = createRequest(inventory, count);
+                    InventoryMessage createRequest = createInventoryMessage(inventory, count);
                     IdMessage createResponse = inventoryBlockingStub.createInventory(createRequest);
                     testInventoryId = createResponse.getId();
                     attachText("Request to delete created: ", jsonPrinter.print(createResponse));

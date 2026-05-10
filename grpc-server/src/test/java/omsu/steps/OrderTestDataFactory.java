@@ -4,6 +4,7 @@ import com.google.protobuf.Timestamp;
 import io.qameta.allure.Step;
 import omsu.grpc.OrderData;
 import omsu.grpc.OrderDataWithId;
+import omsu.grpc.OrderItem;
 import omsu.grpc.OrderStatus;
 
 import java.time.Instant;
@@ -19,6 +20,15 @@ public class OrderTestDataFactory {
                 .setStatus(status)
                 .setUser(username)
                 .setCreatedAt(instantToProto(createdAt))
+                .build();
+    }
+
+    @Step("Add inventory {invId} to order {orderId} with quantity {count}")
+    public static OrderItem createOrderItem(String orderId, String invId, long count) {
+        return OrderItem.newBuilder()
+                .setOrderId(orderId)
+                .setInventoryId(invId)
+                .setQuantity(count)
                 .build();
     }
 

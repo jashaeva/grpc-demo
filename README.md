@@ -50,7 +50,10 @@ sh localenv.sh
 1. https://habr.com/ru/companies/otus/articles/699616/  (не очень)
 2. https://www.baeldung.com/java-unit-tests-grpc-service
 3. https://learning.postman.com/docs/sending-requests/grpc/scripting-in-grpc-request
-4. 
+4. https://runebook.dev/en/docs/spring_boot/application-properties/appendix.application-properties.testing
+5. https://www.baeldung.com/spring-boot-junit-5-testing-active-profile
+6. https://dev.to/ankitdevcode/spring-boot-testing-a-comprehensive-best-practices-guide-1do6
+7. 
 ## Видео
 1. https://rutube.ru/video/6eb697fa466ce74a02c78fe564405cf5/  (Дмитрий Тучс)
 2. https://rutube.ru/video/ccab9367cb22411c4c5bfd1276a395cd/ 

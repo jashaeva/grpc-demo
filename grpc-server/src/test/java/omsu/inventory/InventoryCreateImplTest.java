@@ -6,16 +6,15 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import omsu.BaseSpringTest;
-import omsu.grpc.CreateRequest;
 import omsu.grpc.IdMessage;
-import omsu.BaseTest;
+import omsu.grpc.InventoryMessage;
 import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import static io.qameta.allure.Allure.step;
 import static omsu.allure.AllureAttachments.attachText;
-import static omsu.steps.InventoryTestDataFactory.createRequest;
+import static omsu.steps.InventoryTestDataFactory.createInventoryMessage;
 import static omsu.utils.DataUtils.randomInventory;
 import static omsu.utils.DataUtils.randomQuantity;
 import static org.junit.jupiter.api.Assertions.*;
@@ -31,7 +30,7 @@ class InventoryCreateImplTest extends BaseSpringTest {
     @DisplayName("TC-IMCr01: Create inventory item with valid data")
     @Description("Positive test: Create inventory item with valid count and name")
     void testCreateInventory_pos() throws InvalidProtocolBufferException {
-        CreateRequest request = createRequest(inventory, count);
+        InventoryMessage request = createInventoryMessage(inventory, count);
         attachText("InventoryData request ", jsonPrinter.print(request));
         step("Execute create inventory call",
             () -> {
@@ -48,7 +47,7 @@ class InventoryCreateImplTest extends BaseSpringTest {
     @DisplayName("TC-IMCr02: Create inventory with negative count - should fail")
     @Description("Negative test: Create inventory with count = -1, expected INVALID_ARGUMENT")
     void testCreateInvalidInventory_neg() {
-        CreateRequest invalidRequest = createRequest(inventory, -1L);
+        InventoryMessage invalidRequest = createInventoryMessage(inventory, -1L);
 
         step("Execute create inventory with invalid data", () -> {
             StatusRuntimeException thrown = assertThrows(
@@ -73,7 +72,7 @@ class InventoryCreateImplTest extends BaseSpringTest {
     @DisplayName("TC-IMCr03: Create inventory with empty name - should fail")
     @Description("Negative test: Create inventory with empty name")
     void testCreateInventoryWithEmptyName_neg() {
-        CreateRequest requestWithEmptyName = createRequest("", count);
+        InventoryMessage requestWithEmptyName = createInventoryMessage("", count);
 
         step("Attempt to create inventory with empty name", () -> {
             StatusRuntimeException thrown = assertThrows(

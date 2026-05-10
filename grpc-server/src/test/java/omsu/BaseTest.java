@@ -13,6 +13,7 @@ import omsu.controller.OrderGrpcImpl;
 import omsu.controller.ValidationInterceptor;
 import omsu.grpc.OrderGrpc;
 import omsu.repository.impl.InventoryRepository;
+import omsu.repository.impl.OrderInventoryRepository;
 import omsu.repository.impl.OrderRepository;
 import omsu.services.impl.InventoryService;
 import omsu.services.impl.OrderService;
@@ -33,7 +34,10 @@ import java.util.concurrent.TimeUnit;
 import static com.google.protobuf.util.JsonFormat.printer;
 import static io.qameta.allure.Allure.step;
 
-//@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+/**
+ * Попытка написать базовый класс без использования спринга и его бинов.
+ * Не получилось - не перехватываются нормально бизнес-исключения.
+ */
 public abstract class BaseTest {
     protected static final Logger log = LoggerFactory.getLogger(BaseTest.class);
     protected static final String PRODUCT_NAME = "Plain";
@@ -80,9 +84,13 @@ public abstract class BaseTest {
                 InProcessServerBuilder.forName(serverName)
                         .addService(new InventoryCRUDImpl(new InventoryService(
                                 new InventoryRepository(jdbcTemplate))))
-                        .addService(new OrderGrpcImpl(new OrderService(
-                                new OrderRepository(jdbcTemplate),
-                                new InventoryRepository(jdbcTemplate))))
+                        .addService(new OrderGrpcImpl(
+                                new OrderService(
+                                    new OrderRepository(jdbcTemplate),
+                                    new InventoryRepository(jdbcTemplate),
+                                    new OrderInventoryRepository(jdbcTemplate)
+                                )
+                        ))
                         .intercept(new ValidationInterceptor())
                         .build()
                         .start()

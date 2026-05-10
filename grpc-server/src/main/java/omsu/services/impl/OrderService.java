@@ -1,14 +1,13 @@
 package omsu.services.impl;
 
-import omsu.exception.GrpcExceptionAdvice;
-import omsu.grpc.IdMessage;
+import omsu.exception.NotEnoughInventoryException;
+import omsu.grpc.*;
 import omsu.exception.EntityNotFoundException;
-import omsu.grpc.OrderData;
-import omsu.grpc.OrderDataWithId;
 import omsu.model.InventoryEntity;
 import omsu.model.OrderEntity;
 import omsu.model.OrderInfoEntity;
 import omsu.repository.IInventoryRepository;
+import omsu.repository.IOrderInventoryRepository;
 import omsu.repository.IOrderRepository;
 import omsu.services.IOrderService;
 import org.slf4j.Logger;
@@ -25,9 +24,13 @@ public class OrderService implements IOrderService {
 
     private final IInventoryRepository inventoryRepository;
     private final IOrderRepository orderRepository;
+    private final IOrderInventoryRepository orderInvRepository;
 
-    public OrderService(IOrderRepository orderRepo, IInventoryRepository inventoryRepo) {
+    public OrderService(IOrderRepository orderRepo,
+                        IInventoryRepository inventoryRepo,
+                        IOrderInventoryRepository orderInvRepo) {
         this.orderRepository = orderRepo;
+        this.orderInvRepository = orderInvRepo;
         this.inventoryRepository = inventoryRepo;
     }
 
@@ -36,7 +39,32 @@ public class OrderService implements IOrderService {
         try {
             invEntity = inventoryRepository.getById(uuid);
         } catch (EntityNotFoundException e) {
-            throw new EntityNotFoundException("No such inventory with id = "+ uuid,e);
+            throw new EntityNotFoundException("Inventory with id = "+ uuid + " not found",e);
+        }
+    }
+
+
+    private void checkInventoryId(UUID uuid, long count) {
+        InventoryEntity invEntity;
+        try {
+            invEntity = inventoryRepository.getById(uuid);
+            if (invEntity.getCount() < count) {
+                throw new NotEnoughInventoryException(
+                        "Inventory not enough quantity " + invEntity.getCount() + "/" + count);
+            }
+        } catch (EntityNotFoundException e) {
+            throw new EntityNotFoundException("Inventory with id = "+ uuid + " not found",e);
+        } catch (NotEnoughInventoryException e) {
+            throw new NotEnoughInventoryException(e);
+        }
+    }
+
+    private void checkOrderExists(UUID uuid) {
+        OrderEntity entity;
+        try {
+            entity = orderRepository.getById(uuid);
+        } catch (EntityNotFoundException e) {
+            throw new EntityNotFoundException("Order with id = "+ uuid + " not found",e);
         }
     }
 
@@ -62,8 +90,17 @@ public class OrderService implements IOrderService {
     }
 
     @Override
-    public OrderInfoEntity getOrderInfo(IdMessage request) {
-        return orderRepository.getOrderInfo(UUID.fromString(request.getId()));
+    public OrderInfo getOrderInfo(IdMessage request) {
+        OrderInfoEntity orderInfo = orderRepository.getOrderInfo(UUID.fromString(request.getId()));
+        log.info("returned orderInfo {}", orderInfo.toString());
+        OrderInfo result = OrderInfo.newBuilder()
+                .setId(orderInfo.getOrder().getId().toString())
+                .setUser(orderInfo.getOrder().getUsername())
+                .setStatus(orderInfo.getOrder().getStatus())
+                .setCreatedAt(timestampToProto(orderInfo.getOrder().getCreated_at()))
+                .setInvCount(orderInfo.getInvQuantity())
+                .build();
+        return result;
     }
 
     @Override
@@ -79,5 +116,24 @@ public class OrderService implements IOrderService {
                 .setCreatedAt(timestampToProto(entity.getCreated_at()))
                 .build();
         return result;
+    }
+
+    @Override
+    public BoolMessage addInventory(OrderItem request) {
+
+        UUID orderId = UUID.fromString(request.getOrderId());
+        UUID inventoryId = UUID.fromString(request.getInventoryId());
+        long quantity = request.getQuantity();
+
+        checkInventoryId(inventoryId, quantity);
+        checkOrderExists(orderId);
+
+        boolean result = orderInvRepository.create(
+                orderId,
+                inventoryId,
+                quantity
+        );
+        log.info("Inventory {} added to order {}: {}", inventoryId, orderId, result);
+        return BoolMessage.newBuilder().setResult(result).build();
     }
 }
