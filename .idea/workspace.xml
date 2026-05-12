@@ -5,8 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a318df17-4f88-4a8b-bfe7-25691d06d922" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.github/workflows/pr-validation.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/pr-validation.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/report-allure.sh" beforeDir="false" afterPath="$PROJECT_DIR$/report-allure.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/grpc-client/src/main/java/omsu/order/service/OrderGrpcClientService.java" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-client/src/main/java/omsu/order/service/OrderGrpcClientService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -165,7 +166,7 @@
     "Shell Script.generating.executor": "Run",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
-    "git-widget-placeholder": "order-grpc",
+    "git-widget-placeholder": "master",
     "kotlin-language-version-configured": "true",
     "last_directory_selection": "/home/julia/Study/GRPC/grpc-demo/grpc-server/src/test/java/omsu/inventory",
     "last_opened_file_path": "/home/julia/Study/GRPC/grpc-demo/grpc-server/src/test/resources",
@@ -189,11 +190,11 @@
       <recent name="$PROJECT_DIR$/grpc-server" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/.github/workflows" />
       <recent name="$PROJECT_DIR$/grpc-server/src/test/resources/db/migration/h2" />
       <recent name="$PROJECT_DIR$/grpc-server/src/test/resources/db" />
       <recent name="$PROJECT_DIR$/grpc-server/src/test/resources/" />
       <recent name="$PROJECT_DIR$/grpc-common/src/main/proto" />
-      <recent name="$PROJECT_DIR$" />
     </key>
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />

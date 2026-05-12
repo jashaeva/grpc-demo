@@ -2,7 +2,7 @@ package omsu.order.service;
 
 import net.devh.boot.grpc.client.inject.GrpcClient;
 import net.devh.boot.grpc.client.autoconfigure.GrpcClientAutoConfiguration;
-import omsu.grpc.CreateRequest;
+import omsu.grpc.InventoryMessage;
 import omsu.grpc.IdMessage;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
@@ -22,7 +22,7 @@ public class OrderGrpcClientService implements CommandLineRunner {
         try {
             System.out.println("Testing gRPC connection...");
 
-            CreateRequest request = CreateRequest.newBuilder()
+            InventoryMessage request = InventoryMessage.newBuilder()
                     .setName("test-"+ RandomStringUtils.randomAlphabetic(10))
                     .setCount(0)
                     .build();
