@@ -1,18 +1,22 @@
 #!/bin/bash
 
-echo "Running tests..."
-#./gradlew clean test
+echo "Generating Allure report..."
 
-echo "Generating aggregated Allure report..."
-./gradlew allureAggregatedReport
+mkdir -p build/all-allure-results
 
-echo "Allure report generated at: build/reports/allure-aggregated/index.html"
-
-# Открыть отчет
-if [[ "$OSTYPE" == "darwin"* ]]; then
-    open build/reports/allure-aggregated/index.html
-elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
-    xdg-open build/reports/allure-aggregated/index.html
-elif [[ "$OSTYPE" == "msys" ]] || [[ "$OSTYPE" == "cygwin" ]]; then
-    start build/reports/allure-aggregated/index.html
+if [ -d "grpc-server/build/allure-results" ]; then
+    echo "Copying results from grpc-server"
+    cp grpc-server/build/allure-results/* build/all-allure-results/
+else
+    echo "ERROR: allure-results not found"
+    exit 1
 fi
+
+echo "Generating report"
+allure generate build/all-allure-results -o build/reports/allure-aggregated --clean
+
+echo "Report generated at build/reports/allure-aggregated/index.html"
+
+# Не открываем отчет в CI (убираем allure open)
+# Вместо этого показываем путь к файлу
+echo "::notice title=Allure Report::Report available at build/reports/allure-aggregated/index.html"

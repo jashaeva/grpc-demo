@@ -1,0 +1,89 @@
+name: PR Validation
+
+on:
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Cache Gradle
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-java21-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-java21-
+            ${{ runner.os }}-gradle-
+
+      - name: Cache Allure
+        id: cache-allure
+        uses: actions/cache@v3
+        with:
+          path: /opt/allure-2.29.0
+          key: ${{ runner.os }}-allure-2.29.0
+
+      - name: Install Allure (if not cached)
+        if: steps.cache-allure.outputs.cache-hit != 'true'
+        run: |
+          wget https://github.com/allure-framework/allure2/releases/download/2.29.0/allure-2.29.0.tgz
+          sudo tar -xvzf allure-2.29.0.tgz -C /opt/
+          sudo ln -sf /opt/allure-2.29.0/bin/allure /usr/local/bin/allure
+      - name: Link Allure (if cached)
+        if: steps.cache-allure.outputs.cache-hit == 'true'
+        run: |
+          sudo ln -sf /opt/allure-2.29.0/bin/allure /usr/local/bin/allure
+
+      - name: Run tests from omsu package
+        run: ./gradlew test --tests "omsu.*" --no-daemon
+
+      - name: Generate Allure report (CI-ready)
+        run: |
+          chmod +x report-allure-fix.sh
+          # Создаём CI-совместимую версию скрипта
+          cat > report-allure-ci.sh << 'EOF'
+          #!/bin/bash
+          echo "Generating Allure report..."
+          mkdir -p build/all-allure-results
+          if [ -d "grpc-server/build/allure-results" ]; then
+            cp grpc-server/build/allure-results/* build/all-allure-results/
+          fi
+          allure generate build/all-allure-results -o build/reports/allure-aggregated --clean
+          echo "::notice title=Allure Report::Report generated at build/reports/allure-aggregated/index.html"
+          EOF
+          chmod +x report-allure-ci.sh
+          ./report-allure-ci.sh
+
+      - name: Upload Allure report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-report-java21
+          path: build/reports/allure-aggregated
+
+      - name: Upload raw test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-raw-results
+          path: grpc-server/build/allure-results
+
+      - name: Upload test logs on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-logs-java21
+          path: |
+            grpc-server/build/reports/tests
+            build/reports/tests
