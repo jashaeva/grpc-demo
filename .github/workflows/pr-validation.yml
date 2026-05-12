@@ -30,7 +30,7 @@ jobs:
 
       - name: Generate Allure report
         run: |
-          chmod +x report-allure-fix.sh
+          chmod +x report-allure.sh
           # Заменяем "allure open" на echo для CI
           sed -i 's/allure open.*/echo "Report ready at build\/reports\/allure-aggregated"/' report-allure.sh
           ./report-allure.sh
