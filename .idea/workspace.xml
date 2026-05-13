@@ -5,18 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a318df17-4f88-4a8b-bfe7-25691d06d922" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/grpc-server/src/test/java/omsu/BaseTestcontainersTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.github/workflows/pr-validation.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/pr-validation.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grpc-server/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grpc-server/src/test/java/omsu/inventory/InventoryCreateImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/src/test/java/omsu/inventory/InventoryCreateImplTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grpc-server/src/test/java/omsu/inventory/InventoryDeleteImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/src/test/java/omsu/inventory/InventoryDeleteImplTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grpc-server/src/test/java/omsu/order/OrderGetTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/src/test/java/omsu/order/OrderGetTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grpc-server/src/test/java/omsu/order/OrderGrpcImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/src/test/java/omsu/order/OrderGrpcImplTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grpc-server/src/test/java/omsu/order/OrderInventoryAddTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/src/test/java/omsu/order/OrderInventoryAddTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grpc-server/src/test/java/omsu/order/OrderUpdateTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/src/test/java/omsu/order/OrderUpdateTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grpc-server/src/test/resources/db/migration/h2/V1__schema_init_h2.sql" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/src/test/resources/h2-migrations/V1__schema_init_h2.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grpc-server/src/test/resources/junit-platform.properties" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/src/test/resources/junit-platform.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/grpc-server/src/test/java/omsu/BaseTestcontainersTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/src/test/java/omsu/BaseTestcontainersTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

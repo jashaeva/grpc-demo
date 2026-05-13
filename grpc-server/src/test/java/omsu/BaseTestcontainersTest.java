@@ -12,13 +12,15 @@ import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
+import java.util.UUID;
+
 import static com.google.protobuf.util.JsonFormat.printer;
 
 @ActiveProfiles("test")
 @Testcontainers
 @SpringBootTest
 public abstract class BaseTestcontainersTest {
-
+    private static final String TEST_SERVER_NAME = "test-server-" + (UUID.randomUUID());
     protected static final JsonFormat.Printer jsonPrinter = printer();
 
     static {
@@ -30,20 +32,19 @@ public abstract class BaseTestcontainersTest {
     }
 
     @DynamicPropertySource
-    static void overrideDatasourceProperties(DynamicPropertyRegistry registry) {
-        // Переопределяем только то, что относится к БД
-        registry.add("spring.datasource.url",()-> System.getProperty("spring.datasource.url"));
-        registry.add("spring.datasource.username",()-> System.getProperty("getUsername"));
-        registry.add("spring.datasource.password", ()->System.getProperty("getPassword"));
+    static void overrideProperties(DynamicPropertyRegistry registry) {
+        // Существующие настройки БД
+        registry.add("spring.datasource.url", () -> System.getProperty("spring.datasource.url"));
+        registry.add("spring.datasource.username", () -> System.getProperty("spring.datasource.username"));
+        registry.add("spring.datasource.password", () -> System.getProperty("spring.datasource.password"));
         registry.add("spring.datasource.driver-class-name", () -> "org.postgresql.Driver");
-
-        // Меняем путь к миграциям на PostgreSQL-версию
         registry.add("spring.flyway.locations", () -> "classpath:db/migration");
-
-        // Отключаем H2-специфичные настройки
         registry.add("spring.testcontainers.enabled", () -> "true");
-    }
 
+        // КЛЮЧЕВОЕ: уникальный in-process сервер для каждого тестового класса
+        registry.add("grpc.server.in-process-name", () -> TEST_SERVER_NAME);
+        registry.add("grpc.client.test-server.address", () -> "in-process:" + TEST_SERVER_NAME);
+    }
     @Autowired
     protected JdbcTemplate jdbcTemplate;
 
