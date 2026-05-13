@@ -5,6 +5,7 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import omsu.BaseSpringTest;
+import omsu.BaseTestcontainersTest;
 import omsu.grpc.IdMessage;
 import omsu.grpc.OrderData;
 import omsu.grpc.OrderStatus;
@@ -31,7 +32,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @Epic("Order Management")
 @Feature("Create order operations")
-class OrderGrpcImplTest extends BaseSpringTest {
+class OrderGrpcImplTest extends BaseTestcontainersTest {
     private static final Logger logger = LoggerFactory.getLogger(OrderGrpcImplTest.class);
     private String username = randomUsername();
 

@@ -16,12 +16,34 @@ jobs:
           distribution: 'temurin'
           java-version: '21'
 
+      # ========== КЕШИРОВАНИЕ GRADLE ==========
+      - name: Cache Gradle packages
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
       - name: Grant execute permission
         run: chmod +x gradlew
 
+      # ========== КЕШИРОВАНИЕ DOCKER (Testcontainers) ==========
+      - name: Cache Docker layers
+        uses: actions/cache@v4
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-docker-${{ hashFiles('**/build.gradle') }}
+          restore-keys: |
+            ${{ runner.os }}-docker-         
+
+      # ========== ЗАПУСК ТЕСТОВ ==========
       - name: Run tests from omsu package
         run: ./gradlew test --tests "omsu.*" --no-daemon
 
+      # ========== ALLURE ОТЧЁТ ==========
       - name: Install Allure 2.34.0
         run: |
           wget https://github.com/allure-framework/allure2/releases/download/2.34.0/allure-2.34.0.tgz
@@ -31,7 +53,6 @@ jobs:
       - name: Generate Allure report
         run: |
           chmod +x report-allure.sh
-          # Заменяем "allure open" на echo для CI
           sed -i 's/allure open.*/echo "Report ready at build\/reports\/allure-aggregated"/' report-allure.sh
           ./report-allure.sh
 
@@ -41,3 +62,8 @@ jobs:
         with:
           name: allure-report
           path: build/reports/allure-aggregated
+
+      # ========== ОЧИСТКА ПОСЛЕ ТЕСТОВ ==========
+      - name: Cleanup Docker containers
+        if: always()
+        run: docker system prune -f

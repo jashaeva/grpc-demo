@@ -8,6 +8,7 @@ import io.qameta.allure.Feature;
 import kotlin.random.URandomKt;
 import omsu.BaseSpringTest;
 import omsu.BaseTest;
+import omsu.BaseTestcontainersTest;
 import omsu.grpc.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -33,7 +34,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Epic("Order Management")
 @Feature("Update order entity")
-class OrderUpdateTest extends BaseSpringTest {
+class OrderUpdateTest extends BaseTestcontainersTest {
     private static final Logger logger = LoggerFactory.getLogger(OrderUpdateTest.class);
     private String testOrderId;
     private String username = randomUsername();

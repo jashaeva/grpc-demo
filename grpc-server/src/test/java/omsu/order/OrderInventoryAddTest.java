@@ -5,6 +5,7 @@ import io.grpc.Status;
 import io.grpc.StatusRuntimeException;
 import io.qameta.allure.Description;
 import omsu.BaseSpringTest;
+import omsu.BaseTestcontainersTest;
 import omsu.grpc.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -24,7 +25,7 @@ import static omsu.utils.TimestampAssertions.assertEqualsWithDefaultTolerance;
 import static omsu.utils.TimestampConverter.instantToProto;
 import static org.junit.jupiter.api.Assertions.*;
 
-class OrderInventoryAddTest extends BaseSpringTest {
+class OrderInventoryAddTest extends BaseTestcontainersTest {
     private String testOrderId;
     private String testInvId;
     private Instant testCreatedAt;

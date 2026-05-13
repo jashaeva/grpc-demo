@@ -4,6 +4,7 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import io.qameta.allure.Description;
 import omsu.BaseSpringTest;
 import omsu.BaseTest;
+import omsu.BaseTestcontainersTest;
 import omsu.grpc.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -24,7 +25,7 @@ import static omsu.utils.TimestampConverter.instantToProto;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class OrderGetTest extends BaseSpringTest {
+class OrderGetTest extends BaseTestcontainersTest {
     private String testOrderId;
     private String testInvId;
     private Instant testCreatedAt;
