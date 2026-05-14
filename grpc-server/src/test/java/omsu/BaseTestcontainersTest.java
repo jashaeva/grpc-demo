@@ -4,6 +4,9 @@ import com.google.protobuf.util.JsonFormat;
 import net.devh.boot.grpc.client.inject.GrpcClient;
 import omsu.grpc.InventoryCRUDGrpc;
 import omsu.grpc.OrderGrpc;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.parallel.Execution;
+import org.junit.jupiter.api.parallel.ExecutionMode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -19,6 +22,8 @@ import static com.google.protobuf.util.JsonFormat.printer;
 @ActiveProfiles("test")
 @Testcontainers
 @SpringBootTest
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@Execution(ExecutionMode.SAME_THREAD)
 public abstract class BaseTestcontainersTest {
     private static final String TEST_SERVER_NAME = "test-server-" + (UUID.randomUUID());
     protected static final JsonFormat.Printer jsonPrinter = printer();
