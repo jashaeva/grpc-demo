@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.UUID;
 
 import static io.qameta.allure.Allure.step;
 import static omsu.allure.AllureAttachments.attachText;
@@ -26,29 +27,19 @@ import static omsu.utils.TimestampConverter.instantToProto;
 import static org.junit.jupiter.api.Assertions.*;
 
 class OrderInventoryAddTest extends BaseTestcontainersTest {
-    private String testOrderId;
     private String testInvId;
-    private Instant testCreatedAt;
-    private final String username = randomUsername();
+    private String testOrderId;
 
     @BeforeEach
-    void createTestOrder(){
-        step("Setup: Create test order item to add inventory",
-                () -> {
-                    testCreatedAt = Instant.now().minus(1, ChronoUnit.DAYS);
-                    OrderData order = createOrder(username, OrderStatus.PENDING, testCreatedAt);
-                    IdMessage created = orderBlockingStub.createOrder(order);
-                    testOrderId = created.getId();
-                    attachText("UUID created: ", testOrderId);
-                });
-        step("Setup: Create test inventory item to get order info",
-                () -> {
-                    InventoryMessage inventory = createInventoryMessage(
-                            randomInventory(), 10L);
-                    IdMessage created = inventoryBlockingStub.createInventory(inventory);
-                    testInvId = created.getId();
-                    attachText("UUID created: ", testInvId);
-                });
+    void createTestOrder() throws InvalidProtocolBufferException {
+        OrderDataWithId order = orderGrpcSteps.createOrderEntity();
+        testOrderId = order.getId();
+        attachText("UUID created: ", testOrderId);
+
+        InventoryData inventory = inventoryGrpcSteps.createInventory();
+        testInvId = inventory.getId();
+        attachText("UUID created: ", testInvId);
+
     }
 
     @Test

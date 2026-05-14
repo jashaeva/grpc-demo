@@ -1,9 +1,12 @@
 package omsu;
 
 import com.google.protobuf.util.JsonFormat;
+import jakarta.annotation.PostConstruct;
 import net.devh.boot.grpc.client.inject.GrpcClient;
 import omsu.grpc.InventoryCRUDGrpc;
 import omsu.grpc.OrderGrpc;
+import omsu.steps.InventoryGrpcSteps;
+import omsu.steps.OrderGrpcSteps;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.parallel.Execution;
 import org.junit.jupiter.api.parallel.ExecutionMode;
@@ -22,8 +25,8 @@ import static com.google.protobuf.util.JsonFormat.printer;
 @ActiveProfiles("test")
 @Testcontainers
 @SpringBootTest
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@Execution(ExecutionMode.SAME_THREAD)
+//@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+//@Execution(ExecutionMode.SAME_THREAD)
 public abstract class BaseTestcontainersTest {
     private static final String TEST_SERVER_NAME = "test-server-" + (UUID.randomUUID());
     protected static final JsonFormat.Printer jsonPrinter = printer();
@@ -58,4 +61,13 @@ public abstract class BaseTestcontainersTest {
 
     @GrpcClient("test-server")
     protected OrderGrpc.OrderBlockingStub orderBlockingStub;
+
+    protected OrderGrpcSteps orderGrpcSteps;
+    protected InventoryGrpcSteps inventoryGrpcSteps;
+
+    @PostConstruct
+    void initSteps() {
+        this.orderGrpcSteps = new OrderGrpcSteps(orderBlockingStub);
+        this.inventoryGrpcSteps = new InventoryGrpcSteps(inventoryBlockingStub);
+    }
 }
