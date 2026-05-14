@@ -44,12 +44,12 @@ class OrderUpdateTest extends BaseTestcontainersTest {
     @Description("Positive case with changes in all fields")
     void updateOrder_pos_allFields() throws InvalidProtocolBufferException {
         OrderDataWithId updateData = createOrderWithId( testOrderId);
-        attachText("New object data to save", jsonPrinter.print(updateData));
 
         String username = updateData.getUser();
         OrderStatus status = updateData.getStatus();
         Timestamp updateCreatedAt = updateData.getCreatedAt();
         step("Updating", ()->{
+            attachText("New object data to save", jsonPrinter.print(updateData));
             Empty empty = orderBlockingStub.updateOrder(updateData);
             step("Verify the order was updated", ()->{
                 OrderDataWithId response = orderBlockingStub.getOrderById(
