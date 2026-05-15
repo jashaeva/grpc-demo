@@ -13,6 +13,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-test'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'jakarta.validation:jakarta.validation-api:3.1.1'
+
     // gRPC
     implementation("net.devh:grpc-server-spring-boot-starter:${springGrpcVersion}") {
         exclude group: 'io.grpc'
@@ -38,10 +39,9 @@ dependencies {
 
     //Testing
     implementation "net.datafaker:datafaker:${fakerVersion}"
-    implementation "org.apache.commons:commons-lang3:${commonsLangVersion}"
+//    implementation "org.apache.commons:commons-lang3:${commonsLangVersion}"
     implementation "io.grpc:grpc-testing:${grpcTestVersion}"
     testImplementation "io.qameta.allure:allure-grpc:${allureVersion}"
-//    testImplementation 'com.h2database:h2' -- ждем пока контейнеры заработают
     // Testcontainers
     testImplementation(platform("org.testcontainers:testcontainers-bom:2.0.4"))
     testImplementation("org.testcontainers:postgresql")

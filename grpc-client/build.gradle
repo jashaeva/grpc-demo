@@ -5,14 +5,11 @@ plugins {
 group = 'omsu'
 version = '1.0-SNAPSHOT'
 
-// repositories не нужен - он уже определен в родительском проекте
-
 dependencies {
     implementation project(':grpc-common')
+    implementation 'org.springframework.boot:spring-boot-starter-web'
 
-    // Только то, что нужно для клиента!
     implementation 'org.springframework.boot:spring-boot-starter'
-
     implementation("net.devh:grpc-client-spring-boot-starter:${springGrpcVersion}") {
         exclude group: 'io.grpc'
         exclude group: 'com.google.protobuf'
@@ -28,14 +25,17 @@ dependencies {
     implementation "com.google.protobuf:protobuf-java-util:${protobufVersion}"
 
     // Testing
-    implementation "org.apache.commons:commons-lang3:${commonsLangVersion}"
+//    implementation "org.apache.commons:commons-lang3:${commonsLangVersion}"
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation "org.mockito:mockito-core:${mockitoVersion}"
-    testImplementation "org.mockito:mockito-junit-jupiter:${mockitoVersion}"
+    testImplementation "org.wiremock:wiremock:${wiremockVersion}"
 }
 
 tasks.register('printVersion') {
     doLast {
         println project.version
     }
+}
+
+test {
+    useJUnitPlatform()
 }

@@ -5,8 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a318df17-4f88-4a8b-bfe7-25691d06d922" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grpc-server/src/test/java/omsu/order/OrderUpdateTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/src/test/java/omsu/order/OrderUpdateTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/grpc-client/src/main/java/omsu/order/controller/InventoryController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/grpc-client/src/main/java/omsu/order/model/Inventory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/grpc-client/src/test/java/omsu/IntegrationTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/grpc-client/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-client/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/grpc-client/src/main/java/omsu/order/service/OrderGrpcClientService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/grpc-client/src/main/resources/db/migration/V1__schema_init.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/grpc-common/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-common/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/grpc-server/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/utils/DataUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-common/src/main/java/omsu/utils/DataUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/utils/RowMappers.java" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/utils/RowMappers.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/utils/TimestampAssertions.java" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-common/src/main/java/omsu/utils/TimestampAssertions.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/utils/UuidUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/utils/UuidUtils.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -91,12 +103,6 @@
                 <item name="grpc-server" type="2d1252cf:ModuleNode" />
                 <item name="Dependencies" type="6de06a37:ExternalSystemViewDefaultContributor$MyDependenciesNode" />
               </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="grpc-demo" type="f1a62948:ProjectNode" />
-                <item name="grpc-server" type="2d1252cf:ModuleNode" />
-                <item name="Run Configurations" type="7b0102dc:RunConfigurationsNode" />
-              </path>
             </expand>
             <select />
           </tree_state>
@@ -167,7 +173,7 @@
     "Shell Script.generating.executor": "Run",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
-    "git-widget-placeholder": "experiment",
+    "git-widget-placeholder": "wiremock",
     "kotlin-language-version-configured": "true",
     "last_directory_selection": "/home/julia/Study/GRPC/grpc-demo/grpc-server/src/test/java/omsu/inventory",
     "last_opened_file_path": "/home/julia/Study/GRPC/grpc-demo/grpc-server/src/test/resources",
@@ -226,7 +232,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Gradle.OrderGetTest">
+  <component name="RunManager" selected="Gradle.grpc-demo:grpc-common [build]">
     <configuration name="server" type="Application" factoryName="Application">
       <option name="ALTERNATIVE_JRE_PATH" value="21" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
@@ -440,10 +446,10 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.grpc-demo:grpc-common [build]" />
         <item itemvalue="Gradle.OrderGetTest" />
         <item itemvalue="Gradle.OrderGetTest.testUtils" />
         <item itemvalue="Gradle.InventoryCreateImplTest" />
-        <item itemvalue="Gradle.grpc-demo:grpc-common [build]" />
         <item itemvalue="Gradle.grpc-demo:grpc-common [clean]" />
       </list>
     </recent_temporary>
