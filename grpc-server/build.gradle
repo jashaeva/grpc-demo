@@ -3,7 +3,7 @@ plugins {
 }
 
 group = 'omsu'
-version = '1.0-SNAPSHOT'
+version = '2.0.0'
 
 dependencies {
     implementation project(':grpc-common')
@@ -35,17 +35,18 @@ dependencies {
     implementation "org.flywaydb:flyway-database-postgresql:${flywayVersion}"
     runtimeOnly "org.postgresql:postgresql:${postgresDriverVersion}"
 
+
     //Testing
     implementation "net.datafaker:datafaker:${fakerVersion}"
     implementation "org.apache.commons:commons-lang3:${commonsLangVersion}"
     implementation "io.grpc:grpc-testing:${grpcTestVersion}"
-//    testImplementation 'org.springframework.boot:spring-boot-testcontainers'
-//    testImplementation(platform("org.testcontainers:testcontainers-bom:2.0.4"))
-//    testImplementation("org.testcontainers:postgresql")
-//    testImplementation("org.testcontainers:junit-jupiter")
-//    testImplementation("org.testcontainers:testcontainers")
     testImplementation "io.qameta.allure:allure-grpc:${allureVersion}"
-    testImplementation 'com.h2database:h2'
+//    testImplementation 'com.h2database:h2' -- ждем пока контейнеры заработают
+    // Testcontainers
+    testImplementation(platform("org.testcontainers:testcontainers-bom:2.0.4"))
+    testImplementation("org.testcontainers:postgresql")
+    testImplementation("org.testcontainers:testcontainers")
+    testImplementation("org.testcontainers:junit-jupiter")
 }
 
 

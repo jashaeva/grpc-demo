@@ -4,6 +4,11 @@ import com.google.protobuf.Empty;
 import io.qameta.allure.Step;
 import omsu.grpc.*;
 
+import static omsu.allure.AllureAttachments.attachText;
+import static omsu.steps.InventoryTestDataFactory.createInventoryMessage;
+import static omsu.utils.DataUtils.randomInventory;
+import static omsu.utils.DataUtils.randomQuantity;
+
 public class InventoryGrpcSteps {
     private final InventoryCRUDGrpc.InventoryCRUDBlockingStub stub;
 
@@ -25,5 +30,21 @@ public class InventoryGrpcSteps {
     public InventoryData getInventory(String id) {
         IdMessage request = IdMessage.newBuilder().setId(id).build();
         return stub.getInventory(request);
+    }
+
+    @Step("gRPC: Create inventory item {name} count={count}")
+    public InventoryData createInventory(final String name, long count) {
+        InventoryMessage inventory = createInventoryMessage(name, count);
+        IdMessage created = stub.createInventory(inventory);
+        return InventoryData.newBuilder()
+                .setId(created.getId())
+                .setName(name)
+                .setCount(count)
+                .build();
+    }
+
+    @Step("gRPC: Create inventory with random data")
+    public InventoryData createInventory() {
+        return createInventory(randomInventory(), randomQuantity());
     }
 }

@@ -5,8 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a318df17-4f88-4a8b-bfe7-25691d06d922" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/report-allure.sh" beforeDir="false" afterPath="$PROJECT_DIR$/report-allure.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/grpc-server/src/test/java/omsu/order/OrderUpdateTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/src/test/java/omsu/order/OrderUpdateTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -137,6 +137,8 @@
     "Gradle.InventoryCreateImplTest.testCreateInvalidInventory_neg.executor": "Run",
     "Gradle.InventoryDeleteImplTest.executor": "Run",
     "Gradle.Load Gradle Dependencies.executor": "Run",
+    "Gradle.OrderGetTest.executor": "Run",
+    "Gradle.OrderGetTest.testUtils.executor": "Run",
     "Gradle.OrderGrpcImplTest.createOrder_pos_allFields.executor": "Debug",
     "Gradle.OrderGrpcImplTest.executor": "Run",
     "Gradle.OrderUpdateTest.executor": "Debug",
@@ -165,7 +167,7 @@
     "Shell Script.generating.executor": "Run",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
-    "git-widget-placeholder": "order-grpc",
+    "git-widget-placeholder": "experiment",
     "kotlin-language-version-configured": "true",
     "last_directory_selection": "/home/julia/Study/GRPC/grpc-demo/grpc-server/src/test/java/omsu/inventory",
     "last_opened_file_path": "/home/julia/Study/GRPC/grpc-demo/grpc-server/src/test/resources",
@@ -189,11 +191,11 @@
       <recent name="$PROJECT_DIR$/grpc-server" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/grpc-server/src/test/resources/h2-migrations" />
+      <recent name="$PROJECT_DIR$/.github/workflows" />
       <recent name="$PROJECT_DIR$/grpc-server/src/test/resources/db/migration/h2" />
       <recent name="$PROJECT_DIR$/grpc-server/src/test/resources/db" />
       <recent name="$PROJECT_DIR$/grpc-server/src/test/resources/" />
-      <recent name="$PROJECT_DIR$/grpc-common/src/main/proto" />
-      <recent name="$PROJECT_DIR$" />
     </key>
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
@@ -224,7 +226,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Gradle.grpc-demo:grpc-common [build]">
+  <component name="RunManager" selected="Gradle.OrderGetTest">
     <configuration name="server" type="Application" factoryName="Application">
       <option name="ALTERNATIVE_JRE_PATH" value="21" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
@@ -237,26 +239,76 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="grpc-demo [compileJava]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="InventoryCreateImplTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
+        <option name="scriptParameters" value="" />
         <option name="taskDescriptions">
           <list />
         </option>
         <option name="taskNames">
           <list>
-            <option value="compileJava" />
+            <option value=":grpc-server:test" />
+            <option value="--tests" />
+            <option value="&quot;omsu.inventory.InventoryCreateImplTest&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
       </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>false</RunAsTest>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="OrderGetTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":grpc-server:test" />
+            <option value="--tests" />
+            <option value="&quot;omsu.order.OrderGetTest&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="OrderGetTest.testUtils" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":grpc-server:test" />
+            <option value="--tests" />
+            <option value="&quot;omsu.order.OrderGetTest.testUtils&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
     <configuration name="grpc-demo:grpc-common [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
@@ -303,50 +355,6 @@
       <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="grpc-demo:grpc-server [assemble]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/grpc-server" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="assemble" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>false</RunAsTest>
-      <method v="2" />
-    </configuration>
-    <configuration name="grpc-demo:grpc-server [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/grpc-server" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="build" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>false</RunAsTest>
-      <method v="2" />
-    </configuration>
     <configuration name="All tests" type="JUnit" factoryName="JUnit">
       <module name="grpc-demo.grpc-server.test" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
@@ -355,6 +363,7 @@
       <option name="MAIN_CLASS_NAME" value="" />
       <option name="METHOD_NAME" value="" />
       <option name="TEST_OBJECT" value="package" />
+      <option name="VM_PARAMETERS" value="-ea " />
       <envs>
         <env name="spring.profile.actve" value="test" />
       </envs>
@@ -431,11 +440,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.OrderGetTest" />
+        <item itemvalue="Gradle.OrderGetTest.testUtils" />
+        <item itemvalue="Gradle.InventoryCreateImplTest" />
         <item itemvalue="Gradle.grpc-demo:grpc-common [build]" />
         <item itemvalue="Gradle.grpc-demo:grpc-common [clean]" />
-        <item itemvalue="Gradle.grpc-demo [compileJava]" />
-        <item itemvalue="Gradle.grpc-demo:grpc-server [build]" />
-        <item itemvalue="Gradle.grpc-demo:grpc-server [assemble]" />
       </list>
     </recent_temporary>
   </component>
