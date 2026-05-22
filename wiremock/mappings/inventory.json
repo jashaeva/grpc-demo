@@ -1,0 +1,20 @@
+{
+  "mappings": [
+    {
+      "request" : {
+        "urlPath" : "/omsu.grpc.InventoryCRUD/getInventory",
+        "method" : "POST",
+        "bodyPatterns" : [{
+          "equalToJson" : "{ \"id\": \"f070f450-1ee6-4cf1-b7b0-60104e52416d\"}"
+        }]
+      },
+      "response" : {
+        "status" : 200,
+        "body" : "{\"id\": \"f070f450-1ee6-4cf1-b7b0-60104e52416d\",\"name\": \"Test product\",\"count\": 42}",
+        "headers" : {
+          "grpc-status-name" : "OK"
+        }
+      }
+    }
+  ]
+}

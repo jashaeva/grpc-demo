@@ -1,0 +1,11 @@
+spring:
+  grpc:
+    client:
+      channels:
+        inventory-service:
+          address: static://localhost:${inventory-service.port}
+logging:
+  level:
+    org.springframework.grpc: DEBUG
+    io.grpc: DEBUG
+    org.wiremock: DEBUG
