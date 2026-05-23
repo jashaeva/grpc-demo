@@ -1,8 +1,6 @@
 {
-  "mappings": [
-    {
       "request" : {
-        "urlPath" : "/omsu.grpc.InventoryCRUD/getInventory",
+        "urlPath" : "/InventoryCRUD/getInventory",
         "method" : "POST",
         "bodyPatterns" : [{
           "equalToJson" : "{ \"id\": \"f070f450-1ee6-4cf1-b7b0-60104e52416d\"}"
@@ -16,5 +14,3 @@
         }
       }
     }
-  ]
-}

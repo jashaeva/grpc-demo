@@ -1,11 +1,13 @@
-spring:
-  grpc:
-    client:
-      channels:
-        inventory-service:
-          address: static://localhost:${inventory-service.port}
+grpc:
+  client:
+    inventory-service:
+#      address: static://localhost:${inventory-service.port:9090}
+      address: static://localhost:9090
+      negotiation-type: plaintext
+      max-inbound-message-size: 10MB
+
 logging:
   level:
-    org.springframework.grpc: DEBUG
     io.grpc: DEBUG
+    net.devh: DEBUG
     org.wiremock: DEBUG

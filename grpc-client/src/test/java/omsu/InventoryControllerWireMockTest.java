@@ -5,16 +5,12 @@ import com.github.tomakehurst.wiremock.client.WireMock;
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
 import omsu.grpc.IdMessage;
 import omsu.grpc.InventoryData;
+import omsu.model.Inventory;
 import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.web.server.LocalServerPort;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Import;
-import org.springframework.context.annotation.Primary;
-import org.springframework.grpc.client.GrpcChannelFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.DynamicPropertyRegistry;
@@ -24,6 +20,7 @@ import omsu.grpc.InventoryCRUDGrpc;
 import org.wiremock.grpc.Jetty12GrpcExtensionFactory;
 import org.wiremock.grpc.dsl.WireMockGrpcService;
 
+import java.io.File;
 import java.util.UUID;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -35,21 +32,31 @@ import static org.wiremock.grpc.dsl.WireMockGrpc.*;
 @Disabled
 @SpringBootTest(
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
-        classes = {GrpcClientApplication.class}
+        properties = {
+                "grpc.client.inventory-service.address=static://localhost:${inventory-service.port}"
+        }
 )
-@Import(InventoryCRUDGrpc.class)
 @ActiveProfiles("test")
 public class InventoryControllerWireMockTest {
     private static final Logger log = LoggerFactory.getLogger(InventoryControllerWireMockTest.class);
-
+    static File descriptorFile = new File("grpc-common/src/test/resources/wiremock/grpc/services.dsc");
 
     private static WireMockServer wireMockServer;
-    private WireMockGrpcService mockInventoryService;
+    private static WireMockGrpcService mockInventoryService;
 
     @LocalServerPort
     int serverPort;
 
-    RestClient client;
+    private RestClient client;
+
+
+    @DynamicPropertySource
+    static void registerWireMockProperties(DynamicPropertyRegistry registry) {
+        registry.add("inventory-service.port", () -> String.valueOf(wireMockServer.port()));
+        // Принудительно обновляем адрес gRPC клиента
+        registry.add("grpc.client.inventory-service.address",
+                () -> "static://localhost:" + wireMockServer.port());
+    }
 
     @BeforeAll
     static void setupWireMock() {
@@ -61,7 +68,13 @@ public class InventoryControllerWireMockTest {
         );
         wireMockServer.start();
         WireMock.configureFor(wireMockServer.port());
-        System.setProperty("inventory-service.port", String.valueOf(wireMockServer.port()));
+
+        mockInventoryService = new WireMockGrpcService(
+                new WireMock(wireMockServer.port()),
+                InventoryCRUDGrpc.SERVICE_NAME
+        );
+
+        log.info("WireMock started on port: {}", wireMockServer.port());
     }
 
     @AfterAll
@@ -74,11 +87,9 @@ public class InventoryControllerWireMockTest {
 
     @BeforeEach
     void init() {
-        mockInventoryService = new WireMockGrpcService(
-                new WireMock(wireMockServer),
-                InventoryCRUDGrpc.SERVICE_NAME
-        );
-        client = RestClient.create();
+        client = RestClient.builder()
+                .baseUrl("http://localhost:" + serverPort)
+                .build();
     }
 
     @Test
@@ -104,6 +115,9 @@ public class InventoryControllerWireMockTest {
                     .withRequestMessage(equalToMessage(requestMessage))
                     .willReturn(message(responseMessage))
         );
+
+        log.info("Registered stubs: " + wireMockServer.getStubMappings());
+
         String url = "http://localhost:" + serverPort + "/api/inventory/" + uuid;
         log.info("URL " + url);
         ResponseEntity<InventoryData> response = client.get()
@@ -111,21 +125,21 @@ public class InventoryControllerWireMockTest {
                 .retrieve()
                 .toEntity(InventoryData.class);
 
-        InventoryData body = client.get()
+        Inventory inventory = client.get()
                 .uri(url)
                 .retrieve()
-                .body(InventoryData.class);
+                .body(Inventory.class);
 
-        assert body != null;
-        log.info("response " + body.getId());
+        assert inventory != null;
+        log.info("response " + inventory.id());
 
 //        InventoryData body = response.getBody();
         int statusCode = response.getStatusCode().value(); // если нужно
         assertThat(statusCode, is(200));
-        assertThat(body, notNullValue());
-        assertThat(body.getName(), is(invName));
-        assertThat(body.getCount(), is(count));
-        assertThat(body.getId(), is(uuid));
+        assertThat(inventory, notNullValue());
+        assertThat(inventory.name(), is(invName));
+        assertThat(inventory.stock(), is(count));
+        assertThat(inventory.id(), is(uuid));
     }
 }
 
