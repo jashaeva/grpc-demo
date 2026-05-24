@@ -6,7 +6,6 @@ import omsu.model.OrderEntity;
 import omsu.model.OrderInfoEntity;
 import omsu.repository.IOrderRepository;
 import omsu.utils.RowMappers;
-import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;

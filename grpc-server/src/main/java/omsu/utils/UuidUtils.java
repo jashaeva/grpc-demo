@@ -1,8 +1,8 @@
 package omsu.utils;
 
-import org.jetbrains.annotations.Nullable;
 import org.springframework.jdbc.support.KeyHolder;
 
+import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.UUID;
 

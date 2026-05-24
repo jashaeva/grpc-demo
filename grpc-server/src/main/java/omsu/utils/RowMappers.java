@@ -1,9 +1,9 @@
 package omsu.utils;
 
+import jakarta.validation.constraints.NotNull;
 import omsu.grpc.OrderStatus;
 import omsu.model.OrderEntity;
 import omsu.model.OrderInfoEntity;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.util.UUID;

@@ -7,7 +7,7 @@ import "inventory-service.proto";
 package omsu.grpc;
 
 option java_package = "omsu.grpc";
-option java_outer_classname = "OrderProto";
+//option java_outer_classname = "OrderProto";
 option java_multiple_files = true;
 
 service Order {

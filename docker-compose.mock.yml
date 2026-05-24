@@ -1,0 +1,57 @@
+services:
+  wiremock:
+    image: adven27/grpc-wiremock:latest
+    container_name: wiremock
+    volumes:
+      - ./wiremock:/wiremock
+#      - ./wiremock/grpc:/home/wiremock/grpc
+#      - ./wiremock/extensions:/var/wiremock/extensions
+      - ./grpc-common/src/main/proto:/proto   #proto
+    ports:
+      - 8080:8080
+      - 9090:9090
+    environment:
+      - GRPC_SERVER_PORT=9090
+      - WIREMOCK_PORT=8080
+    networks:
+      - grpc-network
+#networks:
+#  grpc-network:
+#    driver: bridge
+#  wiremock:
+#    container_name: wiremock
+#    image: adven27/grpc-wiremock:latest
+#    volumes:
+#      - ./wiremock/mappings:/wiremock         #stubs
+#      - ./grpc-common/src/main/proto:/proto   #proto
+#    ports:
+#      - 8081:8081                                     # wiremock port
+#      - 9090:9090                                     # gRPC port
+#    environment:
+#      - GRPC_SERVER_PORT=9090
+#    networks:
+#      - grpc-network
+#
+#  java-app:
+#    build: .
+#    container_name: grpc-client.cn
+#    depends_on:
+#      - wiremock
+#    environment:
+#      # Ключевые переменные для перенаправления на WireMock
+#      - GRPC_SERVER_HOST=wiremock
+#      - GRPC_SERVER_PORT=8080
+#      # Добавьте другие переменные для вашего приложения
+#      - JAVA_OPTS=-Xmx256m
+#    ports:
+#      # Если ваше приложение имеет REST API для тестирования
+#      - "8080:8080"
+#    networks:
+#      - grpc-network
+#
+    # Если нужно переопределить команду запуска (например, для тестов)
+    # command: ["java", "-jar", "app.jar", "--spring.profiles.active=test"]
+#
+networks:
+  grpc-network:
+    driver: bridge

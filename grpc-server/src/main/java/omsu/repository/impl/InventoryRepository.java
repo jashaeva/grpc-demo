@@ -3,7 +3,6 @@ package omsu.repository.impl;
 import omsu.exception.EntityNotFoundException;
 import omsu.model.InventoryEntity;
 import omsu.repository.IInventoryRepository;
-import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
@@ -14,7 +13,6 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 
 import java.sql.PreparedStatement;
-import java.util.Map;
 import java.util.UUID;
 
 import static omsu.utils.UuidUtils.getUuid;

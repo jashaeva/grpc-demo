@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a318df17-4f88-4a8b-bfe7-25691d06d922" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grpc-server/src/test/java/omsu/order/OrderUpdateTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/src/test/java/omsu/order/OrderUpdateTest.java" afterDir="false" />
-    </list>
+    <list default="true" id="a318df17-4f88-4a8b-bfe7-25691d06d922" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -30,6 +27,9 @@
         <task path="$PROJECT_DIR$/grpc-server">
           <activation />
         </task>
+        <task path="$PROJECT_DIR$/grpc-client">
+          <activation />
+        </task>
         <projects_view>
           <tree_state>
             <expand>
@@ -40,7 +40,20 @@
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="grpc-demo" type="f1a62948:ProjectNode" />
-                <item name="Run Configurations" type="7b0102dc:RunConfigurationsNode" />
+                <item name="grpc-client" type="2d1252cf:ModuleNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="grpc-demo" type="f1a62948:ProjectNode" />
+                <item name="grpc-client" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="grpc-demo" type="f1a62948:ProjectNode" />
+                <item name="grpc-client" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="build" type="c8890929:TasksNode$1" />
               </path>
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
@@ -59,43 +72,6 @@
                 <item name="grpc-common" type="2d1252cf:ModuleNode" />
                 <item name="Tasks" type="e4a08cd1:TasksNode" />
                 <item name="build" type="c8890929:TasksNode$1" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="grpc-demo" type="f1a62948:ProjectNode" />
-                <item name="grpc-server" type="2d1252cf:ModuleNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="grpc-demo" type="f1a62948:ProjectNode" />
-                <item name="grpc-server" type="2d1252cf:ModuleNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="grpc-demo" type="f1a62948:ProjectNode" />
-                <item name="grpc-server" type="2d1252cf:ModuleNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="application" type="c8890929:TasksNode$1" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="grpc-demo" type="f1a62948:ProjectNode" />
-                <item name="grpc-server" type="2d1252cf:ModuleNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="build" type="c8890929:TasksNode$1" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="grpc-demo" type="f1a62948:ProjectNode" />
-                <item name="grpc-server" type="2d1252cf:ModuleNode" />
-                <item name="Dependencies" type="6de06a37:ExternalSystemViewDefaultContributor$MyDependenciesNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="grpc-demo" type="f1a62948:ProjectNode" />
-                <item name="grpc-server" type="2d1252cf:ModuleNode" />
-                <item name="Run Configurations" type="7b0102dc:RunConfigurationsNode" />
               </path>
             </expand>
             <select />
@@ -128,11 +104,13 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Application.GrpcClientApplication.executor": "Coverage",
     "Gradle.AllureDiagnosticTest.executor": "Run",
     "Gradle.Build grpc-demo.executor": "Run",
     "Gradle.Download Sources.executor": "Run",
     "Gradle.InventoryCRUDImplTest.executor": "Run",
     "Gradle.InventoryCRUDImplTest.testCreateInventory.executor": "Run",
+    "Gradle.InventoryControllerWireMockTest.executor": "Run",
     "Gradle.InventoryCreateImplTest.executor": "Run",
     "Gradle.InventoryCreateImplTest.testCreateInvalidInventory_neg.executor": "Run",
     "Gradle.InventoryDeleteImplTest.executor": "Run",
@@ -142,6 +120,7 @@
     "Gradle.OrderGrpcImplTest.createOrder_pos_allFields.executor": "Debug",
     "Gradle.OrderGrpcImplTest.executor": "Run",
     "Gradle.OrderUpdateTest.executor": "Debug",
+    "Gradle.StandaloneWiremockTest.executor": "Run",
     "Gradle.Tests in 'grpc-demo.grpc-server.test'.executor": "Run",
     "Gradle.Tests in 'omsu'.executor": "Run",
     "Gradle.Tests in 'omsu.inventory'.executor": "Run",
@@ -150,6 +129,13 @@
     "Gradle.grpc-demo [build].executor": "Run",
     "Gradle.grpc-demo [classes].executor": "Run",
     "Gradle.grpc-demo [compileJava].executor": "Run",
+    "Gradle.grpc-demo [compileTestJava].executor": "Run",
+    "Gradle.grpc-demo [printAllVersions].executor": "Run",
+    "Gradle.grpc-demo [processResources].executor": "Run",
+    "Gradle.grpc-demo.executor": "Run",
+    "Gradle.grpc-demo:grpc-client [:grpc-client:omsu.GrpcClientApplication.main()].executor": "Run",
+    "Gradle.grpc-demo:grpc-client [build].executor": "Run",
+    "Gradle.grpc-demo:grpc-client [clean].executor": "Run",
     "Gradle.grpc-demo:grpc-common [assemble].executor": "Run",
     "Gradle.grpc-demo:grpc-common [build].executor": "Run",
     "Gradle.grpc-demo:grpc-common [clean].executor": "Run",
@@ -167,13 +153,13 @@
     "Shell Script.generating.executor": "Run",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
-    "git-widget-placeholder": "experiment",
+    "git-widget-placeholder": "wiremock",
     "kotlin-language-version-configured": "true",
-    "last_directory_selection": "/home/julia/Study/GRPC/grpc-demo/grpc-server/src/test/java/omsu/inventory",
-    "last_opened_file_path": "/home/julia/Study/GRPC/grpc-demo/grpc-server/src/test/resources",
-    "project.structure.last.edited": "Problems",
+    "last_directory_selection": "/home/julia/Study/GRPC/grpc-demo/grpc-client/src/main/java/omsu",
+    "last_opened_file_path": "/home/julia/Study/GRPC/grpc-demo/grpc-common/src/main/proto",
+    "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.4673413",
+    "project.structure.side.proportion": "0.2021773",
     "settings.editor.selected.configurable": "google.protobuf.language"
   }
 }]]></component>
@@ -185,17 +171,18 @@
       <recent name="omsu.inventory.exception" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/grpc-server/src/test/resources" />
-      <recent name="$PROJECT_DIR$/grpc-server/src/main/resources/db/migration" />
-      <recent name="$PROJECT_DIR$" />
-      <recent name="$PROJECT_DIR$/grpc-server" />
+      <recent name="$PROJECT_DIR$/grpc-common/src/main/proto" />
+      <recent name="$PROJECT_DIR$/grpc-client/src/test/resources/wiremock/grpc" />
+      <recent name="$PROJECT_DIR$/wiremock/grpc" />
+      <recent name="$PROJECT_DIR$/grpc-client/src/test/resources" />
+      <recent name="$PROJECT_DIR$/grpc-client/src/test/resources/grpc" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/grpc-client/src/test/resources" />
+      <recent name="$PROJECT_DIR$/wiremock/noneed" />
+      <recent name="$PROJECT_DIR$/wiremock/grpc" />
+      <recent name="$PROJECT_DIR$/wiremock" />
       <recent name="$PROJECT_DIR$/grpc-server/src/test/resources/h2-migrations" />
-      <recent name="$PROJECT_DIR$/.github/workflows" />
-      <recent name="$PROJECT_DIR$/grpc-server/src/test/resources/db/migration/h2" />
-      <recent name="$PROJECT_DIR$/grpc-server/src/test/resources/db" />
-      <recent name="$PROJECT_DIR$/grpc-server/src/test/resources/" />
     </key>
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
@@ -226,7 +213,20 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Gradle.OrderGetTest">
+  <component name="RunManager" selected="Gradle.StandaloneWiremockTest">
+    <configuration name="GrpcClientApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="omsu.GrpcClientApplication" />
+      <module name="grpc-demo.grpc-client.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="omsu.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="server" type="Application" factoryName="Application">
       <option name="ALTERNATIVE_JRE_PATH" value="21" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
@@ -239,7 +239,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="InventoryCreateImplTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="InventoryControllerWireMockTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -250,9 +250,9 @@
         </option>
         <option name="taskNames">
           <list>
-            <option value=":grpc-server:test" />
+            <option value=":grpc-client:test" />
             <option value="--tests" />
-            <option value="&quot;omsu.inventory.InventoryCreateImplTest&quot;" />
+            <option value="&quot;omsu.InventoryControllerWireMockTest&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -263,7 +263,7 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="OrderGetTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="StandaloneWiremockTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -274,9 +274,9 @@
         </option>
         <option name="taskNames">
           <list>
-            <option value=":grpc-server:test" />
+            <option value=":grpc-client:test" />
             <option value="--tests" />
-            <option value="&quot;omsu.order.OrderGetTest&quot;" />
+            <option value="&quot;omsu.StandaloneWiremockTest&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -287,28 +287,26 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="OrderGetTest.testUtils" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="grpc-demo:grpc-client [clean]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/grpc-client" />
         <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
+        <option name="scriptParameters" />
         <option name="taskDescriptions">
           <list />
         </option>
         <option name="taskNames">
           <list>
-            <option value=":grpc-server:test" />
-            <option value="--tests" />
-            <option value="&quot;omsu.order.OrderGetTest.testUtils&quot;" />
+            <option value="clean" />
           </list>
         </option>
         <option name="vmOptions" />
       </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>true</RunAsTest>
+      <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
     <configuration name="grpc-demo:grpc-common [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
@@ -323,28 +321,6 @@
         <option name="taskNames">
           <list>
             <option value="build" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>false</RunAsTest>
-      <method v="2" />
-    </configuration>
-    <configuration name="grpc-demo:grpc-common [clean]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/grpc-common" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="clean" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -440,11 +416,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.OrderGetTest" />
-        <item itemvalue="Gradle.OrderGetTest.testUtils" />
-        <item itemvalue="Gradle.InventoryCreateImplTest" />
+        <item itemvalue="Gradle.StandaloneWiremockTest" />
+        <item itemvalue="Gradle.InventoryControllerWireMockTest" />
         <item itemvalue="Gradle.grpc-demo:grpc-common [build]" />
-        <item itemvalue="Gradle.grpc-demo:grpc-common [clean]" />
+        <item itemvalue="Application.GrpcClientApplication" />
+        <item itemvalue="Gradle.grpc-demo:grpc-client [clean]" />
       </list>
     </recent_temporary>
   </component>
@@ -459,6 +435,10 @@
     </task>
     <servers />
   </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="Dockerfile" />
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.dsc" />
+  </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
@@ -469,5 +449,10 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/grpc_demo$GrpcClientApplication.ic" NAME="GrpcClientApplication Coverage Results" MODIFIED="1779453132134" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>omsu.*</FILTER>
+    </SUITE>
   </component>
 </project>
