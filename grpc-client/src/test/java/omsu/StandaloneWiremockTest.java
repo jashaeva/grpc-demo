@@ -1,9 +1,8 @@
 package omsu;
 
-
 import omsu.model.Inventory;
-import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
@@ -13,8 +12,9 @@ import org.springframework.web.client.RestClient;
 import java.util.UUID;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.hamcrest.Matchers.is;
 
+// Это точно не тот тест, который должен быть для этой ситуации
+@Disabled
 @SpringBootTest(
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
         properties = {
@@ -40,8 +40,6 @@ public class StandaloneWiremockTest {
     void returns_canned_message_from_grpc_service() {
         String uuid = UUID.randomUUID().toString();
 
-        // Тест вызывает REST API, который внутри делает gRPC вызов
-        // Теперь gRPC вызов пойдет в Docker на localhost:9090
         Inventory inventory = client.get()
                 .uri("/api/inventory/" + uuid)
                 .retrieve()

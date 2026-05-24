@@ -4,18 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a318df17-4f88-4a8b-bfe7-25691d06d922" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Wiremock Info.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.mock.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.mock.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grpc-client/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-client/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grpc-client/src/main/java/omsu/GrpcClientApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-client/src/main/java/omsu/GrpcClientApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grpc-client/src/main/java/omsu/controller/InventoryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-client/src/main/java/omsu/controller/InventoryController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grpc-client/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-client/src/main/resources/application.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grpc-client/src/test/java/omsu/InventoryControllerWireMockTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-client/src/test/java/omsu/InventoryControllerWireMockTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grpc-client/src/test/resources/application-test.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-client/src/test/resources/application-test.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wiremock/mappings/inventory.json" beforeDir="false" afterPath="$PROJECT_DIR$/wiremock/mappings/inventory.json" afterDir="false" />
-    </list>
+    <list default="true" id="a318df17-4f88-4a8b-bfe7-25691d06d922" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
