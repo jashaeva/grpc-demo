@@ -12,6 +12,7 @@ import omsu.controller.InventoryCRUDImpl;
 import omsu.controller.OrderGrpcImpl;
 import omsu.controller.ValidationInterceptor;
 import omsu.grpc.OrderGrpc;
+import omsu.kafka.KafkaLogProducer;
 import omsu.repository.impl.InventoryRepository;
 import omsu.repository.impl.OrderInventoryRepository;
 import omsu.repository.impl.OrderRepository;
@@ -22,12 +23,16 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestInstance;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
+import org.springframework.kafka.core.KafkaTemplate;
+
 import javax.sql.DataSource;
 import java.util.concurrent.TimeUnit;
 
@@ -48,9 +53,11 @@ public abstract class BaseTest {
     protected final GrpcCleanupRule grpcCleanup = new GrpcCleanupRule();
 
     protected static JdbcTemplate jdbcTemplate;
+    @Mock
+    private KafkaTemplate<String, Object> kafkaTemplate;
+
     protected InventoryCRUDGrpc.InventoryCRUDBlockingStub inventoryBlockingStub;
     protected OrderGrpc.OrderBlockingStub orderBlockingStub;
-
     private Server server;
     private ManagedChannel channel;
 
@@ -79,18 +86,24 @@ public abstract class BaseTest {
         cleanDB();
         log.info("Clean DB");
 
+        // в методе setUp или перед созданием сервера
+        MockitoAnnotations.openMocks(this);
+        KafkaLogProducer producer = new KafkaLogProducer(kafkaTemplate);
+
+
         String serverName = InProcessServerBuilder.generateName();
         server = grpcCleanup.register(
                 InProcessServerBuilder.forName(serverName)
-                        .addService(new InventoryCRUDImpl(new InventoryService(
-                                new InventoryRepository(jdbcTemplate))))
+                        .addService(new InventoryCRUDImpl(
+                                new InventoryService(new InventoryRepository(jdbcTemplate)),
+                                producer))
                         .addService(new OrderGrpcImpl(
                                 new OrderService(
                                     new OrderRepository(jdbcTemplate),
                                     new InventoryRepository(jdbcTemplate),
                                     new OrderInventoryRepository(jdbcTemplate)
-                                )
-                        ))
+                                ), producer)
+                        )
                         .intercept(new ValidationInterceptor())
                         .build()
                         .start()

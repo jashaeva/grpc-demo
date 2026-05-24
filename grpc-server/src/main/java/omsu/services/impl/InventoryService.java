@@ -1,7 +1,9 @@
 package omsu.services.impl;
 
+import omsu.kafka.KafkaLogProducer;
 import omsu.model.InventoryEntity;
 import omsu.repository.IInventoryRepository;
+import omsu.repository.impl.InventoryRepository;
 import omsu.services.IInventoryService;
 
 import java.util.UUID;
@@ -12,6 +14,7 @@ public class InventoryService implements IInventoryService {
     public InventoryService(IInventoryRepository repository) {
         this.repository = repository;
     }
+
 
     @Override
     public UUID create(InventoryEntity entity) {

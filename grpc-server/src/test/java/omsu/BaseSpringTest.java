@@ -7,6 +7,7 @@ import omsu.grpc.OrderGrpc;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.test.context.ActiveProfiles;
 
 import static com.google.protobuf.util.JsonFormat.printer;
@@ -24,12 +25,6 @@ public abstract class BaseSpringTest {
 
     protected static final JsonFormat.Printer jsonPrinter = printer();
 
-//    @DynamicPropertySource
-//    static void properties(DynamicPropertyRegistry registry) {
-//        registry.add("spring.datasource.url", () -> "jdbc:postgresql://localhost:5437/inventorydb");
-//        registry.add("spring.datasource.username", () -> "postgres");
-//        registry.add("spring.datasource.password", () -> "secret");
-//    }
 
     @Autowired
     protected JdbcTemplate jdbcTemplate;

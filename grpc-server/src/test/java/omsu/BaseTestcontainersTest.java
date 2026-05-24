@@ -13,6 +13,7 @@ import org.junit.jupiter.api.parallel.ExecutionMode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
@@ -25,11 +26,11 @@ import static com.google.protobuf.util.JsonFormat.printer;
 @ActiveProfiles("test")
 @Testcontainers
 @SpringBootTest
-//@TestInstance(TestInstance.Lifecycle.PER_CLASS)
-//@Execution(ExecutionMode.SAME_THREAD)
 public abstract class BaseTestcontainersTest {
     private static final String TEST_SERVER_NAME = "test-server-" + (UUID.randomUUID());
     protected static final JsonFormat.Printer jsonPrinter = printer();
+    @Autowired
+    private KafkaTemplate<String, Object> kafkaTemplate;
 
     static {
         try {
@@ -67,6 +68,7 @@ public abstract class BaseTestcontainersTest {
 
     @PostConstruct
     void initSteps() {
+        kafkaTemplate.send("grpc-logs","");
         this.orderGrpcSteps = new OrderGrpcSteps(orderBlockingStub);
         this.inventoryGrpcSteps = new InventoryGrpcSteps(inventoryBlockingStub);
     }

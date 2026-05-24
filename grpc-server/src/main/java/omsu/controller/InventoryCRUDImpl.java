@@ -5,7 +5,9 @@ import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
 import omsu.grpc.*;
 
+import omsu.kafka.KafkaLogProducer;
 import omsu.model.InventoryEntity;
+import omsu.model.dto.LogEvent;
 import omsu.services.IInventoryService;
 
 import java.util.UUID;
@@ -14,8 +16,10 @@ import java.util.UUID;
 public class InventoryCRUDImpl extends InventoryCRUDGrpc.InventoryCRUDImplBase {
 
     private final IInventoryService service;
+    private final KafkaLogProducer kafkaLogProducer;
 
-    public InventoryCRUDImpl(IInventoryService service) {
+    public InventoryCRUDImpl(IInventoryService service, KafkaLogProducer kafkaProducer) {
+        this.kafkaLogProducer = kafkaProducer;
         this.service = service;
     }
 
@@ -31,6 +35,7 @@ public class InventoryCRUDImpl extends InventoryCRUDGrpc.InventoryCRUDImplBase {
 
         responseObserver.onNext(response);
         responseObserver.onCompleted();
+        kafkaLogProducer.sendLog(new LogEvent("createInventory", request.toString(), response.toString()));
 
     }
 
@@ -42,9 +47,11 @@ public class InventoryCRUDImpl extends InventoryCRUDGrpc.InventoryCRUDImplBase {
                 UUID.fromString(request.getId()),
                 request.getName(),
                 request.getCount());
-        boolean result = service.update(entity);
+        boolean response = service.update(entity);
         responseObserver.onNext(Empty.getDefaultInstance());
         responseObserver.onCompleted();
+        kafkaLogProducer.sendLog(new LogEvent("editInventory", request.toString(),
+                (response)? "TRUE": "FALSE"));
     }
 
     @Override
@@ -61,6 +68,7 @@ public class InventoryCRUDImpl extends InventoryCRUDGrpc.InventoryCRUDImplBase {
 
         responseObserver.onNext(response);
         responseObserver.onCompleted();
+        kafkaLogProducer.sendLog(new LogEvent("getInventory", request.toString(), response.toString()));
     }
 
     @Override
@@ -71,5 +79,7 @@ public class InventoryCRUDImpl extends InventoryCRUDGrpc.InventoryCRUDImplBase {
             BoolMessage response = BoolMessage.newBuilder().setResult(res).build();
             responseObserver.onNext(response);
             responseObserver.onCompleted();
+            kafkaLogProducer.sendLog(new LogEvent("deleteInventory", request.toString(),
+                (response.getResult())? "TRUE": "FALSE"));
     }
 }

@@ -10,6 +10,7 @@ dependencies {
 
     implementation 'org.springframework.boot:spring-boot-starter-web'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    implementation "org.springframework.kafka:spring-kafka"
 
     // Правильная gRPC клиентская библиотека (как у сервера)
     implementation("net.devh:grpc-client-spring-boot-starter:${springGrpcVersion}") {
