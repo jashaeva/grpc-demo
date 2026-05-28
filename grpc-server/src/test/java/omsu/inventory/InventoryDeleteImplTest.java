@@ -5,7 +5,6 @@ import io.grpc.StatusRuntimeException;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
-import omsu.BaseSpringTest;
 import omsu.BaseTestcontainersTest;
 import omsu.grpc.BoolMessage;
 import omsu.grpc.IdMessage;

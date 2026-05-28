@@ -138,7 +138,7 @@ public class InventoryControllerWireMockTest {
         assertThat(statusCode, is(200));
         assertThat(inventory, notNullValue());
         assertThat(inventory.name(), is(invName));
-        assertThat(inventory.stock(), is(count));
+        assertThat(inventory.count(), is(count));
         assertThat(inventory.id(), is(uuid));
     }
 }

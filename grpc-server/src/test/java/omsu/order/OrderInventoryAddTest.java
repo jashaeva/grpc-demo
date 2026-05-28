@@ -4,26 +4,16 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import io.grpc.Status;
 import io.grpc.StatusRuntimeException;
 import io.qameta.allure.Description;
-import omsu.BaseSpringTest;
 import omsu.BaseTestcontainersTest;
 import omsu.grpc.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.util.UUID;
-
 import static io.qameta.allure.Allure.step;
 import static omsu.allure.AllureAttachments.attachText;
-import static omsu.steps.InventoryTestDataFactory.createInventoryMessage;
 import static omsu.steps.OrderTestDataFactory.createOrder;
 import static omsu.steps.OrderTestDataFactory.createOrderItem;
-import static omsu.utils.DataUtils.randomInventory;
-import static omsu.utils.DataUtils.randomUsername;
-import static omsu.utils.TimestampAssertions.assertEqualsWithDefaultTolerance;
-import static omsu.utils.TimestampConverter.instantToProto;
 import static org.junit.jupiter.api.Assertions.*;
 
 class OrderInventoryAddTest extends BaseTestcontainersTest {

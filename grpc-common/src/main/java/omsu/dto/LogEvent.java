@@ -1,4 +1,4 @@
-package omsu.model.dto;
+package omsu.dto;
 
 public record LogEvent(
         String method,

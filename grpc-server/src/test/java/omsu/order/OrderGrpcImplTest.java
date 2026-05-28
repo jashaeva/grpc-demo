@@ -5,17 +5,12 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import omsu.BaseTestcontainersTest;
-import omsu.grpc.IdMessage;
-import omsu.grpc.OrderData;
 import omsu.grpc.OrderDataWithId;
-import omsu.grpc.OrderStatus;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -24,7 +19,6 @@ import static io.qameta.allure.Allure.step;
 import static omsu.allure.AllureAttachments.attachTable;
 import static omsu.allure.AllureAttachments.attachText;
 import static omsu.steps.OrderTestDataFactory.createOrder;
-import static omsu.utils.DataUtils.randomUsername;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 

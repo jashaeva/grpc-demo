@@ -7,6 +7,11 @@ mkdir -p build/all-allure-results
 echo "Копируем результаты из подпроекта сервера"
 cp grpc-server/build/allure-results/* build/all-allure-results/
 
+
+echo "Копируем результаты из подпроекта клиента"
+cp grpc-client/build/allure-results/* build/all-allure-results/
+
+
 echo "Генерируем отчет напрямую через allure"
 allure generate build/all-allure-results -o build/reports/allure-aggregated --clean
 

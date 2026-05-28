@@ -1,6 +1,6 @@
 package omsu.kafka;
 
-import omsu.model.dto.LogEvent;
+import omsu.dto.LogEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -16,7 +16,7 @@ public class KafkaLogProducer {
     }
 
     public void sendLog(LogEvent logEvent) {
-        kafkaTemplate.send("grpc-logs", logEvent);
+        kafkaTemplate.send("grpc-logs", logEvent.request(), logEvent);
         log.info("Kafka has sent the message: method {}, request {}, response {}",
                 logEvent.method(), logEvent.request(), logEvent.response()
         );

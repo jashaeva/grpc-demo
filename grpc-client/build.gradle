@@ -1,4 +1,5 @@
 plugins {
+    id 'project-report'
     id 'org.springframework.boot' version "${springBootVersion}"
 }
 
@@ -21,15 +22,15 @@ dependencies {
     implementation "io.grpc:grpc-stub:${grpcVersion}"
     implementation "io.grpc:grpc-protobuf:${grpcVersion}"
     implementation "io.grpc:grpc-inprocess:${grpcVersion}"
-
     implementation "com.google.protobuf:protobuf-java-util:${protobufVersion}"
-
-//    implementation platform("com.fasterxml.jackson:jackson-bom:${jacksonVersion}")
     implementation "javax.annotation:javax.annotation-api:${javaxVersion}"
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation "org.wiremock:wiremock-grpc-extension-jetty12:${wiremockGrpcVersion}"
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    testImplementation 'org.springframework.kafka:spring-kafka-test'
+    testImplementation "io.rest-assured:rest-assured:${restAssuredVersion}"
+    testImplementation "org.awaitility:awaitility:${awaitilityVersion}"
 }
 
 test {

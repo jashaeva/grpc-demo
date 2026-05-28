@@ -22,6 +22,7 @@ dependencies {
     protobuf "build.buf.protoc-gen-validate:protoc-gen-validate:1.3.3"
 
     implementation "net.datafaker:datafaker:${fakerVersion}"
+    implementation "io.qameta.allure:allure-attachments:${allureVersion}"
 }
 
 protobuf {

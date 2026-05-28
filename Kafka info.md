@@ -37,3 +37,6 @@ julia@julia-notebook:~/Study/GRPC/grpc-demo$ docker exec -it **b40eacb5fb26** /u
 {"method":"editInventory","request":"id: \"2e692e34-5793-11f1-aa04-7ae9421208de\"\n","response":"id: \"2e692e34-5793-11f1-aa04-7ae9421208de\"\nname: \"Pants\"\ncount: 23\n"}
 ^CProcessed a total of 5 messages
 ~~~
+
+**_Замечание_**
+Сейчас в топик "grpc-logs" пишутся только успешные вызовы. Все, что перехвачено (исключения валидации или GrpcAdvice...) на пишет в топик ничего, что, безусловно, плохо. 

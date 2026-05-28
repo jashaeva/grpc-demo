@@ -1,13 +1,12 @@
 package omsu.controller;
 import com.google.protobuf.Empty;
-import io.grpc.LoadBalancer;
 import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
 import omsu.grpc.*;
 
 import omsu.kafka.KafkaLogProducer;
 import omsu.model.InventoryEntity;
-import omsu.model.dto.LogEvent;
+import omsu.dto.LogEvent;
 import omsu.services.IInventoryService;
 
 import java.util.UUID;

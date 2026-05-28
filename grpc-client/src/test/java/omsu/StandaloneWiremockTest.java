@@ -47,7 +47,7 @@ public class StandaloneWiremockTest {
 
         assertThat(inventory).isNotNull();
 //        assertThat(inventory, is( ));
-//        assertThat(inventory.stock(), is(count));
+//        assertThat(inventory.count(), is(count));
 //        assertThat(inventory.id(), is(uuid));
     }
 }

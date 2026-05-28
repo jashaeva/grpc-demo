@@ -3,7 +3,6 @@ package omsu.steps;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.util.JsonFormat;
 import io.qameta.allure.Step;
-import net.datafaker.Faker;
 import omsu.grpc.*;
 import omsu.utils.TimestampConverter;
 import org.slf4j.Logger;
@@ -11,7 +10,6 @@ import org.slf4j.LoggerFactory;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.UUID;
 
 import static com.google.protobuf.util.JsonFormat.printer;
 import static omsu.allure.AllureAttachments.attachText;
