@@ -4,6 +4,8 @@ import io.grpc.Status;
 import io.grpc.StatusRuntimeException;
 import net.devh.boot.grpc.server.advice.GrpcAdvice;
 import net.devh.boot.grpc.server.advice.GrpcExceptionHandler;
+import omsu.dto.LogEvent;
+import omsu.kafka.KafkaLogProducer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -11,9 +13,13 @@ import org.springframework.dao.DuplicateKeyException;
 
 @GrpcAdvice
 public class GrpcExceptionAdvice {
+    private final KafkaLogProducer kafkaLogProducer;
 
     private static final Logger log = LoggerFactory.getLogger(GrpcExceptionAdvice.class);
 
+    public GrpcExceptionAdvice(KafkaLogProducer kafkaProducer) {
+        this.kafkaLogProducer = kafkaProducer;
+    }
 
     @GrpcExceptionHandler(DataIntegrityViolationException.class)
     public StatusRuntimeException handleDataIntegrityViolation(DataIntegrityViolationException e) {
@@ -24,6 +30,11 @@ public class GrpcExceptionAdvice {
                     .withDescription("count must be greater than or equal to 1")
                     .asRuntimeException();
         }
+        kafkaLogProducer.sendLog(new LogEvent(
+                "EXCEPTION",
+                Status.INTERNAL.getCode().toString(),
+                "Database integrity violation" )
+        );
         return Status.INTERNAL
                 .withDescription("Database integrity violation")
                 .asRuntimeException();
@@ -32,6 +43,11 @@ public class GrpcExceptionAdvice {
     @GrpcExceptionHandler(DuplicateKeyException.class)
     public StatusRuntimeException handleDuplicateKeyException(DuplicateKeyException e) {
         log.warn("Duplicate key violation: {}", e.getMessage());
+        kafkaLogProducer.sendLog(new LogEvent(
+                "EXCEPTION",
+                Status.ALREADY_EXISTS.getCode().toString(),
+                e.getMessage() )
+        );
         return Status.ALREADY_EXISTS.withDescription(e.getMessage())
                 .asRuntimeException();
     }
@@ -39,6 +55,11 @@ public class GrpcExceptionAdvice {
     @GrpcExceptionHandler(EntityNotFoundException.class)
     public StatusRuntimeException handleEntityNotFoundException(EntityNotFoundException e) {
         log.info("Entity not found: {}", e.getMessage());
+        kafkaLogProducer.sendLog(new LogEvent(
+                "EXCEPTION",
+                Status.NOT_FOUND.getCode().toString(),
+                e.getMessage() )
+        );
         return Status.NOT_FOUND.withDescription(e.getMessage())
                 .asRuntimeException();
     }
@@ -46,6 +67,11 @@ public class GrpcExceptionAdvice {
     @GrpcExceptionHandler(NotEnoughInventoryException.class)
     public StatusRuntimeException handleNotenoughInventoryException(NotEnoughInventoryException e) {
         log.info("Inventory not enough: {}", e.getMessage());
+        kafkaLogProducer.sendLog(new LogEvent(
+                "EXCEPTION",
+                Status.RESOURCE_EXHAUSTED.getCode().toString(),
+                e.getMessage() )
+        );
         return Status.RESOURCE_EXHAUSTED.withDescription(e.getMessage())
                 .asRuntimeException();
     }

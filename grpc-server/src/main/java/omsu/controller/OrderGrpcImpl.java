@@ -4,6 +4,7 @@ import com.google.protobuf.Empty;
 import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
 import omsu.grpc.*;
+import omsu.kafka.KafkaLogProducer;
 import omsu.model.OrderEntity;
 import omsu.model.OrderInfoEntity;
 import omsu.services.IOrderService;
@@ -14,18 +15,20 @@ import java.util.UUID;
 @GrpcService
 public class OrderGrpcImpl extends OrderGrpc.OrderImplBase {
 
-private final IOrderService service;
+    private final IOrderService service;
+    private final KafkaLogProducer kafkaLogProducer;
 
-public OrderGrpcImpl(IOrderService service) {
-    this.service = service;
-}
+    public OrderGrpcImpl(IOrderService service, KafkaLogProducer kafkaLogProducer) {
+        this.kafkaLogProducer = kafkaLogProducer;
+        this.service = service;
+    }
 
 //    rpc getInvCountById (IdMessage) returns (CountData) {}
 //    rpc getInventoryByOrderId (IdMessage) returns (stream InventoryData) {}
 //    rpc getAllOrders (stream IdMessage) returns (stream OrderInfo) {}
 
     @Override
-    public void createOrder (OrderData request, StreamObserver<IdMessage> response) {
+    public void createOrder(OrderData request, StreamObserver<IdMessage> response) {
         UUID uuid = service.create(request);
 
         IdMessage res = IdMessage.newBuilder()
@@ -38,7 +41,7 @@ public OrderGrpcImpl(IOrderService service) {
     }
 
     @Override
-    public void updateOrder (OrderDataWithId request, StreamObserver<Empty> responseObserver) {
+    public void updateOrder(OrderDataWithId request, StreamObserver<Empty> responseObserver) {
         service.update(request);
         responseObserver.onNext(Empty.getDefaultInstance());
         responseObserver.onCompleted();
@@ -61,7 +64,7 @@ public OrderGrpcImpl(IOrderService service) {
         responseObserver.onCompleted();
     }
 
-//    rpc addInventory (OrderItem) returns (BoolMessage) {}
+    //    rpc addInventory (OrderItem) returns (BoolMessage) {}
     @Override
     public void addInventory(OrderItem request, StreamObserver<BoolMessage> responseObserver) {
         BoolMessage entity = service.addInventory(request);

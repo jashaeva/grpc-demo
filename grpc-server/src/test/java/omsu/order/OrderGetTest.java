@@ -2,7 +2,7 @@ package omsu.order;
 
 import com.google.protobuf.InvalidProtocolBufferException;
 import io.qameta.allure.Description;
-import omsu.BaseTestcontainersTest;
+import omsu.BaseTestContainersTest;
 import omsu.grpc.*;
 import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
@@ -14,7 +14,7 @@ import static omsu.utils.DataUtils.*;
 import static omsu.utils.TimestampAssertions.assertEqualsWithDefaultTolerance;
 import static org.junit.jupiter.api.Assertions.*;
 
-class OrderGetTest extends BaseTestcontainersTest {
+class OrderGetTest extends BaseTestContainersTest {
     private final String username = randomUsername();
     private final Logger log = LoggerFactory.getLogger(OrderGetTest.class);
 

@@ -1,4 +1,4 @@
 package omsu.model;
 
-public record Inventory (String id, String name, long stock) {
+public record Inventory (String id, String name, long count) {
 }

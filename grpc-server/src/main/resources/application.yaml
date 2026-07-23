@@ -3,11 +3,12 @@ logging:
     root: INFO
     com.zaxxer.hikari: INFO
     org.springframework.boot.context.config: INFO
+    org.springframework.kafka: DEBUG
+    omsu.kafka: DEBUG
 
 grpc:
   server:
     port: 9090
-    # address: 0.0.0.0  # слушать все интерфейсы
   advice:
     exception-handling:
       enabled: true
@@ -25,9 +26,15 @@ spring:
     driver-class-name: org.postgresql.Driver
   flyway:
     enabled: true
-    locations: classpath:db/migration
+    locations: classpath:db/migration/postgres
     baseline-on-migrate: true
     schemas: inventory_schema
+  kafka:
+    bootstrap-servers: kafka:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
 ---
 spring:
   config:

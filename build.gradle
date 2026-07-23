@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'io.spring.dependency-management' version '1.1.7'
     id 'jacoco'
+    id 'project-report'
     id 'io.qameta.allure' version '2.12.0'
     id 'com.github.ben-manes.versions' version '0.53.0'
 }
@@ -30,7 +31,7 @@ allprojects {
 }
 
 subprojects {
-    def excludedFromCoverage = [':grpc-client', ':grpc-common']  // исключенные проекты
+    def excludedFromCoverage = [ ':grpc-common']  // исключенные проекты
 
     if (!excludedFromCoverage.contains(project.path)) {
         apply plugin: 'jacoco'
@@ -61,6 +62,7 @@ subprojects {
 
     // Остальные общие настройки
     ext {
+        awaitilityVersion = '4.3.0'
         springBootVersion = '3.5.6'
         springGrpcVersion = '3.1.0.RELEASE'
         postgresDriverVersion = '42.7.8'
@@ -77,6 +79,7 @@ subprojects {
         fakerVersion = '2.5.4'
         jacksonVersion = '2.17.2'
         mockitoVersion = '5.20.0'
+        restAssuredVersion = '5.5.0'
         wiremockVersion = '4.0.0-beta.34'
         wiremockGrpcVersion =  '0.9.0'
         wiremockIntegrationVersion = '3.0.0'
@@ -103,6 +106,7 @@ subprojects {
         // Allure
         testImplementation platform("io.qameta.allure:allure-bom:$allureVersion")
         testImplementation "io.qameta.allure:allure-junit5"
+
         testImplementation "io.qameta.allure:allure-attachments"
 
         // AspectJ для Allure
@@ -123,9 +127,13 @@ subprojects {
         useJUnitPlatform()
     }
     allure {
-        version = allureVersion
-        aspectjweaver = true
         autoconfigure = true
+        version.set("${allureVersion}")
+
+        adapter {
+            aspectjVersion.set("${aspectJVersion}")
+            aspectjWeaver = true
+        }
     }
 
     test {
@@ -140,20 +148,37 @@ tasks.register('allureAggregatedReport') {
 
     doLast {
         def allResultsDir = layout.buildDirectory.dir("all-allure-results").get().asFile
+        // Очищаем директорию перед сборкой
+        delete(allResultsDir)
         allResultsDir.mkdirs()
 
-        // Собираем результаты всех тестов в одну директорию
+        def filesCount = 0
+
+        // КОПИРУЕМ (не перемещаем) результаты всех тестов
         subprojects.each { subproject ->
             def resultsDir = subproject.layout.buildDirectory.dir("allure-results").get().asFile
             if (resultsDir.exists()) {
                 fileTree(resultsDir).each { file ->
                     if (file.name.endsWith('.json') || file.name.endsWith('.txt') || file.name.endsWith('.xml')) {
                         def targetFile = new File(allResultsDir, "${subproject.name}-${file.name}")
-                        file.renameTo(targetFile)
+                        // Копируем, а не переименовываем!
+                        copy {
+                            from file
+                            into allResultsDir
+                            rename { "${subproject.name}-${it}" }
+                        }
+                        filesCount++
                     }
                 }
             }
         }
+
+        if (filesCount == 0) {
+            println "WARNING: No allure results found in any subproject"
+            return
+        }
+
+        println "Collected $filesCount result files"
 
         def reportDir = layout.buildDirectory.dir("reports/allure-aggregated").get().asFile
 
@@ -167,13 +192,67 @@ tasks.register('allureAggregatedReport') {
             println "ERROR: Allure command line not found. Please install Allure:"
             println "  macOS: brew install allure"
             println "  Linux: sudo apt-add-repository ppa:qameta/allure && sudo apt-get update && sudo apt-get install allure"
-            println "  Windows: scoop install allure"
             throw e
         }
     }
 }
 
-// Агрегированный отчет
+tasks.register('allureReportOnly') {
+    description = 'Generate aggregated report from existing results'
+    group = 'reporting'
+
+    doLast {
+        def allResultsDir = layout.buildDirectory.dir("all-allure-results").get().asFile
+        // Очищаем директорию перед сборкой
+        delete(allResultsDir)
+        allResultsDir.mkdirs()
+
+        def filesCount = 0
+
+        // КОПИРУЕМ (не перемещаем) результаты всех тестов
+        subprojects.each { subproject ->
+            def resultsDir = subproject.layout.buildDirectory.dir("allure-results").get().asFile
+            if (resultsDir.exists()) {
+                fileTree(resultsDir).each { file ->
+                    if (file.name.endsWith('.json') || file.name.endsWith('.txt') || file.name.endsWith('.xml')) {
+                        def targetFile = new File(allResultsDir, "${subproject.name}-${file.name}")
+                        // Копируем, а не переименовываем!
+                        copy {
+                            from file
+                            into allResultsDir
+                            rename { "${subproject.name}-${it}" }
+                        }
+                        filesCount++
+                    }
+                }
+            }
+        }
+
+        if (filesCount == 0) {
+            println "WARNING: No allure results found in any subproject"
+            return
+        }
+
+        println "Collected $filesCount result files"
+
+        def reportDir = layout.buildDirectory.dir("reports/allure-aggregated").get().asFile
+
+        // Генерируем отчет через Allure CLI
+        try {
+            exec {
+                commandLine 'allure', 'generate', allResultsDir.absolutePath, '-o', reportDir.absolutePath, '--clean'
+            }
+            println "Allure aggregated report generated at: ${reportDir.absolutePath}/index.html"
+        } catch (Exception e) {
+            println "ERROR: Allure command line not found. Please install Allure:"
+            println "  macOS: brew install allure"
+            println "  Linux: sudo apt-add-repository ppa:qameta/allure && sudo apt-get update && sudo apt-get install allure"
+            throw e
+        }
+    }
+}
+
+// Jacoco Агрегированный отчет
 tasks.register('jacocoAggregatedReport', JacocoReport) {
     dependsOn = subprojects.findAll {
         it.plugins.hasPlugin('jacoco')

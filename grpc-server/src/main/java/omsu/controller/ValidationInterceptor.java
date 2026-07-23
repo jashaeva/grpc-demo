@@ -5,12 +5,19 @@ import io.envoyproxy.pgv.ValidationException;
 import io.envoyproxy.pgv.Validator;
 import io.envoyproxy.pgv.ValidatorIndex;
 import io.grpc.*;
+import omsu.dto.LogEvent;
+import omsu.kafka.KafkaLogProducer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ValidationInterceptor implements ServerInterceptor {
     private final ValidatorIndex validatorIndex = new ReflectiveValidatorIndex();
     private static final Logger log = LoggerFactory.getLogger(ValidationInterceptor.class);
+    private final KafkaLogProducer kafkaLogProducer;
+
+    public ValidationInterceptor(KafkaLogProducer kafkaLogProducer) {
+        this.kafkaLogProducer = kafkaLogProducer;
+    }
 
     @Override
     public <ReqT, RespT> ServerCall.Listener<ReqT> interceptCall(
@@ -46,6 +53,11 @@ public class ValidationInterceptor implements ServerInterceptor {
                     delegate.onMessage(message);
                 } catch (ValidationException e) {
                     log.debug("Validation failed: {}", e.getMessage());
+                    kafkaLogProducer.sendLog(new LogEvent(
+                            "VALIDATION EXCEPTION",
+                            message.toString(),
+                            e.getMessage() )
+                    );
                     wrappedCall.close(Status.INVALID_ARGUMENT.withDescription(e.getMessage()), new Metadata());
                 }
             }
