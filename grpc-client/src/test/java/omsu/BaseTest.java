@@ -34,7 +34,7 @@ public abstract class BaseTest {
     @DynamicPropertySource
     static void configureGrpcServerProperties(DynamicPropertyRegistry registry) {
         var grpc = ContainerHolder.getGrpcServer();
-        registry.add("grpc.client.server.address", () ->
+        registry.add("grpc.client.inventory-service.address", () ->
                 "localhost:" + grpc.getMappedPort(9090));
     }
 
@@ -46,6 +46,7 @@ public abstract class BaseTest {
         registry.add("spring.datasource.password", POSTGRES_CONTAINER::getPassword);
         registry.add("spring.datasource.driver-class-name",POSTGRES_CONTAINER::getDriverClassName);
         registry.add("spring.flyway.locations", () -> "classpath:db/migration");
+        registry.add("spring.flyway.schemas", () -> "inventory_schema");
         registry.add("spring.testcontainers.enabled", () -> "true");
     }
 
@@ -53,7 +54,5 @@ public abstract class BaseTest {
     static void configureKafkaProperties(DynamicPropertyRegistry registry) {
         var KAFKA_CONTAINER = ContainerHolder.getKafka();
         registry.add("spring.kafka.bootstrap-servers", KAFKA_CONTAINER::getBootstrapServers);
-        registry.add("spring.kafka.bootstrap-servers",
-                () -> "localhost:" + KAFKA_CONTAINER.getMappedPort(9092));
     }
 }

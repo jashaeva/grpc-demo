@@ -1,8 +1,7 @@
 grpc:
   client:
     inventory-service:
-#      address: static://localhost:${inventory-service.port:9090}
-      address: static://localhost:9090
+      address: static://localhost:${inventory-service.port:9090}
       negotiation-type: plaintext
       max-inbound-message-size: 10MB
 

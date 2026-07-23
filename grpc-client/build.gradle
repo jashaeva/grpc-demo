@@ -41,7 +41,6 @@ dependencies {
 }
 
 tasks.test {
-    dependsOn ':grpc-server:jibDockerBuild'
     useJUnitPlatform()
 }
 
