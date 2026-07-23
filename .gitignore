@@ -24,6 +24,7 @@ out/
 !**/src/test/**/out/
 !localenv.sh
 !settings.gradle
+!check_dependencies.sh
 
 ### Eclipse ###
 .apt_generated

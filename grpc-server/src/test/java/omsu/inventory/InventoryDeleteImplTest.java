@@ -5,7 +5,7 @@ import io.grpc.StatusRuntimeException;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
-import omsu.BaseTestcontainersTest;
+import omsu.BaseTestContainersTest;
 import omsu.grpc.BoolMessage;
 import omsu.grpc.IdMessage;
 import omsu.grpc.InventoryMessage;
@@ -28,11 +28,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @Epic("Inventory Management")
 @Feature("Delete Inventory Operations")
-class InventoryDeleteImplTest extends BaseTestcontainersTest {
+class InventoryDeleteImplTest extends BaseTestContainersTest {
     private static final Logger log = LoggerFactory.getLogger(InventoryDeleteImplTest.class);
     private String testInventoryId;
-    private String inventory = randomInventory();
-    private long count = randomQuantity();
+    private final String inventory = randomInventory();
+    private final long count = randomQuantity();
 
     @Test
     @DisplayName("TC-04: Delete existing inventory item")

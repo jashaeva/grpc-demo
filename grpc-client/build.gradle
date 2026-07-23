@@ -31,9 +31,17 @@ dependencies {
     testImplementation 'org.springframework.kafka:spring-kafka-test'
     testImplementation "io.rest-assured:rest-assured:${restAssuredVersion}"
     testImplementation "org.awaitility:awaitility:${awaitilityVersion}"
+
+    // Testcontainers
+    testImplementation(platform("org.testcontainers:testcontainers-bom:2.0.4"))
+    testImplementation("org.testcontainers:postgresql")
+    testImplementation("org.testcontainers:testcontainers")
+    testImplementation("org.testcontainers:junit-jupiter")
+    testImplementation("org.testcontainers:kafka")
 }
 
-test {
+tasks.test {
+    dependsOn ':grpc-server:jibDockerBuild'
     useJUnitPlatform()
 }
 

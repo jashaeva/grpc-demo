@@ -1,0 +1,16 @@
+# application-test-containers.yaml
+spring:
+  testcontainers:
+    enabled: false  # Все еще ручное управление
+
+  # Datasource будет переопределен через @DynamicPropertySource
+  datasource:
+    # Можно оставить пустым или с плейсхолдером
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/testdb}
+
+  flyway:
+    enabled: true
+    locations: classpath:db/migration/postgres  # Миграции для PostgreSQL
+
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP:localhost:9092}

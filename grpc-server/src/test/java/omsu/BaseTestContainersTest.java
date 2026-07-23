@@ -7,9 +7,6 @@ import omsu.grpc.InventoryCRUDGrpc;
 import omsu.grpc.OrderGrpc;
 import omsu.steps.InventoryGrpcSteps;
 import omsu.steps.OrderGrpcSteps;
-import org.junit.jupiter.api.TestInstance;
-import org.junit.jupiter.api.parallel.Execution;
-import org.junit.jupiter.api.parallel.ExecutionMode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -17,45 +14,44 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
-import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.util.UUID;
 
 import static com.google.protobuf.util.JsonFormat.printer;
 
-@ActiveProfiles("test")
-@Testcontainers
+@ActiveProfiles("test-containers")
 @SpringBootTest
-public abstract class BaseTestcontainersTest {
+public abstract class BaseTestContainersTest {
     private static final String TEST_SERVER_NAME = "test-server-" + (UUID.randomUUID());
     protected static final JsonFormat.Printer jsonPrinter = printer();
+
     @Autowired
     private KafkaTemplate<String, Object> kafkaTemplate;
+    @Autowired
+    protected JdbcTemplate jdbcTemplate;
 
-    static {
-        try {
-            Class.forName("omsu.config.TestContainerConfig");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+    @DynamicPropertySource
+    static void configurePostgreSQLProperties(DynamicPropertyRegistry registry) {
+            var POSTGRES_CONTAINER = ContainerHolder.getPostgres();
+            registry.add("spring.datasource.url", POSTGRES_CONTAINER::getJdbcUrl);
+            registry.add("spring.datasource.username", POSTGRES_CONTAINER::getUsername);
+            registry.add("spring.datasource.password", POSTGRES_CONTAINER::getPassword);
+            registry.add("spring.datasource.driver-class-name",POSTGRES_CONTAINER::getDriverClassName);
+            registry.add("spring.flyway.locations", () -> "classpath:db/migration/postgres");
+            registry.add("spring.testcontainers.enabled", () -> "true");
     }
 
     @DynamicPropertySource
-    static void overrideProperties(DynamicPropertyRegistry registry) {
-        // Существующие настройки БД
-        registry.add("spring.datasource.url", () -> System.getProperty("spring.datasource.url"));
-        registry.add("spring.datasource.username", () -> System.getProperty("spring.datasource.username"));
-        registry.add("spring.datasource.password", () -> System.getProperty("spring.datasource.password"));
-        registry.add("spring.datasource.driver-class-name", () -> "org.postgresql.Driver");
-        registry.add("spring.flyway.locations", () -> "classpath:db/migration");
-        registry.add("spring.testcontainers.enabled", () -> "true");
-
-        // КЛЮЧЕВОЕ: уникальный in-process сервер для каждого тестового класса
-        registry.add("grpc.server.in-process-name", () -> TEST_SERVER_NAME);
-        registry.add("grpc.client.test-server.address", () -> "in-process:" + TEST_SERVER_NAME);
+    static void configureKafkaProperties(DynamicPropertyRegistry registry) {
+            var KAFKA_CONTAINER = ContainerHolder.getKafka();
+            registry.add("spring.kafka.bootstrap-servers", KAFKA_CONTAINER::getBootstrapServers);
     }
-    @Autowired
-    protected JdbcTemplate jdbcTemplate;
+
+    @DynamicPropertySource
+    static void configureGrpcProperties(DynamicPropertyRegistry registry) {
+            registry.add("grpc.server.in-process-name", () -> TEST_SERVER_NAME);
+            registry.add("grpc.client.test-server.address", () -> "in-process:" + TEST_SERVER_NAME);
+    }
 
     @GrpcClient("test-server")
     protected InventoryCRUDGrpc.InventoryCRUDBlockingStub inventoryBlockingStub;

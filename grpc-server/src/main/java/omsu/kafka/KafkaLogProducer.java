@@ -13,6 +13,7 @@ public class KafkaLogProducer {
 
     public KafkaLogProducer(KafkaTemplate<String, Object> kafkaTemplate) {
         this.kafkaTemplate = kafkaTemplate;
+        log.info("KafkaLogProducer initialized with kafkaTemplate: {}", kafkaTemplate != null);
     }
 
     public void sendLog(LogEvent logEvent) {

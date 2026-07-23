@@ -1,4 +1,4 @@
-package omsu;
+package omsu.wiremock;
 
 import omsu.model.Inventory;
 import org.junit.jupiter.api.BeforeEach;

@@ -64,7 +64,8 @@ python3 -m http.server 8888
 4. https://runebook.dev/en/docs/spring_boot/application-properties/appendix.application-properties.testing
 5. https://www.baeldung.com/spring-boot-junit-5-testing-active-profile
 6. https://dev.to/ankitdevcode/spring-boot-testing-a-comprehensive-best-practices-guide-1do6
-7. 
+7. https://bigdataschool.ru/blog/kafka-apps-unit-testing/
+
 ## Видео
 1. https://rutube.ru/video/6eb697fa466ce74a02c78fe564405cf5/  (Дмитрий Тучс)
 2. https://rutube.ru/video/ccab9367cb22411c4c5bfd1276a395cd/ 

@@ -6,7 +6,7 @@ import com.google.protobuf.Timestamp;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
-import omsu.BaseTestcontainersTest;
+import omsu.BaseTestContainersTest;
 import omsu.grpc.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Epic("Order Management")
 @Feature("Update order entity")
-class OrderUpdateTest extends BaseTestcontainersTest {
+class OrderUpdateTest extends BaseTestContainersTest {
     private static final Logger logger = LoggerFactory.getLogger(OrderUpdateTest.class);
     private String testOrderId;
     private OrderDataWithId order;

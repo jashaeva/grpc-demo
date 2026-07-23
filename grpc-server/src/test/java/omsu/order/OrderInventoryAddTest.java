@@ -4,7 +4,7 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import io.grpc.Status;
 import io.grpc.StatusRuntimeException;
 import io.qameta.allure.Description;
-import omsu.BaseTestcontainersTest;
+import omsu.BaseTestContainersTest;
 import omsu.grpc.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -16,7 +16,7 @@ import static omsu.steps.OrderTestDataFactory.createOrder;
 import static omsu.steps.OrderTestDataFactory.createOrderItem;
 import static org.junit.jupiter.api.Assertions.*;
 
-class OrderInventoryAddTest extends BaseTestcontainersTest {
+class OrderInventoryAddTest extends BaseTestContainersTest {
     private String testInvId;
     private String testOrderId;
 

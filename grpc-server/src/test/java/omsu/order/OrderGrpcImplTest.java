@@ -4,7 +4,7 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
-import omsu.BaseTestcontainersTest;
+import omsu.BaseTestContainersTest;
 import omsu.grpc.OrderDataWithId;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @Epic("Order Management")
 @Feature("Create order operations")
-class OrderGrpcImplTest extends BaseTestcontainersTest {
+class OrderGrpcImplTest extends BaseTestContainersTest {
     private static final Logger logger = LoggerFactory.getLogger(OrderGrpcImplTest.class);
 
     @Test

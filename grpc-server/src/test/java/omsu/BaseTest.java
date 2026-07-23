@@ -90,7 +90,6 @@ public abstract class BaseTest {
         MockitoAnnotations.openMocks(this);
         KafkaLogProducer producer = new KafkaLogProducer(kafkaTemplate);
 
-
         String serverName = InProcessServerBuilder.generateName();
         server = grpcCleanup.register(
                 InProcessServerBuilder.forName(serverName)
@@ -104,7 +103,7 @@ public abstract class BaseTest {
                                     new OrderInventoryRepository(jdbcTemplate)
                                 ), producer)
                         )
-                        .intercept(new ValidationInterceptor())
+                        .intercept(new ValidationInterceptor(producer))
                         .build()
                         .start()
         );
