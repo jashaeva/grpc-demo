@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'com.google.protobuf' version '0.9.5'
+    id 'org.springframework.boot' version "${springBootVersion}"
 }
 
 group = 'omsu'
@@ -23,6 +24,9 @@ dependencies {
 
     implementation "net.datafaker:datafaker:${fakerVersion}"
     implementation "io.qameta.allure:allure-attachments:${allureVersion}"
+
+    implementation 'jakarta.annotation:jakarta.annotation-api:2.1.1'
+    implementation "org.springframework.kafka:spring-kafka"
 }
 
 protobuf {

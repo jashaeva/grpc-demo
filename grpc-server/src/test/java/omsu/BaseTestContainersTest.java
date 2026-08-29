@@ -26,7 +26,7 @@ public abstract class BaseTestContainersTest {
     protected static final JsonFormat.Printer jsonPrinter = printer();
 
     @Autowired
-    private KafkaTemplate<String, Object> kafkaTemplate;
+    protected KafkaTemplate<String, Object> kafkaTemplate;
     @Autowired
     protected JdbcTemplate jdbcTemplate;
 
@@ -64,7 +64,6 @@ public abstract class BaseTestContainersTest {
 
     @PostConstruct
     void initSteps() {
-        kafkaTemplate.send("grpc-logs","");
         this.orderGrpcSteps = new OrderGrpcSteps(orderBlockingStub);
         this.inventoryGrpcSteps = new InventoryGrpcSteps(inventoryBlockingStub);
     }

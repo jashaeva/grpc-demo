@@ -5,14 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a318df17-4f88-4a8b-bfe7-25691d06d922" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/documentation/Kafka info.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/documentation/Kafka test plan.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/grpc-common/src/main/java/omsu/kafka/KafkaLogProducer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grpc-client/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-client/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grpc-client/src/test/java/omsu/BaseTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-client/src/test/java/omsu/BaseTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grpc-client/src/test/java/omsu/ContainerHolder.java" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-client/src/test/java/omsu/ContainerHolder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grpc-client/src/test/resources/application-test.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-client/src/test/resources/application-test.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grpc-server/src/main/resources/application-docker.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/src/main/resources/application-docker.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Kafka info.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Wiremock Info.md" beforeDir="false" afterPath="$PROJECT_DIR$/documentation/Wiremock Info.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/grpc-client/src/main/java/omsu/kafka/KafkaLogListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-common/src/main/java/omsu/kafka/KafkaLogListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/grpc-common/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-common/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/grpc-server/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/grpc-server/src/main/java/omsu/kafka/KafkaLogProducer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/grpc-server/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/src/main/resources/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/grpc-server/src/test/java/omsu/BaseTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/grpc-server/src/test/java/omsu/BaseTestContainersTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/src/test/java/omsu/BaseTestContainersTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/grpc-server/src/test/java/omsu/kafka/KafkeTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/src/test/java/omsu/kafka/KafkaProducerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -196,11 +204,11 @@
       <recent name="$PROJECT_DIR$/grpc-client/src/test/resources/wiremock/grpc" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/documentation" />
       <recent name="$PROJECT_DIR$/grpc-server/src/main/resources/db/migration/h2" />
       <recent name="$PROJECT_DIR$/grpc-server/src/main/resources/db/migration" />
       <recent name="$PROJECT_DIR$/grpc-server/src/main/resources/db/migration/postgres" />
       <recent name="$PROJECT_DIR$/grpc-common/src/test/java/omsu" />
-      <recent name="$PROJECT_DIR$/grpc-client/src/test/resources" />
     </key>
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
@@ -209,6 +217,7 @@
       <recent name="omsu.utils.RowMappers" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="omsu.kafka" />
       <recent name="omsu" />
       <recent name="omsu.allure" />
       <recent name="" />
@@ -480,13 +489,13 @@
     </configuration>
     <list>
       <item itemvalue="Application.rest server" />
-      <item itemvalue="Application.server-dev" />
       <item itemvalue="Application.server-prod" />
+      <item itemvalue="Application.server-dev" />
+      <item itemvalue="Gradle.grpc-server [ jib build ]" />
       <item itemvalue="Gradle.AllureDiagnosticTest" />
+      <item itemvalue="Gradle.grpc-demo:grpc-server [clean]" />
       <item itemvalue="Gradle.KafkaLogConsumerTest (1)" />
       <item itemvalue="Gradle.grpc-demo [build]" />
-      <item itemvalue="Gradle.grpc-demo:grpc-server [clean]" />
-      <item itemvalue="Gradle.grpc-server [ jib build ]" />
       <item itemvalue="JUnit.Allure check" />
       <item itemvalue="JUnit.Client test" />
       <item itemvalue="JUnit.JUnit Server tests" />

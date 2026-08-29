@@ -34,7 +34,17 @@ spring:
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
-
+      # МИНИМУМ ДЛЯ НАДЕЖНОСТИ:
+      retries: 3
+      acks: all
+      enable-idempotence: true
+      # ОПЦИОНАЛЬНО (для лучшей производительности):
+      compression-type: snappy
+      batch-size: 16384
+      linger-ms: 10
+      # БЕЗОПАСНОСТЬ (важно для продакшена):
+      properties:
+        spring.json.trusted.packages: omsu.dto
 ---
 spring:
   config:

@@ -16,6 +16,7 @@ dependencies {
 
     implementation "org.springframework.kafka:spring-kafka"
     implementation 'jakarta.validation:jakarta.validation-api:3.1.1'
+    implementation 'jakarta.annotation:jakarta.annotation-api:2.1.1'
 
     // gRPC
     implementation("net.devh:grpc-server-spring-boot-starter:${springGrpcVersion}") {
