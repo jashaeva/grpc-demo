@@ -10,7 +10,11 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ActiveProfiles;
 
 import static com.google.protobuf.util.JsonFormat.printer;
-
+/*
+* Локально, используется БД Н2
+* Базовый класс для проверки модульных тестов (юнит)
+* Чтобы пользоваться, эти юнит тесты надо написать
+ */
 @ActiveProfiles("test")
 @SpringBootTest(properties = {
         "grpc.server.in-process-name=test-server",
@@ -24,12 +28,6 @@ public abstract class BaseSpringTest {
 
     protected static final JsonFormat.Printer jsonPrinter = printer();
 
-//    @DynamicPropertySource
-//    static void properties(DynamicPropertyRegistry registry) {
-//        registry.add("spring.datasource.url", () -> "jdbc:postgresql://localhost:5437/inventorydb");
-//        registry.add("spring.datasource.username", () -> "postgres");
-//        registry.add("spring.datasource.password", () -> "secret");
-//    }
 
     @Autowired
     protected JdbcTemplate jdbcTemplate;

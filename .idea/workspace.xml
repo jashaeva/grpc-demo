@@ -4,7 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a318df17-4f88-4a8b-bfe7-25691d06d922" name="Changes" comment="" />
+    <list default="true" id="a318df17-4f88-4a8b-bfe7-25691d06d922" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/e2e-tests/src/test/java/omsu/BaseTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/e2e-tests/src/test/java/omsu/ContainerHolder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/e2e-tests/src/test/resources/application-test.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/e2e-tests/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/e2e-tests/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/grpc-client/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-client/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/grpc-client/src/test/java/omsu/api/RestToGrpcClientApi.java" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-client/src/main/java/omsu/api/RestToGrpcClientApi.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/grpc-client/src/test/java/omsu/kafka/KafkaLogConsumerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/e2e-tests/src/test/java/omsu/kafka/KafkaLogConsumerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/grpc-client/src/test/java/omsu/rest/RestControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-client/src/test/java/omsu/rest/RestControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/grpc-common/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-common/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/grpc-server/src/test/java/omsu/kafka/KafkaProducerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/grpc-server/src/test/java/omsu/kafka/KafkaProducerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/report-allure-fix.sh" beforeDir="false" afterPath="$PROJECT_DIR$/report-allure-fix.sh" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -30,6 +44,9 @@
         <task path="$PROJECT_DIR$/grpc-client">
           <activation />
         </task>
+        <task path="$PROJECT_DIR$/e2e-tests">
+          <activation />
+        </task>
         <projects_view>
           <tree_state>
             <expand>
@@ -40,36 +57,11 @@
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="grpc-demo" type="f1a62948:ProjectNode" />
-                <item name="grpc-client" type="2d1252cf:ModuleNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="grpc-demo" type="f1a62948:ProjectNode" />
-                <item name="grpc-client" type="2d1252cf:ModuleNode" />
                 <item name="Tasks" type="e4a08cd1:TasksNode" />
               </path>
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="grpc-demo" type="f1a62948:ProjectNode" />
-                <item name="grpc-client" type="2d1252cf:ModuleNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="build" type="c8890929:TasksNode$1" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="grpc-demo" type="f1a62948:ProjectNode" />
-                <item name="grpc-common" type="2d1252cf:ModuleNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="grpc-demo" type="f1a62948:ProjectNode" />
-                <item name="grpc-common" type="2d1252cf:ModuleNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="grpc-demo" type="f1a62948:ProjectNode" />
-                <item name="grpc-common" type="2d1252cf:ModuleNode" />
                 <item name="Tasks" type="e4a08cd1:TasksNode" />
                 <item name="build" type="c8890929:TasksNode$1" />
               </path>
@@ -86,12 +78,16 @@
         <option value="JUnit5 Test Class" />
         <option value="package-info" />
         <option value="Interface" />
+        <option value="Record" />
         <option value="Class" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 8
@@ -105,34 +101,49 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Application.GrpcClientApplication.executor": "Coverage",
+    "Application.Test.executor": "Run",
+    "Gradle.AllureDiagnosticTest.diagnoseAllure.executor": "Run",
     "Gradle.AllureDiagnosticTest.executor": "Run",
     "Gradle.Build grpc-demo.executor": "Run",
     "Gradle.Download Sources.executor": "Run",
+    "Gradle.InterviewTest.check.executor": "Run",
     "Gradle.InventoryCRUDImplTest.executor": "Run",
     "Gradle.InventoryCRUDImplTest.testCreateInventory.executor": "Run",
     "Gradle.InventoryControllerWireMockTest.executor": "Run",
     "Gradle.InventoryCreateImplTest.executor": "Run",
     "Gradle.InventoryCreateImplTest.testCreateInvalidInventory_neg.executor": "Run",
+    "Gradle.InventoryCreateImplTest.testCreateInventory_pos.executor": "Run",
     "Gradle.InventoryDeleteImplTest.executor": "Run",
+    "Gradle.KafkaLogConsumerTest (1).executor": "Debug",
+    "Gradle.KafkaLogConsumerTest.executor": "Run",
+    "Gradle.KafkaLogConsumerTest.testConsumerReceivesMessage.executor": "Run",
+    "Gradle.KafkaLogConsumerTest.testRestAssured.executor": "Run",
+    "Gradle.KafkaProducerTest.executor": "Run",
     "Gradle.Load Gradle Dependencies.executor": "Run",
     "Gradle.OrderGetTest.executor": "Run",
     "Gradle.OrderGetTest.testUtils.executor": "Run",
     "Gradle.OrderGrpcImplTest.createOrder_pos_allFields.executor": "Debug",
     "Gradle.OrderGrpcImplTest.executor": "Run",
     "Gradle.OrderUpdateTest.executor": "Debug",
+    "Gradle.RestControllerTest.executor": "Run",
     "Gradle.StandaloneWiremockTest.executor": "Run",
     "Gradle.Tests in 'grpc-demo.grpc-server.test'.executor": "Run",
     "Gradle.Tests in 'omsu'.executor": "Run",
     "Gradle.Tests in 'omsu.inventory'.executor": "Run",
     "Gradle.Tests in 'omsu.order'.executor": "Run",
+    "Gradle.grpc-demo [assemble].executor": "Run",
     "Gradle.grpc-demo [buildDependents].executor": "Run",
     "Gradle.grpc-demo [build].executor": "Run",
     "Gradle.grpc-demo [classes].executor": "Run",
+    "Gradle.grpc-demo [clean].executor": "Run",
     "Gradle.grpc-demo [compileJava].executor": "Run",
     "Gradle.grpc-demo [compileTestJava].executor": "Run",
     "Gradle.grpc-demo [printAllVersions].executor": "Run",
+    "Gradle.grpc-demo [printVersion].executor": "Run",
     "Gradle.grpc-demo [processResources].executor": "Run",
+    "Gradle.grpc-demo [testClasses].executor": "Run",
     "Gradle.grpc-demo.executor": "Run",
+    "Gradle.grpc-demo:e2e-tests [build].executor": "Run",
     "Gradle.grpc-demo:grpc-client [:grpc-client:omsu.GrpcClientApplication.main()].executor": "Run",
     "Gradle.grpc-demo:grpc-client [build].executor": "Run",
     "Gradle.grpc-demo:grpc-client [clean].executor": "Run",
@@ -143,9 +154,14 @@
     "Gradle.grpc-demo:grpc-server [:grpc-server:omsu.inventory.InventoryServiceApplication.main()].executor": "Run",
     "Gradle.grpc-demo:grpc-server [assemble].executor": "Run",
     "Gradle.grpc-demo:grpc-server [build].executor": "Run",
+    "Gradle.grpc-demo:grpc-server [clean].executor": "Run",
     "Gradle.grpc-demo:grpc-server [compileJava].executor": "Run",
+    "Gradle.grpc-server [ jib build ].executor": "Run",
     "JUnit.All tests.executor": "Run",
+    "JUnit.Allure check.executor": "Run",
+    "JUnit.Client test.executor": "Run",
     "JUnit.JUnit Server tests.executor": "Run",
+    "JUnit.e2e-tests.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "Shell Script.allure.executor": "Run",
@@ -153,14 +169,14 @@
     "Shell Script.generating.executor": "Run",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
-    "git-widget-placeholder": "wiremock",
+    "git-widget-placeholder": "kafka",
     "kotlin-language-version-configured": "true",
-    "last_directory_selection": "/home/julia/Study/GRPC/grpc-demo/grpc-client/src/main/java/omsu",
-    "last_opened_file_path": "/home/julia/Study/GRPC/grpc-demo/grpc-common/src/main/proto",
+    "last_directory_selection": "/home/julia/Study/GRPC/grpc-demo/e2e-tests/src/test/java/omsu",
+    "last_opened_file_path": "/home/julia/Study/GRPC/grpc-demo/e2e-tests/src/test/resources",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.2021773",
-    "settings.editor.selected.configurable": "google.protobuf.language"
+    "settings.editor.selected.configurable": "editor.preferences.tabs"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -171,18 +187,18 @@
       <recent name="omsu.inventory.exception" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/grpc-common/src/main/proto" />
-      <recent name="$PROJECT_DIR$/grpc-client/src/test/resources/wiremock/grpc" />
-      <recent name="$PROJECT_DIR$/wiremock/grpc" />
+      <recent name="$PROJECT_DIR$/e2e-tests/src/test/resources" />
+      <recent name="$PROJECT_DIR$/e2e-tests/src/test/java/omsu/kafka" />
       <recent name="$PROJECT_DIR$/grpc-client/src/test/resources" />
-      <recent name="$PROJECT_DIR$/grpc-client/src/test/resources/grpc" />
+      <recent name="$PROJECT_DIR$/.github/old" />
+      <recent name="$PROJECT_DIR$" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/grpc-client/src/test/resources" />
-      <recent name="$PROJECT_DIR$/wiremock/noneed" />
-      <recent name="$PROJECT_DIR$/wiremock/grpc" />
-      <recent name="$PROJECT_DIR$/wiremock" />
-      <recent name="$PROJECT_DIR$/grpc-server/src/test/resources/h2-migrations" />
+      <recent name="$PROJECT_DIR$/documentation" />
+      <recent name="$PROJECT_DIR$/grpc-server/src/main/resources/db/migration/h2" />
+      <recent name="$PROJECT_DIR$/grpc-server/src/main/resources/db/migration" />
+      <recent name="$PROJECT_DIR$/grpc-server/src/main/resources/db/migration/postgres" />
+      <recent name="$PROJECT_DIR$/grpc-common/src/test/java/omsu" />
     </key>
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
@@ -191,43 +207,52 @@
       <recent name="omsu.utils.RowMappers" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="omsu.kafka" />
+      <recent name="omsu" />
+      <recent name="omsu.allure" />
       <recent name="" />
     </key>
     <key name="CreateTestDialog.RecentsKey">
       <recent name="omsu.order" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="omsu.order" />
+      <recent name="omsu" />
+      <recent name="omsu.kafka" />
       <recent name="omsu.config" />
+      <recent name="omsu.order" />
       <recent name="omsu.extension" />
-      <recent name="omsu.inventory.config" />
-      <recent name="omsu.inventory.model" />
     </key>
   </component>
   <component name="RunDashboard">
     <option name="configurationTypes">
       <set>
         <option value="Application" />
+        <option value="GradleRunConfiguration" />
         <option value="JUnit" />
         <option value="ShConfigurationType" />
       </set>
     </option>
+    <option name="hiddenConfigurations">
+      <map>
+        <entry key="JUnit">
+          <value>
+            <set>
+              <option value="Allure check" />
+            </set>
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
-  <component name="RunManager" selected="Gradle.StandaloneWiremockTest">
-    <configuration name="GrpcClientApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Gradle.KafkaProducerTest">
+    <configuration name="rest server" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="omsu.GrpcClientApplication" />
       <module name="grpc-demo.grpc-client.main" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="omsu.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="server" type="Application" factoryName="Application">
+    <configuration name="server-dev" type="Application" factoryName="Application">
       <option name="ALTERNATIVE_JRE_PATH" value="21" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <envs>
@@ -239,7 +264,19 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="InventoryControllerWireMockTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="server-prod" type="Application" factoryName="Application">
+      <option name="ALTERNATIVE_JRE_PATH" value="21" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <envs>
+        <env name="spring.profiles.active" value="prod" />
+      </envs>
+      <option name="MAIN_CLASS_NAME" value="omsu.GrpcDemoServiceApplication" />
+      <module name="grpc-demo.grpc-server.main" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="KafkaLogConsumerTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -250,9 +287,9 @@
         </option>
         <option name="taskNames">
           <list>
-            <option value=":grpc-client:test" />
+            <option value=":e2e-tests:test" />
             <option value="--tests" />
-            <option value="&quot;omsu.InventoryControllerWireMockTest&quot;" />
+            <option value="&quot;omsu.kafka.KafkaLogConsumerTest&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -263,7 +300,7 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="StandaloneWiremockTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="KafkaProducerTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -274,9 +311,9 @@
         </option>
         <option name="taskNames">
           <list>
-            <option value=":grpc-client:test" />
+            <option value=":grpc-server:test" />
             <option value="--tests" />
-            <option value="&quot;omsu.StandaloneWiremockTest&quot;" />
+            <option value="&quot;omsu.kafka.KafkaProducerTest&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -287,10 +324,32 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="grpc-demo:grpc-client [clean]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="grpc-demo [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/grpc-client" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="-x test" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="build" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="grpc-demo [clean]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="externalSystemIdString" value="GRADLE" />
         <option name="scriptParameters" />
         <option name="taskDescriptions">
@@ -309,10 +368,10 @@
       <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="grpc-demo:grpc-common [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="grpc-demo:e2e-tests [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/grpc-common" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/e2e-tests" />
         <option name="externalSystemIdString" value="GRADLE" />
         <option name="scriptParameters" />
         <option name="taskDescriptions">
@@ -331,8 +390,20 @@
       <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="All tests" type="JUnit" factoryName="JUnit">
+    <configuration name="Allure check" type="JUnit" factoryName="JUnit">
       <module name="grpc-demo.grpc-server.test" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <option name="ALTERNATIVE_JRE_PATH" value="21" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="AllureDiagnosticTest" />
+      <option name="METHOD_NAME" value="" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Client test" type="JUnit" factoryName="JUnit">
+      <module name="grpc-demo.grpc-client.test" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="ALTERNATIVE_JRE_PATH" value="21" />
       <option name="PACKAGE_NAME" value="omsu" />
@@ -355,7 +426,22 @@
       <option name="MAIN_CLASS_NAME" value="" />
       <option name="METHOD_NAME" value="" />
       <option name="TEST_OBJECT" value="package" />
+      <envs>
+        <env name="spring.profiles.active" value="test-containers" />
+      </envs>
       <dir value="$PROJECT_DIR$/grpc-server/src/test/java/omsu" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="e2e-tests" type="JUnit" factoryName="JUnit">
+      <module name="grpc-demo.e2e-tests.test" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <option name="ALTERNATIVE_JRE_PATH" value="21" />
+      <option name="PACKAGE_NAME" value="omsu.kafka" />
+      <option name="MAIN_CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="TEST_OBJECT" value="package" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -414,13 +500,30 @@
       <envs />
       <method v="2" />
     </configuration>
+    <list>
+      <item itemvalue="Application.rest server" />
+      <item itemvalue="Application.server-prod" />
+      <item itemvalue="Application.server-dev" />
+      <item itemvalue="Gradle.KafkaLogConsumerTest" />
+      <item itemvalue="Gradle.KafkaProducerTest" />
+      <item itemvalue="Gradle.grpc-demo [clean]" />
+      <item itemvalue="Gradle.grpc-demo:e2e-tests [build]" />
+      <item itemvalue="Gradle.grpc-demo [build]" />
+      <item itemvalue="JUnit.e2e-tests" />
+      <item itemvalue="JUnit.Allure check" />
+      <item itemvalue="JUnit.Client test" />
+      <item itemvalue="JUnit.JUnit Server tests" />
+      <item itemvalue="Shell Script.allure" />
+      <item itemvalue="Shell Script.dockers" />
+      <item itemvalue="Shell Script.generating" />
+    </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.StandaloneWiremockTest" />
-        <item itemvalue="Gradle.InventoryControllerWireMockTest" />
-        <item itemvalue="Gradle.grpc-demo:grpc-common [build]" />
-        <item itemvalue="Application.GrpcClientApplication" />
-        <item itemvalue="Gradle.grpc-demo:grpc-client [clean]" />
+        <item itemvalue="Gradle.KafkaProducerTest" />
+        <item itemvalue="Gradle.KafkaLogConsumerTest" />
+        <item itemvalue="Gradle.grpc-demo:e2e-tests [build]" />
+        <item itemvalue="Gradle.grpc-demo [build]" />
+        <item itemvalue="Gradle.grpc-demo [clean]" />
       </list>
     </recent_temporary>
   </component>
@@ -437,7 +540,18 @@
   </component>
   <component name="UnknownFeatures">
     <option featureType="com.intellij.fileTypeFactory" implementationName="Dockerfile" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework:spring-core" />
+    <option featureType="dependencySupport" implementationName="java:org.apache.kafka:kafka_2.13" />
+    <option featureType="dependencySupport" implementationName="java:jakarta.validation:jakarta.validation-api" />
     <option featureType="com.intellij.fileTypeFactory" implementationName="*.dsc" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework:spring-webmvc" />
+    <option featureType="dependencySupport" implementationName="java:junit:junit" />
+    <option featureType="dependencySupport" implementationName="executable:docker" />
+    <option featureType="dependencySupport" implementationName="java:io.grpc:grpc-api" />
+    <option featureType="dependencySupport" implementationName="java:org.flywaydb:flyway-core" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework:spring-messaging" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework.boot:spring-boot" />
+    <option featureType="dependencySupport" implementationName="java:org.wiremock:wiremock" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -449,6 +563,13 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <pin-to-top-manager>
+      <pinned-members>
+        <PinnedItemInfo parentTag="org.apache.kafka.clients.consumer.internals.SubscriptionState" memberName="subscriptionType" />
+      </pinned-members>
+    </pin-to-top-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/grpc_demo$GrpcClientApplication.ic" NAME="GrpcClientApplication Coverage Results" MODIFIED="1779453132134" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">

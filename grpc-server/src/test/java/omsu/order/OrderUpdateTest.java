@@ -6,17 +6,14 @@ import com.google.protobuf.Timestamp;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
-import omsu.BaseTestcontainersTest;
+import omsu.BaseTestContainersTest;
 import omsu.grpc.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
-import org.junit.jupiter.api.extension.ExtensionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.lang.reflect.Method;
 
 import static io.qameta.allure.Allure.step;
 import static omsu.allure.AllureAttachments.attachText;
@@ -26,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Epic("Order Management")
 @Feature("Update order entity")
-class OrderUpdateTest extends BaseTestcontainersTest {
+class OrderUpdateTest extends BaseTestContainersTest {
     private static final Logger logger = LoggerFactory.getLogger(OrderUpdateTest.class);
     private String testOrderId;
     private OrderDataWithId order;

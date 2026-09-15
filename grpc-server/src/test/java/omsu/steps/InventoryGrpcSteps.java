@@ -1,6 +1,5 @@
 package omsu.steps;
 
-import com.google.protobuf.Empty;
 import io.qameta.allure.Step;
 import omsu.grpc.*;
 

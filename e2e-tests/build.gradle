@@ -1,0 +1,36 @@
+plugins {
+    id 'org.springframework.boot' version "${springBootVersion}"
+}
+
+group = 'omsu'
+version = '1.0-SNAPSHOT'
+
+dependencies {
+    implementation project(':grpc-common')
+    implementation project(':grpc-server')
+    implementation project(':grpc-client')
+    implementation "io.grpc:grpc-protobuf:${grpcVersion}"
+    implementation "org.springframework.kafka:spring-kafka"
+    implementation 'jakarta.annotation:jakarta.annotation-api:2.1.1'
+    //Testing
+    implementation "net.datafaker:datafaker:${fakerVersion}"
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation "io.rest-assured:rest-assured:${restAssuredVersion}"
+    testImplementation "org.awaitility:awaitility:${awaitilityVersion}"
+    // Testcontainers
+    testImplementation(platform("org.testcontainers:testcontainers-bom:2.0.4"))
+    testImplementation("org.testcontainers:postgresql")
+    testImplementation("org.testcontainers:testcontainers")
+    testImplementation("org.testcontainers:junit-jupiter")
+    testImplementation("org.testcontainers:kafka")
+}
+tasks.register('printVersion') {
+    doLast {
+        println project.version
+    }
+}
+test {
+    useJUnitPlatform()
+}

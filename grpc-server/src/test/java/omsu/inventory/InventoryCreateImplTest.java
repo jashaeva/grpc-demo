@@ -5,8 +5,7 @@ import io.grpc.*;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
-import omsu.BaseSpringTest;
-import omsu.BaseTestcontainersTest;
+import omsu.BaseTestContainersTest;
 import omsu.grpc.IdMessage;
 import omsu.grpc.InventoryMessage;
 import org.junit.jupiter.api.*;
@@ -22,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @Epic("Inventory Management")
 @Feature("Create Inventory Operations")
-class InventoryCreateImplTest extends BaseTestcontainersTest {
+class InventoryCreateImplTest extends BaseTestContainersTest {
     private static final Logger log = LoggerFactory.getLogger(InventoryCreateImplTest.class);
     private final String inventory = randomInventory();
     private final long count = randomQuantity();

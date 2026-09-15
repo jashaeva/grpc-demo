@@ -3,7 +3,8 @@ rootProject.name = 'grpc-demo'
 def modules = [
         'grpc-server',
         'grpc-client',
-        'grpc-common'
+        'grpc-common',
+        'e2e-tests'
 ]
 
 modules.each { m ->
@@ -11,7 +12,3 @@ modules.each { m ->
         include m
     }
 }
-//include 'grpc-server'
-//include 'grpc-client'
-//include 'grpc-common'
-
