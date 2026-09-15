@@ -281,7 +281,8 @@ tasks.register("printAllVersions") {
         def lines = [
                 "grpc-server=${project(':grpc-server').version}",
                 "grpc-client=${project(':grpc-client').version}",
-                "grpc-common=${project(':grpc-common').version}"
+                "grpc-common=${project(':grpc-common').version}",
+                "grpc-common=${project(':e2e-tests').version}"
         ]
         if (out) {
             new File(out).withWriterAppend { w -> lines.each { w.println(it) } }

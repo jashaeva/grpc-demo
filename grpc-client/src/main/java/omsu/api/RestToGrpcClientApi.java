@@ -1,14 +1,9 @@
 package omsu.api;
 
-import io.restassured.RestAssured;
-import io.restassured.path.json.config.JsonPathConfig;
 import io.restassured.response.Response;
-import omsu.grpc.InventoryData;
-import omsu.grpc.InventoryMessage;
 import omsu.model.Inventory;
 
 import static io.restassured.RestAssured.*;
-import static io.restassured.config.JsonConfig.jsonConfig;
 
 public class RestToGrpcClientApi {
     private int port;

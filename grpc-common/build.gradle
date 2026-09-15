@@ -10,7 +10,13 @@ version = '1.0-SNAPSHOT'
 repositories {
     mavenCentral()
 }
+bootJar {
+    enabled = false
+}
 
+jar {
+    enabled = true
+}
 dependencies {
     implementation("io.grpc:grpc-protobuf:${grpcVersion}") {
         exclude group: 'com.google.protobuf'

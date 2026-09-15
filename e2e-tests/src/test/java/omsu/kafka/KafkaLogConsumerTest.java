@@ -3,10 +3,15 @@ package omsu.kafka;
 import io.qameta.allure.Description;
 import io.restassured.response.Response;
 import omsu.BaseTest;
+import omsu.allure.AllureAttachments;
 import omsu.dto.LogEvent;
 import omsu.grpc.IdMessage;
 import omsu.grpc.InventoryMessage;
 import omsu.model.IdDTO;
+import omsu.utils.DataUtils;
+import org.awaitility.Awaitility;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,13 +20,8 @@ import java.time.Duration;
 import java.util.UUID;
 
 import static io.qameta.allure.Allure.step;
-import static omsu.allure.AllureAttachments.attachText;
-import static omsu.utils.DataUtils.randomInventory;
-import static omsu.utils.DataUtils.randomQuantity;
-import static org.awaitility.Awaitility.await;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.testcontainers.shaded.org.hamcrest.Matchers.notNullValue;
 
 //todo
 
@@ -41,14 +41,17 @@ class KafkaLogConsumerTest extends BaseTest {
     @Description("Если запрос на стороне grpc не выполнился, в топике сообщения не будет.")
     void testConsumerReceivesMessage_neg() {
         String id = UUID.randomUUID().toString();
-        String request = IdMessage.newBuilder().setId(id).build().toString();
+        omsu.grpc.IdMessage request = IdMessage
+                .newBuilder()
+                .setId(id)
+                .build();
         Response inventory = api.getInventory(id);
 
-        attachText("rest api returned: ", inventory.body().asPrettyString());
+        AllureAttachments.attachText("rest api returned: ", inventory.body().asPrettyString());
 
-        LogEvent messageFromKafka = await()
+        LogEvent messageFromKafka = Awaitility.await()
                 .atMost(Duration.ofSeconds(5))
-                .until(() -> kafkaLogListener.getMessage(request), nullValue());
+                .until(() -> kafkaLogListener.getMessage(request.toString()), Matchers.nullValue());
 
         step("Check that message from kafka exist", () ->{
                 assertNull(messageFromKafka);
@@ -63,13 +66,13 @@ class KafkaLogConsumerTest extends BaseTest {
     @Description("Плохой тест в плане структуры, так как использует реальное содержимое БД вместо того, чтобы подготовить их")
     //fixme поменять метод на create
     void testConsumerReceivesMessage() {
-        String name = randomInventory();
-        long count = randomQuantity();
+        String name = DataUtils.randomInventory();
+        long count = DataUtils.randomQuantity();
         Response idResponse = api.createInventory(name, count);
         idResponse.then()
                 .log().all()
                 .statusCode(200)
-                .body("id", notNullValue());
+                .body("id", Matchers.notNullValue());
 
         String id = idResponse.as(IdDTO.class).id();
 
@@ -80,15 +83,15 @@ class KafkaLogConsumerTest extends BaseTest {
                 .setCount(count)
                 .build().toString();
 
-        LogEvent messageFromKafka = await()
+        LogEvent messageFromKafka = Awaitility.await()
                 .atMost(Duration.ofSeconds(5))
-                .until(() -> kafkaLogListener.getMessage(request), notNullValue());
+                .until(() -> kafkaLogListener.getMessage(request), Matchers.notNullValue());
 
         step("Check that message from kafka exist", () ->{
             assertNotNull(messageFromKafka);
-            assertEquals("createInventory", messageFromKafka.method());
-            assertEquals(request, messageFromKafka.request());
-            assertThat(messageFromKafka.response(), notNullValue());
+            Assertions.assertEquals("createInventory", messageFromKafka.method());
+            Assertions.assertEquals(request, messageFromKafka.request());
+            MatcherAssert.assertThat(messageFromKafka.response(), Matchers.notNullValue());
         });
     }
 }

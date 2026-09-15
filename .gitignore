@@ -1,7 +1,7 @@
 .gradle
 build/
 **/build/
-grpc-client/allure-results/
+**/allure-results/
 
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/

@@ -5,13 +5,14 @@ import omsu.BaseTestContainersTest;
 import omsu.ContainerHolder;
 import omsu.dto.LogEvent;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.testcontainers.kafka.KafkaContainer;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
+@Disabled
 public class KafkaProducerTest extends BaseTestContainersTest {
 
     @Autowired

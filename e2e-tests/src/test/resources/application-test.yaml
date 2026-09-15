@@ -1,0 +1,22 @@
+grpc:
+  client:
+    inventory-service:
+      address: static://localhost:${inventory-service.port:9090}
+      negotiation-type: plaintext
+      max-inbound-message-size: 10MB
+
+logging:
+  level:
+    io.grpc: DEBUG
+    net.devh: DEBUG
+    org.wiremock: DEBUG
+    org.apache.kafka: DEBUG
+spring:
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: rest-group
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: "omsu.dto,omsu.model.dto"

@@ -5,14 +5,10 @@ import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.restassured.response.Response;
 import omsu.BaseTest;
-import omsu.api.RestToGrpcClientApi;
 import omsu.model.IdDTO;
 import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.server.LocalServerPort;
-import org.springframework.test.context.ActiveProfiles;
 
 import static omsu.utils.DataUtils.*;
 import static org.hamcrest.Matchers.*;
